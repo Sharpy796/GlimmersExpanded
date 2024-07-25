@@ -8,8 +8,8 @@ local file = ModTextFileGetContent(path)
 
 
 
-file = file:gsub("\"spark_purple_bright\"},", "\"plasma_fading_pink\", \"acid\", \"lava\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"spark_purple_bright\"},")
-file = file:gsub("rainbow", "pink={particle=\"plasma_fading_pink\",},acid={particle=\"acid\",}, lava={particle=\"lava\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",},rainbow")
+file = file:gsub("\"spark_purple_bright\"},", "\"plasma_fading_pink\", \"acid\", \"lava\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"void\", \"spark_purple_bright\"},")
+file = file:gsub("rainbow", "pink={particle=\"plasma_fading_pink\",},acid={particle=\"acid\",}, lava={particle=\"lava\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"void\",},rainbow")
 ModTextFileSetContent(path, file)
 
 local translations = ModTextFileGetContent("data/translations/common.csv")

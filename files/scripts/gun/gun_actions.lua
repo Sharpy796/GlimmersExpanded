@@ -40,6 +40,8 @@ local myFancyNewColors = {
 	createGlimmer("lava"),
 	createGlimmer("lc"),
 	createGlimmer("midas"),
+	createGlimmer("trueRainbow"),
+	createGlimmer("void")
 }
 
 for _, color in ipairs(myFancyNewColors) do 
