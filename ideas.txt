@@ -4,13 +4,13 @@
 [x] White
 [ ] Brown
 [ ] Gold?
-[ ] Silver
-[ ] Diamond
-[ ] Acid - Needs to glow
+[ ] Silver?
+[ ] Diamond?
+[x] Acid - doesn't need to glow, it looks pretty neat
 [x] Lava
 [x] Weird Fungus
 [ ] Blood
-[ ] Ominous?
+[x] Ominous?
 [x] Lively Concoction
 [x] Midas
 [x] True Rainbow

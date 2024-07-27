@@ -40,6 +40,7 @@ local myFancyNewColors = {
 	createGlimmer("acid", 15),
 	createGlimmer("lava", 15),
 	createGlimmer("fungi"),
+	createGlimmer("darkness", 15),
 	createGlimmer("lc", 4),
 	createGlimmer("midas", 4),
 	createGlimmer("true_rainbow"),
