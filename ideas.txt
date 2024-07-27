@@ -1,0 +1,40 @@
+[x] Pink
+[X] Teal
+[ ] Black (Void?) - Show in front of backgrounds -.-
+[x] White
+[ ] Brown
+[ ] Gold?
+[ ] Silver
+[ ] Diamond
+[ ] Acid - Needs to glow
+[x] Lava
+[x] Weird Fungus
+[ ] Blood
+[ ] Ominous?
+[x] Lively Concoction
+[x] Midas
+[x] True Rainbow
+[ ] Ordered Rainbow
+[ ] Biome
+[ ] Flask to Glimmer
+    - Potion Comp? Tint
+
+Gonna try and add a quest to unlock these. Ideas for the Glimmer Quest:
+- Fungal shift inside the glimmer lake bunker to unlock the transmuted glimmers
+- Create an alchemy lab that requires you to mix materials to create glimmers
+  - Secret item to open a portal to the secret alchemy lab
+  - One glimmer is created, with material residue nearby.
+  - Various empty and full flasks and pouches lie around the room
+  - Basins meant to hold materials & symbols on them
+  - Recipe:
+    - Blank Glimmer
+    - Material
+    - Catalyst?
+
+
+What is needed for a new glimmer:
+- A gun_actions.lua entry
+- A translation in translations.csv
+- An icon
+- An entry in init.lua
+- An .xml file
