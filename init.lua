@@ -18,6 +18,20 @@ translations = translations .. new_translations
 translations = translations:gsub("\r", ""):gsub("\n\n", "\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
 
+function OnPlayerSpawned(player_id)
+    -- testing
+    local x, y = EntityGetTransform(player_id)
+	-- if not GameHasFlagRun("glimmers_expanded_spawn_books") then
+		-- GameAddFlagRun("glimmers_expanded_spawn_books")
+        -- EntityLoad("mods/GlimmersExpanded/files/quest/books/glimmers_expanded_book_1.xml", x+10, y)
+        -- EntityLoad("mods/GlimmersExpanded/files/quest/books/glimmers_expanded_book_4.xml", x+20, y)
+        -- EntityLoad("mods/GlimmersExpanded/files/quest/books/glimmers_expanded_book_14.xml", x+30, y)
+        -- EntityLoad("mods/GlimmersExpanded/files/quest/books/glimmers_expanded_book_29.xml", x+40, y)
+        -- EntityLoad("mods/GlimmersExpanded/files/quest/books/glimmers_expanded_book_35.xml", x+50, y)
+        -- EntityLoad("mods/GlimmersExpanded/files/quest/books/glimmers_expanded_book_37.xml", x+60, y)
+    -- end
+end
+
 -- This code runs when all mods' filesystems are registered
 -- TODO: Inject spells in with other glimmers
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua

@@ -27,9 +27,14 @@ Gonna try and add a quest to unlock these. Ideas for the Glimmer Quest:
   - Various empty and full flasks and pouches lie around the room
   - Basins meant to hold materials & symbols on them
   - Recipe:
-    - Blank Glimmer
+    - Colored Glimmer
     - Material
-    - Catalyst?
+    - Catalyst? 
+      - Australium? (lava + gate opener (pus + urine + flummoxium))
+      - Unique material? ("Magiterial Catalyst") made from slightly more accessible materials
+  - Once a glimmer is unlocked, it can spawn there by default
+  - Have an option to have these spells unlocked by default
+- "Mimicium Glimmer" that changes based on the liquid it is dropped in
 
 
 What is needed for a new glimmer:
