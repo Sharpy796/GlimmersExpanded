@@ -21,6 +21,9 @@ actiondesc_glimmers_expanded_colour_acid,"Gives a projectile an acidic sparkly t
 action_glimmers_expanded_colour_teal,"Teal Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_teal,"Gives a projectile a teal sparkly trail",,,,,,,,,,,,,
 
+action_glimmers_expanded_colour_freezing,"Freezing Liquid Glimmer",,,,,,,,,,,,,
+actiondesc_glimmers_expanded_colour_freezing,"Gives a projectile a frozen sparkly trail",,,,,,,,,,,,,
+
 action_glimmers_expanded_colour_darkness,"Ominous Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_darkness,"Gives a projectile an ominous sparkly trail",,,,,,,,,,,,,
 
@@ -38,6 +41,8 @@ actiondesc_glimmers_expanded_colour_void,"Gives a projectile a trail darker than
 
 action_glimmers_expanded_colour_neon_green,"Neon Green Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_neon_green,"Gives a projectile a neon green sparkly trail",,,,,,,,,,,,,
+
+mat_glimmers_expanded_void_liquid_variant,"Void Liquid",,,,,,,,,,,,,
 
 bookname_glimmers_expanded_hidden_alchemy_1,"Alchemist's Note - Day 1",,,,,,,,,,,,,
 bookdesc_glimmers_expanded_hidden_alchemy_1,"Though my experiements proved successful, something in me still desires... more, like a hunger pang knawing at my guts. I could stop here and live happily with my accomplishment. I could spend the rest of my days resting, content in knowing I have accomplished more than most can claim...\nBut then I would never know what could have been.\nThat settles it. Tomorrow, I will continue my research. It is much too late tonight... ah. I have realized I am out of coffee grounds. I'll need to speak with Graham soon to acquire more; I cannot *live* without that sweet, sweet aroma.",,,,,,,,,,,,,
