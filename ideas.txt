@@ -10,6 +10,12 @@
 [x] Lava
 [x] Weird Fungus
 [ ] Blood
+[ ] Freezing Liquid?
+[ ] Concentrated Mana?
+[ ] Invisiblium?
+[ ] Diminution?
+[ ] Fire?
+[ ] Mimicium?
 [x] Ominous?
 [x] Lively Concoction
 [x] Midas
