@@ -6,13 +6,12 @@
 [ ] Gold?
 [ ] Silver?
 [ ] Diamond?
-[x] Acid - doesn't need to glow, it looks pretty neat
+[x] Acid - or diminution?
+[ ] Diminution? - ...it dwarfs acid by a LOT. but acid was so cool of a concept...
 [x] Lava
 [x] Weird Fungus
 [x] Blood
 [x] Freezing Liquid? - YES :+1:
-[ ] Concentrated Mana? - Maybe?
-[ ] Diminution? - ...it dwarfs acid by a LOT. but acid was so cool of a concept...
 [x] Mimicium? - YES :+1: It looks so pretty....
 [x] Ominous?
 [x] Lively Concoction
@@ -22,6 +21,7 @@
 [ ] Biome
 [ ] Flask to Glimmer
     - Potion Comp? Tint
+[ ] Paint spells?? (Might be a separate mod)
 
 Gonna try and add a quest to unlock these. Ideas for the Glimmer Quest:
 - Fungal shift inside the glimmer lake bunker to unlock the transmuted glimmers
