@@ -3,6 +3,9 @@ dummy_line,"todo",,,,,,,,,,,,,
 action_glimmers_expanded_colour_white,"White Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_white,"Gives a projectile a white sparkly trail",,,,,,,,,,,,,
 
+action_glimmers_expanded_colour_mimic,"Mimicium Glimmer",,,,,,,,,,,,,
+actiondesc_glimmers_expanded_colour_mimic,"Gives a projectile an iridescent sparkly trail",,,,,,,,,,,,,
+
 action_glimmers_expanded_colour_pink,"Pink Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_pink,"Gives a projectile a pink sparkly trail",,,,,,,,,,,,,
 

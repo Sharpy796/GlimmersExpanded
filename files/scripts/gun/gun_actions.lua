@@ -64,8 +64,8 @@ end
 -- TODO: Make the transmuted glimmers locked behind unique unlock flags
 -- TODO: Make spawn tiers and probabilities into a table
 local myFancyNewColors = {
-	-- createGlimmer("mimic_liquid"),
 	createGlimmer("white"),
+	createGlimmer("mimic"),
 	createGlimmer("pink"),
 	createGlimmer("fungi"),
 	-- red glimmer

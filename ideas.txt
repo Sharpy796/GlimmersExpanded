@@ -1,6 +1,6 @@
 [x] Pink
-[X] Teal
-[ ] Black (Void?) - Show in front of backgrounds -.-
+[x] Teal
+[x] Black (Void?) - Show in front of backgrounds -.-
 [x] White
 [ ] Brown
 [ ] Gold?
@@ -10,14 +10,10 @@
 [x] Lava
 [x] Weird Fungus
 [x] Blood
-[ ] Freezing Liquid? - YES :+1:
+[x] Freezing Liquid? - YES :+1:
 [ ] Concentrated Mana? - Maybe?
-[ ] Invisiblium? - Meh
 [ ] Diminution? - ...it dwarfs acid by a LOT. but acid was so cool of a concept...
-[ ] Fire? - liquid_fire looks neat, kinda yellowish. fire looks the same as orange
-[ ] Mimicium? - YES :+1: It looks so pretty....
-[ ] Milk? - Non-glowy white
-[ ] Molten plastic red? - nah, not glowy enough (purple)
+[x] Mimicium? - YES :+1: It looks so pretty....
 [x] Ominous?
 [x] Lively Concoction
 [x] Midas
