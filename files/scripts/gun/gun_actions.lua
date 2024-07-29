@@ -1,6 +1,6 @@
 local Mod_Id = "GLIMMERS_EXPANDED_COLOUR_"
 
-local function createGlimmer (Name, wait_frames, spawn_tiers, spawn_probs)
+local function createGlimmer (Name, wait_frames, spawn_tiers, spawn_probs, unlock_flag)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
 	local NAME = Name:upper()
@@ -8,6 +8,7 @@ local function createGlimmer (Name, wait_frames, spawn_tiers, spawn_probs)
 	if wait_frames == nil then wait_frames = 8 end
 	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
 	if spawn_probs == nil then spawn_probs = "0.2,0.2,0.4,0.2,0.2,0.2" end
+	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
 
 	local newGlimmer = 
 	{
@@ -20,7 +21,7 @@ local function createGlimmer (Name, wait_frames, spawn_tiers, spawn_probs)
 		type 					= ACTION_TYPE_MODIFIER,
 		spawn_level 			= spawn_tiers,
 		spawn_probability 		= spawn_probs,
-		spawn_requires_flag 	= "card_unlocked_paint",
+		spawn_requires_flag 	= unlock_flag,
 		price 					= 40,
 		mana 					= 0,
 		action 					= function()
@@ -35,7 +36,7 @@ local function createGlimmer (Name, wait_frames, spawn_tiers, spawn_probs)
 	} return newGlimmer
 end
 
-local myFancyNewColors = {
+local myFancyNewColors = { -- TODO: Make the transmuted glimmers locked behind unique unlock flags
 	createGlimmer("white", nil, "2,3,4", "0.1,0.4,0.1"),
 	createGlimmer("pink", nil, "2,3,4", "0.4,0.1,0.1"),
 	createGlimmer("fungi", nil, "3,4,5", "0.4,0.1,0.1"),
