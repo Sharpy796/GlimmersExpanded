@@ -75,6 +75,7 @@ local myFancyNewColors = {
 	-- createGlimmer("transmuted yellow??", nil, "2,3,4", "0.1,0.4,0.1"),
 	-- green glimmer
 	createGlimmer("acid", 15),
+	createGlimmer("weakness", 15),
 	createGlimmer("teal"),
 	-- createGlimmer("transmuted teal??", "2,3,4", "0.4,0.1,0.1"),
 	-- blue glimmer

@@ -8,8 +8,8 @@ local file = ModTextFileGetContent(path)
 
 
 
-file = file:gsub("\"spark_purple_bright\"},", "\"spark_white\", \"mimic_liquid\", \"plasma_fading_pink\", \"spark_teal\", \"blood\", \"blood_cold\", \"acid\", \"lava\", \"material_darkness\", \"fungi\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"glimmers_expanded_void_liquid_variant\", \"spark_purple_bright\"},")
-file = file:gsub("rainbow", "white={particle=\"magic_liquid_weakness\",}, mimic={particle=\"mimic_liquid\",}, pink={particle=\"plasma_fading_pink\",}, teal={particle=\"spark_teal\",}, blood={particle=\"blood\",}, freezing={particle=\"blood_cold\",}, acid={particle=\"acid\",}, lava={particle=\"lava\",}, darkness={particle=\"material_darkness\",}, fungi={particle=\"fungi\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"glimmers_expanded_void_liquid_variant\",},rainbow")
+file = file:gsub("\"spark_purple_bright\"},", "\"spark_white\", \"mimic_liquid\", \"plasma_fading_pink\", \"spark_teal\", \"blood\", \"blood_cold\", \"acid\", \"magic_liquid_weakness\", \"lava\", \"material_darkness\", \"fungi\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"glimmers_expanded_void_liquid_variant\", \"spark_purple_bright\"},")
+file = file:gsub("rainbow", "white={particle=\"spark_white\",}, mimic={particle=\"mimic_liquid\",}, pink={particle=\"plasma_fading_pink\",}, teal={particle=\"spark_teal\",}, blood={particle=\"blood\",}, freezing={particle=\"blood_cold\",}, acid={particle=\"acid\",}, weakness={particle=\"magic_liquid_weakness\",}, lava={particle=\"lava\",}, darkness={particle=\"material_darkness\",}, fungi={particle=\"fungi\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"glimmers_expanded_void_liquid_variant\",},rainbow")
 ModTextFileSetContent(path, file)
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
