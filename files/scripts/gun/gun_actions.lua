@@ -34,18 +34,29 @@ local function createGlimmer (Name, wait_frames)
 end
 
 local myFancyNewColors = {
-	createGlimmer("pink"),
-	createGlimmer("teal"),
 	createGlimmer("white"),
-	createGlimmer("acid", 15),
-	createGlimmer("lava", 15),
+	-- createGlimmer("white??"),
+	createGlimmer("pink"),
 	createGlimmer("fungi"),
+	-- red glimmer
+	-- createGlimmer("blood"),
+	-- orange glimmer
+	createGlimmer("lava", 15),
+	-- createGlimmer("yellow??"),
+	-- green glimmer
+	createGlimmer("acid", 15),
+	createGlimmer("teal"),
+	-- createGlimmer("teal??"),
+	-- blue glimmer
+	-- createGlimmer("blue??"),
+	-- purple glimmer
 	createGlimmer("darkness", 15),
+	-- rainbow glimmer
+	createGlimmer("true_rainbow"),
 	createGlimmer("lc", 4),
 	createGlimmer("midas", 4),
-	createGlimmer("true_rainbow"),
 	createGlimmer("void"),
-	-- createGlimmer("neon_green")
+	-- createGlimmer("neon_green"),
 }
 
 for _, color in ipairs(myFancyNewColors) do 
