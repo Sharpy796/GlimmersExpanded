@@ -36,28 +36,56 @@ local function createGlimmer (Name, wait_frames, spawn_tiers, spawn_probs, unloc
 	} return newGlimmer
 end
 
-local myFancyNewColors = { -- TODO: Make the transmuted glimmers locked behind unique unlock flags
-	createGlimmer("white", nil, "2,3,4", "0.1,0.4,0.1"),
-	createGlimmer("pink", nil, "2,3,4", "0.4,0.1,0.1"),
-	createGlimmer("fungi", nil, "3,4,5", "0.4,0.1,0.1"),
+-- local myFancyNewColors = { -- TODO: Make the transmuted glimmers locked behind unique unlock flags
+-- 	createGlimmer("white", nil, "2,3,4", "0.1,0.4,0.1"),
+-- 	createGlimmer("pink", nil, "2,3,4", "0.4,0.1,0.1"),
+-- 	createGlimmer("fungi", nil, "3,4,5", "0.4,0.1,0.1"),
+-- 	-- red glimmer
+-- 	-- createGlimmer("blood", nil, "2,3,4,5,6,10", "0.2,0.2,0.4,0.2,0.2,0.2"),
+-- 	-- orange glimmer
+-- 	createGlimmer("lava", 15, "3,4,5", "0.1,0.1,0.4"),
+-- 	-- createGlimmer("transmuted yellow??", nil, "2,3,4", "0.1,0.4,0.1"),
+-- 	-- green glimmer
+-- 	createGlimmer("acid", 15, "3,4,5", "0.4,0.1,0.1"),
+-- 	createGlimmer("teal", nil, "2,3,4", "0.4,0.1,0.1"),
+-- 	-- createGlimmer("transmuted teal??", "2,3,4", "0.4,0.1,0.1"),
+-- 	-- blue glimmer
+-- 	-- createGlimmer("transmuted blue??", "2,3,4", "0.4,0.1,0.1"),
+-- 	-- purple glimmer
+-- 	createGlimmer("darkness", 15, "3,4,5", "0.1,0.4,0.1"),
+-- 	-- rainbow glimmer
+-- 	createGlimmer("true_rainbow", "2,3,4,10", "0.1,0.1,0.1,0.2"),
+-- 	createGlimmer("lc", 4, "5,6,10", "0.1,0.1,0.2"),
+-- 	createGlimmer("midas", 4, "5,6,10", "0.1,0.1,0.2"),
+-- 	createGlimmer("void", nil, "3,4,5", "0.1,0.4,0.1"),
+-- 	-- createGlimmer("neon_green"),
+-- }
+
+-- TODO: Make the transmuted glimmers locked behind unique unlock flags
+-- TODO: Make spawn tiers and probabilities into a table
+local myFancyNewColors = {
+	createGlimmer("white"),
+	-- createGlimmer("mimic_liquid"),
+	createGlimmer("pink"),
+	createGlimmer("fungi"),
 	-- red glimmer
-	-- createGlimmer("blood", nil, "2,3,4,5,6,10", "0.2,0.2,0.4,0.2,0.2,0.2"),
+	createGlimmer("blood"),
 	-- orange glimmer
-	createGlimmer("lava", 15, "3,4,5", "0.1,0.1,0.4"),
+	createGlimmer("lava", 15),
 	-- createGlimmer("transmuted yellow??", nil, "2,3,4", "0.1,0.4,0.1"),
 	-- green glimmer
-	createGlimmer("acid", 15, "3,4,5", "0.4,0.1,0.1"),
-	createGlimmer("teal", nil, "2,3,4", "0.4,0.1,0.1"),
+	createGlimmer("acid", 15),
+	createGlimmer("teal"),
 	-- createGlimmer("transmuted teal??", "2,3,4", "0.4,0.1,0.1"),
 	-- blue glimmer
-	-- createGlimmer("transmuted blue??", "2,3,4", "0.4,0.1,0.1"),
+	-- createGlimmer("freezing_liquid", 15),
 	-- purple glimmer
-	createGlimmer("darkness", 15, "3,4,5", "0.1,0.4,0.1"),
+	createGlimmer("darkness", 15),
 	-- rainbow glimmer
-	createGlimmer("true_rainbow", "2,3,4,10", "0.1,0.1,0.1,0.2"),
-	createGlimmer("lc", 4, "5,6,10", "0.1,0.1,0.2"),
-	createGlimmer("midas", 4, "5,6,10", "0.1,0.1,0.2"),
-	createGlimmer("void", nil, "3,4,5", "0.1,0.4,0.1"),
+	createGlimmer("true_rainbow"),
+	createGlimmer("lc", 4),
+	createGlimmer("midas", 4),
+	createGlimmer("void"),
 	-- createGlimmer("neon_green"),
 }
 

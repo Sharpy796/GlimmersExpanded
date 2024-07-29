@@ -9,13 +9,15 @@
 [x] Acid - doesn't need to glow, it looks pretty neat
 [x] Lava
 [x] Weird Fungus
-[ ] Blood
-[ ] Freezing Liquid?
-[ ] Concentrated Mana?
-[ ] Invisiblium?
-[ ] Diminution?
-[ ] Fire?
-[ ] Mimicium?
+[x] Blood
+[ ] Freezing Liquid? - YES :+1:
+[ ] Concentrated Mana? - Maybe?
+[ ] Invisiblium? - Meh
+[ ] Diminution? - ...it dwarfs acid by a LOT. but acid was so cool of a concept...
+[ ] Fire? - liquid_fire looks neat, kinda yellowish. fire looks the same as orange
+[ ] Mimicium? - YES :+1: It looks so pretty....
+[ ] Milk? - Non-glowy white
+[ ] Molten plastic red? - nah, not glowy enough (purple)
 [x] Ominous?
 [x] Lively Concoction
 [x] Midas

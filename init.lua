@@ -8,8 +8,8 @@ local file = ModTextFileGetContent(path)
 
 
 
-file = file:gsub("\"spark_purple_bright\"},", "\"spark_white\", \"plasma_fading_pink\", \"spark_teal\", \"acid\", \"lava\", \"material_darkness\", \"fungi\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"void_liquid\", \"spark_purple_bright\"},")
-file = file:gsub("rainbow", "white={particle=\"spark_white\",}, pink={particle=\"plasma_fading_pink\",}, teal={particle=\"spark_teal\",}, acid={particle=\"acid\",}, lava={particle=\"lava\",}, darkness={particle=\"material_darkness\",}, fungi={particle=\"fungi\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"void_liquid\",},rainbow")
+file = file:gsub("\"spark_purple_bright\"},", "\"spark_white\", \"plasma_fading_pink\", \"spark_teal\", \"blood\", \"acid\", \"lava\", \"material_darkness\", \"fungi\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"void_liquid\", \"spark_purple_bright\"},")
+file = file:gsub("rainbow", "white={particle=\"spark_white\",}, pink={particle=\"plasma_fading_pink\",}, teal={particle=\"spark_teal\",}, blood={particle=\"blood\",}, acid={particle=\"acid\",}, lava={particle=\"lava\",}, darkness={particle=\"material_darkness\",}, fungi={particle=\"fungi\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"void_liquid\",},rainbow")
 ModTextFileSetContent(path, file)
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
