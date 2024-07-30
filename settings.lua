@@ -47,7 +47,31 @@ mod_settings =
         -- end
 	},
     {
-        id = "default_unlock",
-        ui_name = ""
-    }
+        id   = "progress_reset",
+        ui_name = "Reset Spell Progress",
+        ui_description = "Resets all spell progress, therefore removing any spells that spawn by default in a certain spot. Cannot be undone! (Currently doesn't do anything.)",
+        lock = true,
+        -- func = function(lmb, rmb)
+        --     if lmb then
+        --         RemoveFlagPersistent("glimmers_expanded_used_unlock_all")
+        --         for i = 1, #progress do
+        --             RemoveFlagPersistent(progress[i])
+        --         end
+        --     end
+        -- end
+    },
+    {
+        id   = "progress_unlock",
+        ui_name = "Unlock Spell Progress",
+        ui_description = "Unlocks all spell progress, therefore allowing all spells to spawn by default in a certain spot. Cannot be undone! (Currently doesn't do anything.)",
+        lock = true,
+        -- func = function(lmb, rmb)
+        --     if lmb then
+        --         AddFlagPersistent("glimmers_expanded_used_unlock_all")
+        --         for i = 1, #progress do
+        --             AddFlagPersistent(progress[i])
+        --         end
+        --     end
+        -- end
+    },
 }

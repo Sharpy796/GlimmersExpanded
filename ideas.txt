@@ -18,7 +18,7 @@
 [x] Midas
 [x] True Rainbow
 [ ] Ordered Rainbow
-[ ] Biome
+[x] Biome
 [ ] Flask to Glimmer
     - Potion Comp? Tint
 [ ] Paint spells?? (Might be a separate mod)
@@ -38,6 +38,7 @@ Gonna try and add a quest to unlock these. Ideas for the Glimmer Quest:
       - Unique material? ("Magiterial Catalyst") made from slightly more accessible materials
   - Once a glimmer is unlocked, it can spawn there by default
   - Have an option to have these spells unlocked by default
+  - Possibly require the essences for the biome glimmer?
 - "Mimicium Glimmer" that changes based on the liquid it is dropped in
 
 
