@@ -2,12 +2,8 @@
 [x] Teal
 [x] Black (Void?) - Show in front of backgrounds -.-
 [x] White
-[ ] Brown
-[ ] Gold?
-[ ] Silver?
-[ ] Diamond?
 [x] Acid - or diminution?
-[ ] Diminution? - ...it dwarfs acid by a LOT. but acid was so cool of a concept...
+[x] Diminution? - ...it dwarfs acid by a LOT. but acid was so cool of a concept...
 [x] Lava
 [x] Weird Fungus
 [x] Blood
