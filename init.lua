@@ -19,8 +19,23 @@ translations = translations:gsub("\r", ""):gsub("\n\n", "\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
 
 function OnPlayerSpawned(player_id)
-    -- testing
     local x, y = EntityGetTransform(player_id)
+
+    -- if not GameHasFlagRun("glimmers_expanded_create_biometrackercomponent") then 
+    --     GameAddFlagRun("glimmers_expanded_create_biometrackercomponent")
+    --     GamePrint("adding the biome tracker")
+    --     local biome_tracker_child = EntityLoad("mods/GlimmersExpanded/files/scripts/biome_tracker.xml", x, y)
+    --     EntityAddChild(player_id, biome_tracker_child)
+
+    --     local biome_tracker = EntityGetComponent( EntityGetAllChildren( player_id, "glimmer_biome_tracker")[1], "BiomeTrackerComponent" )
+    --     if ( biome_tracker ~= nil ) then
+    --         GamePrint("Yay! Biome tracker successfully added.")
+    --     else
+    --         GamePrint("Biome tracker did NOT get added (or you're bad at detecting the biome tracker)")
+    --     end
+    -- end
+
+    -- testing
 	-- if not GameHasFlagRun("glimmers_expanded_spawn_books") then
 		-- GameAddFlagRun("glimmers_expanded_spawn_books")
         -- EntityLoad("mods/GlimmersExpanded/files/quest/books/glimmers_expanded_book_1.xml", x+10, y)

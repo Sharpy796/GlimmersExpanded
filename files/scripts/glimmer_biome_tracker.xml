@@ -1,0 +1,12 @@
+<Entity
+    name="Glimmer Biome Tracker"  
+    tags="glimmer_biome_tracker" >
+
+    <InheritTransformComponent>
+    </InheritTransformComponent>
+
+    <BiomeTrackerComponent
+      _enabled="1" 
+      limit_to_every_n_frame="5" >
+    </BiomeTrackerComponent>
+</Entity>

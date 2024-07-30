@@ -88,6 +88,7 @@ local myFancyNewColors = {
 	createGlimmer("midas", 4),
 	createGlimmer("void"),
 	-- createGlimmer("neon_green"),
+	createGlimmer("biome"),
 }
 
 for _, color in ipairs(myFancyNewColors) do 

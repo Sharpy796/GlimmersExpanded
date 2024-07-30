@@ -1,14 +1,14 @@
 <Entity >
    
 	<LuaComponent
-		script_source_file="mods/GlimmersExpandedfiles/scripts/projectiles/colour_biome.lua"
+		script_source_file="mods/GlimmersExpanded/files/scripts/projectiles/colour_biome.lua"
 		execute_every_n_frame="1"
 		remove_after_executed="1"
 		>
 	</LuaComponent>
 	
 	<LuaComponent
-		script_source_file="mods/GlimmersExpandedfiles/scripts/projectiles/colour_biome.lua"
+		script_source_file="mods/GlimmersExpanded/files/scripts/projectiles/colour_biome.lua"
 		execute_on_added="1"
 		remove_after_executed="1"
 		>
@@ -21,8 +21,7 @@
 	</VariableStorageComponent>
   
     <ParticleEmitterComponent 
-          emitted_material_name="lava"
-          uint32 = "FFFFFFFF"
+          emitted_material_name="material_rainbow"
           offset.x="0"
           offset.y="0"
           x_pos_offset_min="-1"

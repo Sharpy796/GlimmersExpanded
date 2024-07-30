@@ -20,11 +20,11 @@ mod_settings_version = 1 -- This is a magic global that can be used to migrate s
 mod_settings =
 {
 	{ -- TODO: Make this work
-		-- id = "inject_spells",
-		-- ui_name = "Inject Spells",
-		-- ui_description = "If enabled, spells will be placed between vanilla spells in progress.",
-		-- value_default = true,
-		-- scope = MOD_SETTING_SCOPE_RUNTIME,
+		id = "inject_spells",
+		ui_name = "Inject Spells",
+		ui_description = "If enabled, spells will be placed between vanilla spells in progress. (Currently doesn't do anything.)",
+		value_default = true,
+		scope = MOD_SETTING_SCOPE_RUNTIME,
         -- ui_fn = function( mod_id, gui, in_main_menu, im_id, setting )
 
         --     GuiLayoutBeginHorizontal(gui, 0, 0, false, 0, 0)
@@ -46,4 +46,8 @@ mod_settings =
 
         -- end
 	},
+    {
+        id = "default_unlock",
+        ui_name = ""
+    }
 }

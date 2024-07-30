@@ -45,6 +45,9 @@ actiondesc_glimmers_expanded_colour_midas,"Gives a projectile a wealthy sparkly 
 action_glimmers_expanded_colour_void,"Void Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_void,"Gives a projectile a trail darker than the void itself",,,,,,,,,,,,,
 
+action_glimmers_expanded_colour_biome,"Biome Glimmer",,,,,,,,,,,,,
+actiondesc_glimmers_expanded_colour_biome,"Gives a projectile a sparkly trail that changes depending on the biome you are in!",,,,,,,,,,,,,
+
 action_glimmers_expanded_colour_neon_green,"Neon Green Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_neon_green,"Gives a projectile a neon green sparkly trail",,,,,,,,,,,,,
 
