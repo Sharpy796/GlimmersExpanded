@@ -1,0 +1,8 @@
+<PixelScenes>
+  <mBufferedPixelScenes>
+    <PixelScene background_filename="" colors_filename="" material_filename="data/biome_impl/spliced/pixelSceneTest/0.plz" pos_x="500" pos_y="1000" skip_biome_checks="1" >
+    </PixelScene>
+    <PixelScene background_filename="" colors_filename="" material_filename="data/biome_impl/spliced/pixelSceneTest/1.plz" pos_x="1012" pos_y="1000" skip_biome_checks="1" >
+    </PixelScene>
+  </mBufferedPixelScenes>
+</PixelScenes>

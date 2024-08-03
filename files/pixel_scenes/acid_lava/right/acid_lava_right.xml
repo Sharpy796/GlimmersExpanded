@@ -1,0 +1,25 @@
+<Entity>
+    <PixelSceneComponent
+		pixel_scene_background=	"mods/GlimmersExpanded/files/pixel_scenes/acid_lava/right/acid_lava_right_background.png"
+		pixel_scene_visual=		"mods/GlimmersExpanded/files/pixel_scenes/acid_lava/right/acid_lava_right_visual.png"
+		pixel_scene=			"mods/GlimmersExpanded/files/pixel_scenes/acid_lava/right/acid_lava_right.png" 
+		offset_x="512"
+		offset_y="0"
+		skip_biome_checks="1" 
+		>
+    </PixelSceneComponent>
+    <!-- <PixelSceneComponent
+		pixel_scene_background=	"mods/GlimmersExpanded/files/pixel_scenes/brickwork_chunk/brickwork_chunk_background.png"
+		pixel_scene_visual=		"mods/GlimmersExpanded/files/pixel_scenes/brickwork_chunk/brickwork_chunk_visual.png"
+		pixel_scene=			"mods/GlimmersExpanded/files/pixel_scenes/brickwork_chunk/brickwork_chunk.png" 
+		offset_x="0"
+		offset_y="0"
+		skip_biome_checks="1" 
+		>
+    </PixelSceneComponent> -->
+	<!-- <LifetimeComponent
+		lifetime="2"
+		>
+	</LifetimeComponent> -->
+
+</Entity>
