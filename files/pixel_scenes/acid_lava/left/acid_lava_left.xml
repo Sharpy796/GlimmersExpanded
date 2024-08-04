@@ -1,7 +1,7 @@
 <Entity>
     <PixelSceneComponent
-		pixel_scene_background=	""
-		pixel_scene_visual=		""
+		pixel_scene_background=	"mods/GlimmersExpanded/files/pixel_scenes/acid_lava/left/acid_lava_left_background.png"
+		pixel_scene_visual=		"mods/GlimmersExpanded/files/pixel_scenes/acid_lava/left/acid_lava_left_visual.png"
 		pixel_scene=			"mods/GlimmersExpanded/files/pixel_scenes/acid_lava/left/acid_lava_left.png" 
 		offset_x="0"
 		offset_y="0"

@@ -88,10 +88,12 @@
 --     table.insert(w.children, newXml2)
 --   end
 -- end
-
-ModTextFileSetContent("data/biome/_pixel_scenes.xml", tostring(xml))
+-- 
+-- ModTextFileSetContent("data/biome/_pixel_scenes.xml", tostring(xml))
 
 dofile_once( "data/scripts/lib/utilities.lua" )
+ModMaterialsFileAdd("mods/GlimmersExpanded/files/materials.xml")
+ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml")
 
 -- colour_spell.lua things (for rainbow compat and more)
 local path = "data/scripts/projectiles/colour_spell.lua"
@@ -109,15 +111,10 @@ ModTextFileSetContent("data/translations/common.csv", translations)
 
 function OnPlayerSpawned(player_id)
     local x, y = EntityGetTransform(player_id)
-
-	-- if GameHasFlagRun("sharpys_brickwork_chunk_is_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
-	-- 	EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/brickwork_chunk/brickwork_chunk.xml", 0, -512)  --load the musical shrine
-	-- 	GameAddFlagRun("sharpys_brickwork_chunk_is_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
-	-- end
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
         -- TODO: Find a spot to spawn these
-		-- EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", -1024, -1024)
-		-- EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", -1024, -1024)
+		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", -1024, -1024)
+		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", -1024, -1024)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
 	end
 end
@@ -129,4 +126,3 @@ end
 -- This code runs when all mods' filesystems are registered
 -- TODO: Inject spells in with other glimmers
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
-ModMaterialsFileAdd("mods/GlimmersExpanded/files/materials.xml")

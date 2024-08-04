@@ -8,4 +8,10 @@
 		skip_biome_checks="1" 
 		>
     </PixelSceneComponent>
+
+	<LuaComponent
+		script_source_file = "mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/spawn_entities_left.lua"
+		execute_on_added = "1"
+		remove_after_executed = "1"
+	></LuaComponent> <!-- For now, let's get it to spawn every spell once. -->	
 </Entity>

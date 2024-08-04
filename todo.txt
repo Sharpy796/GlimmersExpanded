@@ -1,4 +1,4 @@
-[ ] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
+[x] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
 [ ] Update spawn rates for rarer glimmers
 [ ] Inject new glimmers into the spell list
 [ ] Make the new glimmers spawn somewhere
