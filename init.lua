@@ -93,7 +93,8 @@
 
 dofile_once( "data/scripts/lib/utilities.lua" )
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/materials.xml")
--- ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
+ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
+ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
 
 -- colour_spell.lua things (for rainbow compat and more)
 local path = "data/scripts/projectiles/colour_spell.lua"

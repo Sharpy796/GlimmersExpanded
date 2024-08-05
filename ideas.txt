@@ -44,3 +44,8 @@ What is needed for a new glimmer:
 - An icon
 - An entry in init.lua
 - An .xml file
+
+
+---- LORE ----
+"I thought I saw something down there... my eyes are playing tricks on me again"
+Something about Graham's coffee

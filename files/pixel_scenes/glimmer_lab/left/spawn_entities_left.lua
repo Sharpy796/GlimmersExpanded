@@ -41,19 +41,19 @@ local locations_spell = {
     -- ["GLIMMERS_EXPANDED_COLOUR_"] = {147, 73+29+29+29+29},
 }
 
-local function spawnGlimmerLabPotion( potionX, potionY )
-    SetRandomSeed( potionX, potionY ) --TODO: Make this slightly more random, but seed-based?
-    local rnd = Random( 1, 1000 )
-    if (rnd <= 0001) then -- 00.1%
-        EntityLoad( "data/entities/items/pickup/potion_secret.xml", potionX, potionY )
-    elseif (rnd <= 0010) then -- 00.9%
-        EntityLoad( "data/entities/items/pickup/potion_mimic.xml", potionX, potionY )
-    elseif (rnd <= 0100) then -- 09.0%
-        EntityLoad( "data/entities/items/pickup/potion_random_material.xml", potionX, potionY )
-    else -- 90.0%
-        EntityLoad( "data/entities/items/pickup/potion.xml", potionX, potionY )
-    end
-end
+-- local function spawnGlimmerLabPotion( potionX, potionY )
+--     SetRandomSeed( potionX, potionY ) --TODO: Make this slightly more random, but seed-based?
+--     local rnd = Random( 1, 1000 )
+--     if (rnd <= 0001) then -- 00.1%
+--         EntityLoad( "data/entities/items/pickup/potion_secret.xml", potionX, potionY )
+--     elseif (rnd <= 0010) then -- 00.9%
+--         EntityLoad( "data/entities/items/pickup/potion_mimic.xml", potionX, potionY )
+--     elseif (rnd <= 0100) then -- 09.0%
+--         EntityLoad( "data/entities/items/pickup/potion_random_material.xml", potionX, potionY )
+--     else -- 90.0%
+--         EntityLoad( "data/entities/items/pickup/potion.xml", potionX, potionY )
+--     end
+-- end
 
 local potionX = 194
 local potionY = 296-2
@@ -93,6 +93,6 @@ local function spawnActions(locations)
     end
 end
 
-spawnActions(locations_spell)
-spawnPotions(locations_potion)
-EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_out.xml", -11666, 4950)
+-- spawnActions(locations_spell)
+-- spawnPotions(locations_potion)
+-- EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_out.xml", -11666, 4950)
