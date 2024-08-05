@@ -3,15 +3,15 @@ dofile_once("data/scripts/item_spawnlists.lua")
 dofile_once("data/scripts/biome_scripts.lua")
 
 
-function spawn_potions( x, y )
-	SetRandomSeed( x, y )
-	local rnd = Random( 1, 1000 )
-	if (rnd <= 995) or (y < 512 * 3) then
-        EntityLoad( "data/entities/items/pickup/potion.xml", x, y )
-	else
-		EntityLoad( "data/entities/items/pickup/potion_mimic.xml", x, y)
-	end
-end
+-- function spawn_potions( x, y )
+-- 	SetRandomSeed( x, y )
+-- 	local rnd = Random( 1, 1000 )
+-- 	if (rnd <= 995) or (y < 512 * 3) then
+--         EntityLoad( "data/entities/items/pickup/potion.xml", x, y )
+-- 	else
+-- 		EntityLoad( "data/entities/items/pickup/potion_mimic.xml", x, y)
+-- 	end
+-- end
 
 -- function spawn_potions( x, y ) end
 
@@ -41,8 +41,22 @@ local locations_spell = {
     -- ["GLIMMERS_EXPANDED_COLOUR_"] = {147, 73+29+29+29+29},
 }
 
+local function spawnGlimmerLabPotion( potionX, potionY )
+    SetRandomSeed( potionX, potionY ) --TODO: Make this slightly more random, but seed-based?
+    local rnd = Random( 1, 1000 )
+    if (rnd <= 0001) then -- 00.1%
+        EntityLoad( "data/entities/items/pickup/potion_secret.xml", potionX, potionY )
+    elseif (rnd <= 0010) then -- 00.9%
+        EntityLoad( "data/entities/items/pickup/potion_mimic.xml", potionX, potionY )
+    elseif (rnd <= 0100) then -- 09.0%
+        EntityLoad( "data/entities/items/pickup/potion_random_material.xml", potionX, potionY )
+    else -- 90.0%
+        EntityLoad( "data/entities/items/pickup/potion.xml", potionX, potionY )
+    end
+end
+
 local potionX = 194
-local potionY = 296
+local potionY = 296-2
 local locations_potion = {
     {potionX, potionY},
     {potionX+11, potionY},
@@ -67,8 +81,9 @@ end
 local function spawnPotions(locations)
     for potion, coordinates in pairs(locations) do
 		-- spawn_from_list( "potion_spawnlist", x+coordinates[1], x+coordinates[2] )
-        spawn_potions(x+coordinates[1], x+coordinates[2])
+        -- spawn_potions(x+coordinates[1], x+coordinates[2])
         -- EntityLoad( "data/entities/items/pickup/potion.xml", x+coordinates[1], y+coordinates[2] )
+        spawnGlimmerLabPotion(x+coordinates[1], y+coordinates[2])
     end
 end
 
