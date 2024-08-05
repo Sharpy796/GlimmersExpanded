@@ -93,7 +93,7 @@
 
 dofile_once( "data/scripts/lib/utilities.lua" )
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/materials.xml")
-ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml")
+-- ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
 
 -- colour_spell.lua things (for rainbow compat and more)
 local path = "data/scripts/projectiles/colour_spell.lua"
@@ -115,6 +115,7 @@ function OnPlayerSpawned(player_id)
         -- TODO: Find a spot to spawn these
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-23, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-23, 512*9)
+		EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550, 396)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
 	end
 end

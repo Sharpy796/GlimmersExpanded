@@ -95,3 +95,4 @@ end
 
 spawnActions(locations_spell)
 spawnPotions(locations_potion)
+EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_out.xml", -11666, 4950)
