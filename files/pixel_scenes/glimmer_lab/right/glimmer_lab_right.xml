@@ -3,7 +3,7 @@
 		pixel_scene_background=	""
 		pixel_scene_visual=		""
 		pixel_scene=			"mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.png" 
-		offset_x="512"
+		offset_x="0"
 		offset_y="0"
 		skip_biome_checks="1" 
 		>
