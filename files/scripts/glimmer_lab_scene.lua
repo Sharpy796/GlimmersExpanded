@@ -10,6 +10,9 @@
 RegisterSpawnFunction( 0xffff00e6, "spawn_glimmer_lab_potion" )
 RegisterSpawnFunction( 0xffff004c, "spawn_glimmer_lab_portal_exit" )
 RegisterSpawnFunction( 0xff0400ff, "spawn_glimmer_lab_spell" )
+RegisterSpawnFunction( 0xff3692ff, "spawn_glimmer_lab_fish_small" )
+RegisterSpawnFunction( 0xffff366d, "spawn_glimmer_lab_fish_big" )
+RegisterSpawnFunction( 0xffa8ff36, "spawn_glimmer_lab_fish_eel" )
 
 -- local old_init = init
 
@@ -74,9 +77,9 @@ function spawn_glimmer_lab_potion( x, y )
         EntityLoad( "data/entities/items/pickup/potion_secret.xml", x, y )
     elseif (rnd <= 0010) then -- 00.9%
         EntityLoad( "data/entities/items/pickup/potion_mimic.xml", x, y )
-    elseif (rnd <= 0100) then -- 09.0%
+    elseif (rnd <= 0300) then -- 29.0%
         EntityLoad( "data/entities/items/pickup/potion_random_material.xml", x, y )
-    else -- 90.0%
+    else -- 70.0%
         EntityLoad( "data/entities/items/pickup/potion.xml", x, y )
     end
 end
@@ -113,4 +116,16 @@ function spawn_glimmer_lab_spell( x, y )
     if glimmer_name ~= nil then
         CreateItemActionEntity( glimmer_lab_spells[totalSpellsGenerated], x, y )
     end
+end
+
+function spawn_glimmer_lab_fish_small( x, y )
+    EntityLoad( "data/entities/animals/fish.xml", x, y )
+end
+
+function spawn_glimmer_lab_fish_big( x, y )
+    EntityLoad( "data/entities/animals/fish_large.xml", x, y )
+end
+
+function spawn_glimmer_lab_fish_eel( x, y )
+    EntityLoad( "data/entities/animals/eel.xml", x, y )
 end

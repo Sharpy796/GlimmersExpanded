@@ -7,8 +7,8 @@
     <TeleportComponent
         target_x_is_absolute_position="true"
         target_y_is_absolute_position="true"
-        target.x = "-11980"
-        target.y = "5020"
+        target.x = "-12015"
+        target.y = "4990"
     ></TeleportComponent>
 
 	<HitboxComponent
