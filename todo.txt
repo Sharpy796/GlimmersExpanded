@@ -1,5 +1,8 @@
 [x] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
-[ ] Update spawn rates for rarer glimmers
+[x] Give all glimmers spawn rates
 [ ] Inject new glimmers into the spell list
 [ ] Make the new glimmers spawn somewhere
+ - [ ] Bunker
+ - [x] Lab
+[ ] Add lore and make that spawn
 [ ] Give the glimmers a quest of sorts to find them

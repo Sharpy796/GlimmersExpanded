@@ -1,16 +1,27 @@
 local Mod_Id = "GLIMMERS_EXPANDED_COLOUR_"
 
-local function createGlimmer (Name, wait_frames, spawn_tiers, spawn_probs, unlock_flag)
+local function createGlimmer (Name, wait_frames, spawn_list, unlock_flag)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
 	local NAME = Name:upper()
 	local name = Name:lower()
 	if wait_frames == nil then wait_frames = 8 end
-	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
-	if spawn_probs == nil then spawn_probs = "0.2,0.2,0.4,0.2,0.2,0.2" end
-	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
+	if spawn_list == nil then spawn_list = {["1"]="0.2",["2"]="0.2",["3"]="0.4",["4"]="0.2",["5"]="0.2",["6"]="0.2"} end
+	
+	local spawn_tiers, spawn_probs = "", ""
+	for tier, prob in pairs(spawn_list) do
+		spawn_tiers = spawn_tiers .. tier
+		spawn_probs = spawn_probs .. prob
+		if spawn_list[tier] ~= spawn_list[#spawn_list] then
+			spawn_tiers = spawn_tiers .. ","
+			spawn_probs = spawn_probs .. ","
+	end
+end
+-- if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
+-- if spawn_probs == nil then spawn_probs = "0.2,0.2,0.4,0.2,0.2,0.2" end
+if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
 
-	local newGlimmer = 
+local newGlimmer = 
 	{
 		id 						= MOD_ID .. NAME,
 		name 					= "$action_" .. mod_id .. name,
@@ -64,31 +75,31 @@ end
 -- TODO: Make the transmuted glimmers locked behind unique unlock flags
 -- TODO: Make spawn tiers and probabilities into a table
 local myFancyNewColors = {
-	createGlimmer("white"),
-	createGlimmer("mimic"),
-	createGlimmer("pink"),
-	createGlimmer("fungi"),
+	createGlimmer("white", nil, {["1"]="0.4",["2"]="0.2",["3"]="0.4",["4"]="0.2"}),
+	createGlimmer("mimic", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	createGlimmer("pink", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1"}),
+	createGlimmer("fungi", nil, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
 	-- red glimmer
-	createGlimmer("blood"),
+	createGlimmer("blood", nil),
 	-- orange glimmer
-	createGlimmer("lava", 15),
+	createGlimmer("lava", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
 	-- createGlimmer("transmuted yellow??", nil, "2,3,4", "0.1,0.4,0.1"),
 	-- green glimmer
-	createGlimmer("acid", 15),
-	createGlimmer("weakness", 15),
-	createGlimmer("teal"),
+	createGlimmer("acid", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
+	createGlimmer("weakness", 15, {["3"]="0.1",["4"]="0.4",["5"]="0.1"}),
+	createGlimmer("teal", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
 	-- createGlimmer("transmuted teal??", "2,3,4", "0.4,0.1,0.1"),
 	-- blue glimmer
-	createGlimmer("freezing", 15),
+	createGlimmer("freezing", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
 	-- purple glimmer
-	createGlimmer("darkness", 15),
+	createGlimmer("darkness", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
 	-- rainbow glimmer
-	createGlimmer("true_rainbow"),
-	createGlimmer("lc", 4),
-	createGlimmer("midas", 4),
-	createGlimmer("void"),
+	createGlimmer("true_rainbow", nil, {["2"]="0.1",["3"]="0.1",["4"]="0.1",["10"]="0.2"}),
+	createGlimmer("lc", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	createGlimmer("midas", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	createGlimmer("void", nil),
 	-- createGlimmer("neon_green"),
-	createGlimmer("biome"),
+	createGlimmer("biome", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
 }
 
 for _, color in ipairs(myFancyNewColors) do 
