@@ -77,9 +77,9 @@ function spawn_glimmer_lab_potion( x, y )
         EntityLoad( "data/entities/items/pickup/potion_secret.xml", x, y )
     elseif (rnd <= 0010) then -- 00.9%
         EntityLoad( "data/entities/items/pickup/potion_mimic.xml", x, y )
-    elseif (rnd <= 0300) then -- 29.0%
+    elseif (rnd <= 0100) then -- 9.0%
         EntityLoad( "data/entities/items/pickup/potion_random_material.xml", x, y )
-    else -- 70.0%
+    else -- 90.0%
         EntityLoad( "data/entities/items/pickup/potion.xml", x, y )
     end
 end

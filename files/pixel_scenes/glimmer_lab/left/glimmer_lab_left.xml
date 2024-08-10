@@ -1,7 +1,7 @@
 <Entity>
     <PixelSceneComponent
-		pixel_scene_background=	""
-		pixel_scene_visual=		""
+		pixel_scene_background=	"mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left_background.png"
+		pixel_scene_visual=		"mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left_visual.png"
 		pixel_scene=			"mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.png" 
 		offset_x="-512"
 		offset_y="0"
@@ -9,9 +9,10 @@
 		>
     </PixelSceneComponent>
 
-	<LuaComponent
+	<!-- <LuaComponent
 		script_source_file = "mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/spawn_entities_left.lua"
 		execute_on_added = "1"
 		remove_after_executed = "1"
-	></LuaComponent> <!-- For now, let's get it to spawn every spell once. -->	
+	></LuaComponent> -->
+	
 </Entity>

@@ -92,7 +92,8 @@
 -- ModTextFileSetContent("data/biome/_pixel_scenes.xml", tostring(xml))
 
 dofile_once( "data/scripts/lib/utilities.lua" )
-ModMaterialsFileAdd("mods/GlimmersExpanded/files/materials.xml")
+-- ModMaterialsFileAdd("mods/GlimmersExpanded/files/materials.xml")
+ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
@@ -101,8 +102,10 @@ ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For t
 local path = "data/scripts/projectiles/colour_spell.lua"
 local file = ModTextFileGetContent(path)
 
-file = file:gsub("\"spark_purple_bright\"},", "\"spark_white\", \"mimic_liquid\", \"plasma_fading_pink\", \"spark_teal\", \"blood\", \"blood_cold\", \"acid\", \"magic_liquid_weakness\", \"lava\", \"material_darkness\", \"fungi\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"glimmers_expanded_void_liquid_variant\", \"spark_purple_bright\"},")
-file = file:gsub("rainbow", "white={particle=\"spark_white\",}, mimic={particle=\"mimic_liquid\",}, pink={particle=\"plasma_fading_pink\",}, teal={particle=\"spark_teal\",}, blood={particle=\"blood\",}, freezing={particle=\"blood_cold\",}, acid={particle=\"acid\",}, weakness={particle=\"magic_liquid_weakness\",}, lava={particle=\"lava\",}, darkness={particle=\"material_darkness\",}, fungi={particle=\"fungi\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"glimmers_expanded_void_liquid_variant\",},rainbow")
+-- file = file:gsub("\"spark_purple_bright\"},", "\"spark_white\", \"mimic_liquid\", \"plasma_fading_pink\", \"spark_teal\", \"blood\", \"blood_cold\", \"acid\", \"magic_liquid_weakness\", \"lava\", \"material_darkness\", \"fungi\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"glimmers_expanded_void_liquid_variant\", \"spark_purple_bright\"},")
+file = file:gsub("\"spark_purple_bright\"},", "\"spark_white\", \"mimic_liquid\", \"plasma_fading_pink\", \"spark_teal\", \"blood\", \"blood_cold\", \"acid\", \"magic_liquid_weakness\", \"lava\", \"material_darkness\", \"fungi\", \"magic_liquid_hp_regeneration_unstable\", \"midas\", \"void_liquid\", \"spark_purple_bright\"},")
+-- file = file:gsub("rainbow", "white={particle=\"spark_white\",}, mimic={particle=\"mimic_liquid\",}, pink={particle=\"plasma_fading_pink\",}, teal={particle=\"spark_teal\",}, blood={particle=\"blood\",}, freezing={particle=\"blood_cold\",}, acid={particle=\"acid\",}, weakness={particle=\"magic_liquid_weakness\",}, lava={particle=\"lava\",}, darkness={particle=\"material_darkness\",}, fungi={particle=\"fungi\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"glimmers_expanded_void_liquid_variant\",},rainbow")
+file = file:gsub("rainbow", "white={particle=\"spark_white\",}, mimic={particle=\"mimic_liquid\",}, pink={particle=\"plasma_fading_pink\",}, teal={particle=\"spark_teal\",}, blood={particle=\"blood\",}, freezing={particle=\"blood_cold\",}, acid={particle=\"acid\",}, weakness={particle=\"magic_liquid_weakness\",}, lava={particle=\"lava\",}, darkness={particle=\"material_darkness\",}, fungi={particle=\"fungi\",}, lc={particle=\"magic_liquid_hp_regeneration_unstable\",}, midas={particle=\"midas\",}, trueRainbow={particle=\"material_rainbow\",}, void={particle=\"void_liquid\",},rainbow")
 ModTextFileSetContent(path, file)
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
