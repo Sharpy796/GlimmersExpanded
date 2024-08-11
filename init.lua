@@ -1,102 +1,8 @@
-
--- -- Pixel Scene things
--- ---@type nxml
--- local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
--- local content = ModTextFileGetContent("data/biome/_pixel_scenes.xml")
--- local xml = nxml.parse(content)
--- local newContent = ModTextFileGetContent("mods/GlimmersExpanded/data/biome_impl/spliced/pixelSceneTest.xml")
--- -- local newContent = ModTextFileGetContent("mods/GlimmersExpanded/pixelSceneTestFile.xml")
--- local newXml = nxml.parse(newContent)
--- local newContent2 = ModTextFileGetContent("mods/GlimmersExpanded/pixelSceneTestFile.xml")
--- local newXml2 = nxml.parse(newContent)
-
--- -- xml:all_of("PixelScenes")[1]:all_of("PixelSceneFiles")[1]:add_child(newXml)
--- -- xml.children["PixelScenes"].children["PixelSceneFiles"]:add_child(newXml)
-
--- -- for _,v in ipairs(xml.children) do
---     -- if v.name == "PixelScenes" then
---         for __, w in ipairs(v.children) do
---             if w.name == "mBufferedPixelScenes" then
---                 -- for ___, u in ipairs(newXml.children) do
---                     -- if u.name == "PixelScenes" then
---                         for ____, t in ipairs(u.children) do
---                             if t.name == "mBufferedPixelScenes" then
---                                 -- table.insert(xml.children[v].children[w].children, newXml.children[u].children[t].children)
---                                 table.insert(xml.children[w].children, newXml.children[t].children)
---                             end
---                         end
---                     -- end
---                 -- end
---             elseif w.name == "PixelSceneFiles" then
---                 -- table.insert(xml.children[v].children[w], newXml2)
---                 table.insert(xml.children[w], newXml2)
---             end
---         end
---     -- end
--- -- end
--- 
--- ModTextFileSetContent("data/biome/_pixel_scenes.xml", tostring(xml))
-
--- -- Pixel Scene things
--- ---@type nxml
--- local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
--- local content = ModTextFileGetContent("data/biome/_pixel_scenes.xml")
--- local xml = nxml.parse(content)
--- local newContent = ModTextFileGetContent("mods/GlimmersExpanded/data/biome_impl/spliced/pixelSceneTest.xml")
--- local newXml = nxml.parse(newContent)
--- local newContent2 = ModTextFileGetContent("mods/GlimmersExpanded/pixelSceneTestFile.xml")
--- local newXml2 = nxml.parse(newContent)
-
--- for _, w in ipairs(xml.children) do
---   if w.name == "mBufferedPixelScenes" then
---     for _, u in ipairs(newXml.children) do
---       if u.name == "PixelScenes" then
---         for _, t in ipairs(u.children) do
---           if t.name == "mBufferedPixelScenes" then
---             table.insert(xml.children[w].children, newXml.children[u].children[t].children)
---           end
---         end
---       end
---     end
--- --   elseif w.name == "PixelSceneFiles" then
---     -- table.insert(xml.children[v].children[w], newXml2)
---   end
--- end
-
--- ModTextFileSetContent("data/biome/_pixel_scenes.xml", tostring(xml))
-
--- Pixel Scene things
--- ---@type nxml
--- local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
--- local content = ModTextFileGetContent("data/biome/_pixel_scenes.xml")
--- local xml = nxml.parse(content)
--- local newContent = ModTextFileGetContent("mods/GlimmersExpanded/data/biome_impl/spliced/pixelSceneTest.xml")
--- local newXml = nxml.parse(newContent)
--- local newContent2 = ModTextFileGetContent("mods/GlimmersExpanded/pixelSceneTestFile.xml")
--- local newXml2 = nxml.parse(newContent2)
-
--- for _, w in ipairs(xml.children) do
---   if w.name == "mBufferedPixelScenes" then
---     for _, v in ipairs(newXml.children) do
---         if v.name == "mBufferedPixelScenes" then
---             for _, u in ipairs(v.children) do
---                 table.insert(w.children, u)
---             end
---         end
---     end
---   elseif w.name == "PixelSceneFiles" then
---     table.insert(w.children, newXml2)
---   end
--- end
--- 
--- ModTextFileSetContent("data/biome/_pixel_scenes.xml", tostring(xml))
-
 dofile_once( "data/scripts/lib/utilities.lua" )
--- ModMaterialsFileAdd("mods/GlimmersExpanded/files/materials.xml")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
--- ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
+ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
@@ -180,15 +86,10 @@ function OnPlayerSpawned(player_id)
 	-- GameAddFlagRun( "fishing_hut_a" )
 
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
-        -- TODO: Find a spot to spawn these
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
 	end
-end
-
-function OnWorldInitialized()
-    -- LoadPixelScene( "mods/GlimmersExpanded/files/brickworkSquare.png", "", 0, 0, "", true, true )
 end
 
 -- This code runs when all mods' filesystems are registered

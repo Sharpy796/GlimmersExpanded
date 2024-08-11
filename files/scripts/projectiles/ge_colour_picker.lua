@@ -4,17 +4,6 @@ local entity_id = GetUpdatedEntityID()
 local colour,particle
 local isHex = false
 
--- local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
--- if ( comps ~= nil ) then
--- 	for i,v in ipairs( comps ) do
--- 		local name = ComponentGetValue2( v, "name" )
-		
--- 		if ( name == "colour_name" ) then
--- 			colour = ComponentGetValue2( v, "value_string" )
--- 		end
--- 	end
--- end
-
 local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
 if ( comps ~= nil ) then
 	for i,v in ipairs( comps ) do

@@ -96,7 +96,7 @@ local data =
 
 if ( biome ~= nil ) then
 
-	GamePrint("shooting, biome is '" .. biome .. "'")
+	-- GamePrint("shooting, biome is '" .. biome .. "'")
 
 	local d = data[biome] or {}
 	particle = d.particle
@@ -111,11 +111,11 @@ if ( biome ~= nil ) then
 		particle = "material_rainbow"
 	end
 
-	if (particle ~= nil) then
-		GamePrint("particle is '" .. particle .. "'")
-	else
-		GamePrint("you do not have a particle...")
-	end
+	-- if (particle ~= nil) then
+	-- 	GamePrint("particle is '" .. particle .. "'")
+	-- else
+	-- 	GamePrint("you do not have a particle...")
+	-- end
 	
 	comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )
 	if ( comps ~= nil ) then
