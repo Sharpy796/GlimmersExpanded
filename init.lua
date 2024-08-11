@@ -135,6 +135,12 @@ local patches = {
 		to		= [["spark_white", "mimic_liquid", "plasma_fading_pink", "spark_teal", "blood", "blood_cold", "acid", "magic_liquid_weakness", "lava", "material_darkness", "fungi", "magic_liquid_hp_regeneration_unstable", "midas", "void_liquid", "spark_purple_bright"},]],
 	},
 	{
+        path    = "data/scripts/buildings/bunker_check.lua",
+        from    = "EntityKill%( entity_id %)",
+        to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550, 396)
+		EntityKill%( entity_id %)]],
+    },
+	{
 		path	= "data/scripts/projectiles/colour_spell.lua",
 		from	= [[rainbow]],
 		to		= [[white = {particle = "spark_white",}, 
@@ -169,11 +175,14 @@ end
 
 function OnPlayerSpawned(player_id)
     local x, y = EntityGetTransform(player_id)
+	
+	-- for testing
+	GameAddFlagRun( "fishing_hut_a" )
+
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
         -- TODO: Find a spot to spawn these
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
-		EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550, 396)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
 	end
 end
