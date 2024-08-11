@@ -96,7 +96,7 @@ dofile_once( "data/scripts/lib/utilities.lua" )
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
-ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
+-- ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
@@ -177,7 +177,7 @@ function OnPlayerSpawned(player_id)
     local x, y = EntityGetTransform(player_id)
 	
 	-- for testing
-	GameAddFlagRun( "fishing_hut_a" )
+	-- GameAddFlagRun( "fishing_hut_a" )
 
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
         -- TODO: Find a spot to spawn these

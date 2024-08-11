@@ -1,8 +1,9 @@
 [x] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
 [x] Give all glimmers spawn rates
 [ ] Inject new glimmers into the spell list
-[ ] Make the new glimmers spawn somewhere
- - [ ] Bunker
+[x] Make the new glimmers spawn somewhere
+ - [x] Bunker
  - [x] Lab
-[ ] Add lore and make that spawn
-[ ] Give the glimmers a quest of sorts to find them
+[ ] Allow for tinkering inside the lab & bunker
+[ ] Add lore and make that spawn in the lab
+[ ] Add the sensors in basins to allow for glimmer alchemy
