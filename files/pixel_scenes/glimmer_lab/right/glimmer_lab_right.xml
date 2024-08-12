@@ -8,4 +8,14 @@
 		skip_biome_checks="1" 
 		>
     </PixelSceneComponent>
+
+	<!-- <LuaComponent
+		script_source_file="data/scripts/buildings/workshop_temporary_check.lua"
+		execute_every_n_frame="20"
+	></LuaComponent> -->
+
+	<!-- <LuaComponent
+		script_source_file="mods/GlimmersExpanded/scripts/buildings/glimmer_lab_check.lua"
+		execute_every_n_frame="20"
+	></LuaComponent> -->
 </Entity>

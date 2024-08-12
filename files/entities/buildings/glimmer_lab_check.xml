@@ -1,0 +1,6 @@
+<Entity tags="glimmer_lab_check">
+	<LuaComponent
+		script_source_file="mods/GlimmersExpanded/files/scripts/buildings/glimmer_lab_check.lua"
+		execute_every_n_frame="20"
+	></LuaComponent>
+</Entity>
