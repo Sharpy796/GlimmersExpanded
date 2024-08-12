@@ -12,7 +12,7 @@ actiondesc_glimmers_expanded_colour_blood,"Gives a projectile a bloody sparkly t
 action_glimmers_expanded_colour_lava,"Lava Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_lava,"Gives a projectile a molten sparkly trail",,,,,,,,,,,,,
 action_glimmers_expanded_colour_acid,"Acid Glimmer",,,,,,,,,,,,,
-actiondesc_glimmers_expanded_colour_acid,"Gives a projectile an acidic sparkly trail",,,,,,,,,,,,,
+actiondesc_glimmers_expanded_colour_acid,"Gives a projectile a caustic sparkly trail",,,,,,,,,,,,,
 action_glimmers_expanded_colour_weakness,"Diminution Glimmer",,,,,,,,,,,,,
 actiondesc_glimmers_expanded_colour_weakness,"Gives a projectile a weakened sparkly trail",,,,,,,,,,,,,
 action_glimmers_expanded_colour_teal,"Teal Glimmer",,,,,,,,,,,,,
