@@ -1,4 +1,4 @@
-dofile_once( "data/scripts/lib/utilities.lua" )
+dofile_once("data/scripts/lib/utilities.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
@@ -82,8 +82,8 @@ end
 function OnPlayerSpawned(player_id)
     local x, y = EntityGetTransform(player_id)
 	
-	-- for testing
-	-- GameAddFlagRun( "fishing_hut_a" )
+	
+	GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
 
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
@@ -93,5 +93,4 @@ function OnPlayerSpawned(player_id)
 end
 
 -- This code runs when all mods' filesystems are registered
--- TODO: Inject spells in with other glimmers
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua

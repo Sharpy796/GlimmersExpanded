@@ -1,6 +1,6 @@
 [x] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
 [x] Give all glimmers spawn rates
-[ ] Inject new glimmers into the spell list
+[x] Inject new glimmers into the spell list
 [x] Make the new glimmers spawn somewhere
  - [x] Bunker
  - [x] Lab
