@@ -10,30 +10,32 @@ translations = translations .. new_translations
 translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
 
+local isPrideGlimmersEnabled = ModIsEnabled("pride_glimmers")
+
 -- Thanks Graham for this bit of code, it looks very useful
 local patches = {
 	{ -- This can break if someone else modifies this file.
         path    = "data/scripts/buildings/bunker_check.lua",
-        from    = [[CreateItemActionEntity%( "COLOUR_RED", x %+ 32, y %- 8%)]],
-        to      = [[CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_WHITE", x %+ %-4, y %- 6%)
-	CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_PINK", x %+ 8, y %- 7%)
-	CreateItemActionEntity%( "COLOUR_RED", x %+ 20, y %- 7%)]]
+        from    = [[CreateItemActionEntity%( "COLOUR_RED"]],
+        to      = [[CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_WHITE", x %+ 14, y %- 7%)
+	CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_PINK", x %+ 26, y %- 8%)
+	CreateItemActionEntity%( "COLOUR_RED"]]
     },
+	-- {
+	-- 	path	= "data/scripts/buildings/bunker_check.lua",
+	-- 	from	= [[CreateItemActionEntity%( "COLOUR_ORANGE", x %+ 44, y %- 9%)]],
+	-- 	to		= [[CreateItemActionEntity%( "COLOUR_ORANGE", x %+ 32, y %- 8%)]],
+	-- },
+	-- {
+	-- 	path	= "data/scripts/buildings/bunker_check.lua",
+	-- 	from	= [[CreateItemActionEntity%( "COLOUR_YELLOW", x %+ 56, y %- 10%)]],
+	-- 	to		= [[CreateItemActionEntity%( "COLOUR_YELLOW", x %+ 44, y %- 9%)]],
+	-- },
 	{
 		path	= "data/scripts/buildings/bunker_check.lua",
-		from	= [[CreateItemActionEntity%( "COLOUR_ORANGE", x %+ 44, y %- 9%)]],
-		to		= [[CreateItemActionEntity%( "COLOUR_ORANGE", x %+ 32, y %- 8%)]],
-	},
-	{
-		path	= "data/scripts/buildings/bunker_check.lua",
-		from	= [[CreateItemActionEntity%( "COLOUR_YELLOW", x %+ 56, y %- 10%)]],
-		to		= [[CreateItemActionEntity%( "COLOUR_YELLOW", x %+ 44, y %- 9%)]],
-	},
-	{
-		path	= "data/scripts/buildings/bunker_check.lua",
-		from	= [[CreateItemActionEntity%( "COLOUR_GREEN"]],
-		to		= [[CreateItemActionEntity%( "COLOUR_GREEN", x %+ 56, y %- 10%)
-	CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_TEAL"]],
+		from	= [[CreateItemActionEntity%( "COLOUR_BLUE"]],
+		to		= [[CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_TEAL", x %+ 74, y %- 11%)
+	CreateItemActionEntity%( "COLOUR_BLUE"]],
 	},
 	{
 		path	= "data/scripts/projectiles/colour_spell.lua",
@@ -43,7 +45,7 @@ local patches = {
 	{
         path    = "data/scripts/buildings/bunker_check.lua",
         from    = "EntityKill%( entity_id %)",
-        to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550, 396)
+        to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550]]..((isPrideGlimmersEnabled and [[+60,]]) or [[,]])..[[ 396]]..((isPrideGlimmersEnabled and [[-5)]]) or [[)]])..[[
 		EntityKill%( entity_id %)]],
     },
 	{

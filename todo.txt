@@ -1,9 +1,11 @@
 [x] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
 [x] Give all glimmers spawn rates
+[ ] Fix glimmer spawn rates so that it averages out and doesn't inflate the spawn chances of all glimmers
 [x] Inject new glimmers into the spell list
 [x] Make the new glimmers spawn somewhere
  - [x] Bunker
  - [x] Lab
+[x] Add compatibility with Pride Glimmers mod
 [x] Allow for tinkering inside the lab & bunker
 [ ] Add lore and make that spawn in the lab
 [ ] Add the sensors in basins to allow for glimmer alchemy

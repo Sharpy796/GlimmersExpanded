@@ -75,26 +75,28 @@ local myFancyNewColors = {
 	createGlimmer("biome", Mod_Id .. "mimic", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
 }
 
+if ModSettingGet("GlimmersExpanded.glimmers_inject_spells") then
+	-- GamePrint(tostring(ModSettingGet("GlimmersExpanded.glimmers_inject_spells")))
+	for k=1,#myFancyNewColors do -- TODO: Organize all the glimmers in rainbow order
+		local v = myFancyNewColors[k]
+		v.author    = v.author  or "Sharpy796"
+		v.mod       = v.mod     or "Glimmers Expanded"
 
-for k=1,#myFancyNewColors do -- TODO: Organize all the glimmers in rainbow order
-	local v = myFancyNewColors[k]
-	v.author    = v.author  or "Sharpy796"
-	v.mod       = v.mod     or "Glimmers Expanded"
 
-
-	if v.id_matchup == nil then
-		table.insert(actions,v)
-	else
-		for z=1,#actions do
-			c = actions[z]
-			if c.id == v.id_matchup or z == #actions then
-				table.insert(actions,z + 1,v)
-				break
+		if v.id_matchup == nil then
+			table.insert(actions,v)
+		else
+			for z=1,#actions do
+				c = actions[z]
+				if c.id == v.id_matchup or z == #actions then
+					table.insert(actions,z + 1,v)
+					break
+				end
 			end
 		end
 	end
+else
+	for _, color in ipairs(myFancyNewColors) do 
+		table.insert(actions,color) 
+	end
 end
-
--- for _, color in ipairs(myFancyNewColors) do 
--- 	table.insert(actions,color) 
--- end
