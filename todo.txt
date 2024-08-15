@@ -1,6 +1,7 @@
 [x] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
 [x] Give all glimmers spawn rates
 [ ] Fix glimmer spawn rates so that it averages out and doesn't inflate the spawn chances of all glimmers
+[x] Make glimmers work with plasma beams
 [x] Inject new glimmers into the spell list
 [x] Make the new glimmers spawn somewhere
  - [x] Bunker

@@ -14,6 +14,12 @@ local isPrideGlimmersEnabled = ModIsEnabled("pride_glimmers")
 
 -- Thanks Graham for this bit of code, it looks very useful
 local patches = {
+	-- { -- Dummy line
+    --     path    = "data/scripts/buildings/bunker_check.lua",
+    --     from    = "EntityKill%( entity_id %)",
+    --     to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550]]..((isPrideGlimmersEnabled and [[+60,]]) or [[,]])..[[ 396]]..((isPrideGlimmersEnabled and [[-5)]]) or [[)]])..[[
+	-- 	EntityKill%( entity_id %)]],
+    -- },
 	{ -- This can break if someone else modifies this file.
         path    = "data/scripts/buildings/bunker_check.lua",
         from    = [[CreateItemActionEntity%( "COLOUR_RED"]],
@@ -21,16 +27,6 @@ local patches = {
 	CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_PINK", x %+ 26, y %- 8%)
 	CreateItemActionEntity%( "COLOUR_RED"]]
     },
-	-- {
-	-- 	path	= "data/scripts/buildings/bunker_check.lua",
-	-- 	from	= [[CreateItemActionEntity%( "COLOUR_ORANGE", x %+ 44, y %- 9%)]],
-	-- 	to		= [[CreateItemActionEntity%( "COLOUR_ORANGE", x %+ 32, y %- 8%)]],
-	-- },
-	-- {
-	-- 	path	= "data/scripts/buildings/bunker_check.lua",
-	-- 	from	= [[CreateItemActionEntity%( "COLOUR_YELLOW", x %+ 56, y %- 10%)]],
-	-- 	to		= [[CreateItemActionEntity%( "COLOUR_YELLOW", x %+ 44, y %- 9%)]],
-	-- },
 	{
 		path	= "data/scripts/buildings/bunker_check.lua",
 		from	= [[CreateItemActionEntity%( "COLOUR_BLUE"]],
@@ -68,7 +64,13 @@ local patches = {
 	void		= {particle="void_liquid",},
 	rainbow]],
 	},
+	{ -- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
+        path    = "data/scripts/projectiles/colour_spell.lua",
+        from    = "comps %= EntityGetComponent%( entity_id, \"ParticleEmitterComponent\" %)",
+        to      = "comps = EntityGetComponent( entity_id, \"LaserEmitterComponent\" ) or {} for k=1,#comps do local v = comps[k] ComponentObjectSetValue2( v, \"laser\", \"beam_particle_type\", CellFactory_GetType(particle)) end comps = EntityGetComponent( entity_id, \"ParticleEmitterComponent\" )",
+    },
 }
+  
 
 -- Thanks Graham for this bit of code, it looks very useful
 for i=1, #patches do

@@ -116,6 +116,13 @@ if ( biome ~= nil ) then
 	-- else
 	-- 	GamePrint("you do not have a particle...")
 	-- end
+
+	-- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
+	comps = EntityGetComponent( entity_id, "LaserEmitterComponent" ) or {}
+	for k=1,#comps do
+		local v = comps[k]
+		ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
+	end
 	
 	comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )
 	if ( comps ~= nil ) then
