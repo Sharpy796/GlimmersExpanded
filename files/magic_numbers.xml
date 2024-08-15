@@ -1,10 +1,10 @@
 <!-- Glimmer Lab -->
-<!-- <MagicNumbers
+<MagicNumbers
   DESIGN_PLAYER_START_POS_Y="4990"
   DESIGN_PLAYER_START_POS_X="-12015"
-></MagicNumbers> -->
+></MagicNumbers>
 <!-- Glimmer Bunker -->
-<MagicNumbers 
+<!-- <MagicNumbers 
   DESIGN_PLAYER_START_POS_Y="400"
   DESIGN_PLAYER_START_POS_X="-12470"
-></MagicNumbers>
+></MagicNumbers> -->

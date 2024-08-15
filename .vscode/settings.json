@@ -1,0 +1,6 @@
+{
+    "Lua.diagnostics.globals": [
+        "glimmer_alchemical_recipes",
+        "glimmer_alchemical_materials"
+    ]
+}

@@ -8,5 +8,5 @@
  - [x] Lab
 [x] Add compatibility with Pride Glimmers mod
 [x] Allow for tinkering inside the lab & bunker
-[ ] Add lore and make that spawn in the lab
+[x] Add lore and make that spawn in the lab
 [ ] Add the sensors in basins to allow for glimmer alchemy

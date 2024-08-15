@@ -1,133 +1,133 @@
 journal_entries = {
     {
-        id = "day_01",
+        id = "entry_1",
         category = "Alchemist's Diary",
-        title = "$bookname_glimmers_expanded_hidden_alchemy_01",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_1",
         -- description supports color tags (ARGB) <c ffff0000>, which will color everything after it, until the next color tag or the end of a line.
-        description = "$bookdesc_glimmers_expanded_hidden_alchemy_01",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_1",
         unlocked_default = true,
         generate_notes = false,
         icon = nil,
     },
     {
-        id = "day_04",
+        id = "entry_2",
         category = "Alchemist's Diary",
-        title = "$bookname_glimmers_expanded_hidden_alchemy_04",
-        description = "$bookdesc_glimmers_expanded_hidden_alchemy_04",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_2",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_2",
         unlocked_default = true,
         generate_notes = false,
         icon = nil,
     },
     {
-        id = "day_18",
+        id = "entry_3",
         category = "Alchemist's Diary",
-        title = "$bookname_glimmers_expanded_hidden_alchemy_18",
-        description = "$bookdesc_glimmers_expanded_hidden_alchemy_18",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_3",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_3",
         unlocked_default = true,
         generate_notes = false,
         icon = nil,
     },
     {
-        id = "day_29",
+        id = "entry_4",
         category = "Alchemist's Diary",
-        title = "$bookname_glimmers_expanded_hidden_alchemy_29",
-        description = "$bookdesc_glimmers_expanded_hidden_alchemy_29",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_4",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_4",
         unlocked_default = true,
         generate_notes = false,
         icon = nil,
     },
     {
-        id = "day_35",
+        id = "entry_5",
         category = "Alchemist's Diary",
-        title = "$bookname_glimmers_expanded_hidden_alchemy_35",
-        description = "$bookdesc_glimmers_expanded_hidden_alchemy_35",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_5",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_5",
         unlocked_default = true,
         generate_notes = false,
         icon = nil,
     },
     {
-        id = "day_37",
+        id = "entry_6",
         category = "Alchemist's Diary",
-        title = "$bookname_glimmers_expanded_hidden_alchemy_37",
-        description = "$bookdesc_glimmers_expanded_hidden_alchemy_37",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_6",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_6",
         unlocked_default = true,
         generate_notes = false,
         icon = nil,
     },
     -- Alchemy
-    {
-        id = "gate_opener_recipe",
-        category = "Alchemy",
-        title = "gate opener title",
-        description = "gate opener desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
-    {
-        id = "australium_recipe",
-        category = "Alchemy",
-        title = "australium title",
-        description = "australium desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
+    -- {
+    --     id = "gate_opener_recipe",
+    --     category = "Alchemy",
+    --     title = "gate opener title",
+    --     description = "gate opener desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
+    -- {
+    --     id = "australium_recipe",
+    --     category = "Alchemy",
+    --     title = "australium title",
+    --     description = "australium desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
     -- Materials
-    {
-        id = "gate_opener",
-        category = "Materials",
-        title = "gate opener title",
-        description = "gate opener desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
-    {
-        id = "australium",
-        category = "Materials",
-        title = "australium title",
-        description = "australium desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
-    {
-        id = "lava",
-        category = "Materials",
-        title = "lava title",
-        description = "lava desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
-    {
-        id = "pus",
-        category = "Materials",
-        title = "pus title",
-        description = "pus desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
-    {
-        id = "urine",
-        category = "Materials",
-        title = "urine title",
-        description = "urine desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
-    {
-        id = "flummoxium",
-        category = "Materials",
-        title = "flummoxium title",
-        description = "flummoxium desc",
-        unlocked_default = true,
-        generate_notes = false,
-        icon = nil,
-    },
+    -- {
+    --     id = "gate_opener",
+    --     category = "Materials",
+    --     title = "gate opener title",
+    --     description = "gate opener desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
+    -- {
+    --     id = "australium",
+    --     category = "Materials",
+    --     title = "australium title",
+    --     description = "australium desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
+    -- {
+    --     id = "lava",
+    --     category = "Materials",
+    --     title = "lava title",
+    --     description = "lava desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
+    -- {
+    --     id = "pus",
+    --     category = "Materials",
+    --     title = "pus title",
+    --     description = "pus desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
+    -- {
+    --     id = "urine",
+    --     category = "Materials",
+    --     title = "urine title",
+    --     description = "urine desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
+    -- {
+    --     id = "flummoxium",
+    --     category = "Materials",
+    --     title = "flummoxium title",
+    --     description = "flummoxium desc",
+    --     unlocked_default = true,
+    --     generate_notes = false,
+    --     icon = nil,
+    -- },
     --[[{
         id = "test_entry",
         category = "Materials",
@@ -148,7 +148,7 @@ category_order = {
     "Materials",
 }
 
--- dofile("mods/Hydroxide/files/mystical_mixtures/alchemy/alchemical_content.lua")
+dofile("mods/GlimmersExpanded/files/journal/glimmer_alchemical_content.lua")
 
 local colors = dofile("mods/GlimmersExpanded/files/journal/colors.lua")
 
@@ -175,39 +175,39 @@ local function find_closest_color_name(r, g, b)
     return closest_color
 end
 
--- for i, v in ipairs(alchemical_materials)do
---     local r, g, b, a = hex_to_rgba(v.color)
---     local closest_color = find_closest_color_name(r, g, b)
+for i, v in ipairs(glimmer_alchemical_materials)do
+    local r, g, b, a = hex_to_rgba(v.color)
+    local closest_color = find_closest_color_name(r, g, b)
 
---     if(not v.generate_notes)then
---         goto continue
---     end
+    if(not v.generate_notes)then
+        goto continue
+    end
 
---     table.insert(journal_entries, {
---         id = "mat_"..v.id,
---         category = "Materials",
---         title = v.name,
---         description = GameTextGetTranslatedOrNot(v.description).."\n \n<c ff2b2b2b>Color: \n<c "..v.color..">"..closest_color.."\n<c ff2b2b2b>Type: \n"..v.type.."\n<c ff2b2b2b>Flammable: \n"..(v.burnable and "true" or "false"),
---         unlocked_default = v.unlocked_default or false,
---         generate_notes = v.generate_notes or false,
---     })
+    table.insert(journal_entries, {
+        id = "mat_"..v.id,
+        category = "Materials",
+        title = v.name,
+        description = GameTextGetTranslatedOrNot(v.description).."\n \n<c ff2b2b2b>Color: \n<c "..v.color..">"..closest_color.."\n<c ff2b2b2b>Type: \n"..v.type.."\n<c ff2b2b2b>Flammable: \n"..(v.burnable and "true" or "false"),
+        unlocked_default = v.unlocked_default or false,
+        generate_notes = v.generate_notes or false,
+    })
 
---     ::continue::
--- end 
+    ::continue::
+end 
 
--- for i, v in ipairs(alchemical_recipes)do
---     if(not v.generate_notes)then
---         goto continue
---     end
+for i, v in ipairs(glimmer_alchemical_recipes)do
+    if(not v.generate_notes)then
+        goto continue
+    end
 
---     table.insert(journal_entries, {
---         id = "recipe_"..v.id,
---         category = "Alchemy",
---         title = v.name,
---         description = GameTextGetTranslatedOrNot(v.description),
---         unlocked_default = v.unlocked_default or false,
---         generate_notes = v.generate_notes or false,
---     })
+    table.insert(journal_entries, {
+        id = "recipe_"..v.id,
+        category = "Alchemy",
+        title = v.name,
+        description = GameTextGetTranslatedOrNot(v.description),
+        unlocked_default = v.unlocked_default or false,
+        generate_notes = v.generate_notes or false,
+    })
 
---     ::continue::
--- end
+    ::continue::
+end
