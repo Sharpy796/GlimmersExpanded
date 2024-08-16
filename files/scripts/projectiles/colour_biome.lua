@@ -127,20 +127,19 @@ if ( biome ~= nil ) then
 	end
 
 	-- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
-	-- comps = EntityGetComponent( entity_id, "LaserEmitterComponent" ) or {}
-	-- comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
-	-- if ( comps ~= nil ) then
-	-- 	for i,v in ipairs( comps ) do
-	-- 	-- for k=1,#comps do
-	-- 		-- local v = comps[k]
-	-- 		if ( particle ~= nil ) then
-	-- 			ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
-	-- 			ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90)
-	-- 		else
-	-- 			ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
-	-- 		end
-	-- 	end
-	-- end
+	comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
+	if ( comps ~= nil ) then
+		for i,v in ipairs( comps ) do
+		-- for k=1,#comps do
+			-- local v = comps[k]
+			if ( particle ~= nil ) then
+				ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
+				ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90)
+			else
+				ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
+			end
+		end
+	end
 	
 	comps = EntityGetComponentIncludingDisabled( entity_id, "ParticleEmitterComponent" )
 	if ( comps ~= nil ) then
