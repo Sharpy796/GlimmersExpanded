@@ -1,34 +1,51 @@
 dofile_once("data/scripts/lib/utilities.lua")
-local devtesting = true
+local devtesting = false
 local _print = print
 function print(any)
 	if (devtesting) then _print(any) end
 end
 
-print("--- BIOME START ---")
+print("--- ULTIMATE START ---")
 
 local entity_id = GetUpdatedEntityID()
-local biome,particle,comps
+local colour,biome,particle
 local player_id = EntityGetWithTag("player_unit")[1]
 
--- TODO: This needs to be the part where we identify the current biome we are in
-if ( player_id ~= nil ) then
-	local x, y = EntityGetTransform(player_id)
-	biome = BiomeMapGetName(x,y)
-	if biome == "$biome_boss_victoryroom" then
-		local endroom = EntityGetWithTag("ending_sampo_spot_underground")[1]
-		if endroom == nil then
-			if y < 0 then 
-				biome = "$biome_the_sky"
-			else
-				biome = "$biome_the_end"
-			end
+local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
+if ( comps ~= nil ) then
+	print("ultimate VariableStorageComponent exists!")
+	for i,v in ipairs( comps ) do
+		print("--- ultimate vscomp"..i.." ---")
+		local name = ComponentGetValue2( v, "name" )
+		if ( name == "colour_name" ) then
+			colour = ComponentGetValue2( v, "value_string" )
+			print("vscomp name exists! it is '"..colour.."'")
 		end
 	end
+else
+	print("ultimate VariableStorageComponent doesn't exist")
+end
+
+if ( colour == "biome" ) then
+    if ( player_id ~= nil ) then
+        local x, y = EntityGetTransform(player_id)
+        colour = BiomeMapGetName(x,y)
+        if colour == "$biome_boss_victoryroom" then
+            local endroom = EntityGetWithTag("ending_sampo_spot_underground")[1]
+            if endroom == nil then
+                if y < 0 then 
+                    colour = "$biome_the_sky"
+                else
+                    colour = "$biome_the_end"
+                end
+            end
+        end
+    end
 end
 
 local data =
 {
+    -- BIOMES
 	-- Main Path
 	["$biome_hills"] = {particle = "grass",}, -- Forest (radioactive_liquid?)
 	["$biome_coalmine"] = {particle="liquid_fire",}, -- Mines
@@ -101,13 +118,59 @@ local data =
 	},
 
 	[""] = {particle="vomit",},
+
+
+    -- COLOURS
+	red =
+	{
+		particle = "spark_red",
+	},
+	orange =
+	{
+		particle = "spark",
+	},
+	yellow =
+	{
+		particle = "spark_yellow",
+	},
+	green =
+	{
+		particle = "spark_green",
+	},
+	blue =
+	{
+		particle = "plasma_fading",
+	},
+	purple =
+	{
+		particle = "spark_purple_bright",
+	},
+	white 		= {particle = "spark_white",}, 
+	mimic		= {particle = "mimic_liquid",},
+	pink		= {particle = "plasma_fading_pink",},
+	teal		= {particle = "spark_teal",},
+	blood		= {particle = "blood",},
+	freezing	= {particle = "blood_cold",},
+	acid		= {particle = "acid",},
+	weakness	= {particle = "magic_liquid_weakness",},
+	lava		= {particle = "lava",},
+	darkness	= {particle = "material_darkness",},
+	fungi		= {particle = "fungi",},
+	lc			= {particle = "magic_liquid_hp_regeneration_unstable",},
+	midas		= {particle = "midas",},
+	trueRainbow	= {particle = "material_rainbow",},
+	void		= {particle = "void_liquid",},
+	rainbow =
+	{
+		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "spark_purple_bright"},
+	},
+	invis =
+	{
+	},
 }
 
-if ( biome ~= nil ) then
-
-	-- GamePrint("shooting, biome is '" .. biome .. "'")
-
-	local d = data[biome] or {}
+if ( colour ~= nil ) then
+	local d = data[colour] or {}
 	particle = d.particle
 	
 	if ( d.particles ~= nil ) then
@@ -121,68 +184,51 @@ if ( biome ~= nil ) then
 	end
 
 	if (particle ~= nil) then
-		GamePrint("biome particle is '" .. particle .. "'")
+		GamePrint("ultimate particle is '" .. particle .. "'")
 	else
-		GamePrint("you do not have a biome particle...")
+		GamePrint("you do not have a ultimate particle...")
 	end
-
-	-- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
-	-- comps = EntityGetComponent( entity_id, "LaserEmitterComponent" ) or {}
-	-- comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
-	-- if ( comps ~= nil ) then
-	-- 	for i,v in ipairs( comps ) do
-	-- 	-- for k=1,#comps do
-	-- 		-- local v = comps[k]
-	-- 		if ( particle ~= nil ) then
-	-- 			ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
-	-- 			ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90)
-	-- 		else
-	-- 			ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
-	-- 		end
-	-- 	end
-	-- end
 	
-	comps = EntityGetComponentIncludingDisabled( entity_id, "ParticleEmitterComponent" )
+	comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )
 	if ( comps ~= nil ) then
-		
 		for i,v in ipairs( comps ) do
 			print("--- comp"..i.." ---")
 			local cosmetic = ComponentGetValue2( v, "emit_cosmetic_particles" )
-			
+
 			-- Testing
 			local particle_old = ComponentGetValue2( v, "emitted_material_name" )
-			print("old biome particle is '" .. particle_old .. "'")
-			if (particle ~= nil) then print("new biome particle is '" .. particle .. "'")
-			else print ("new biome particle is 'nil'") end
+			print("old ultimate particle is '" .. particle_old .. "'")
+			if (particle ~= nil) then print("new ultimate particle is '" .. particle .. "'")
+			else print ("new ultimate particle is 'nil'") end
 			
 			if cosmetic then
 				if ( particle ~= nil ) then
-					print("biome particle exists, changing from '" ..  particle_old .. "' to '" .. particle .. "'")
+					print("ultimate particle exists, changing from '" ..  particle_old .. "' to '" .. particle .. "'")
 					-- ComponentSetValue2( v, "is_emitting", true )
 					ComponentSetValue2( v, "emitted_material_name", particle )
 				else
-					print("biome particle is nil, setting 'is_emitting' to false")
+					print("ultimate particle is nil, setting 'is_emitting' to false")
 					ComponentSetValue2( v, "is_emitting", false )
 				end
 			end
 		end
 	end
 	
-	comps = EntityGetComponentIncludingDisabled( entity_id, "SpriteParticleEmitterComponent" )
+	comps = EntityGetComponent( entity_id, "SpriteParticleEmitterComponent" )
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			ComponentSetValue2( v, "is_emitting", false )
 		end
 	end
 
-	comps = EntityGetComponentIncludingDisabled( entity_id, "SpriteComponent" )
+	comps = EntityGetComponent( entity_id, "SpriteComponent" )
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			ComponentSetValue2( v, "visible", false )
 		end
 	end
 	
-	comps = EntityGetComponentIncludingDisabled( entity_id, "ProjectileComponent" )
+	comps = EntityGetComponent( entity_id, "ProjectileComponent" )
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )
@@ -195,6 +241,8 @@ if ( biome ~= nil ) then
 			end
 		end
 	end
+else
+	print("colour is nil")
 end
-print("---- BIOME END ----")
+print("---- ULTIMATE END ----")
 print = _print

@@ -44,33 +44,45 @@ local patches = {
         to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550]]..((isPrideGlimmersEnabled and [[+60,]]) or [[,]])..[[ 396]]..((isPrideGlimmersEnabled and [[-5)]]) or [[)]])..[[
 		EntityKill%( entity_id %)]],
     },
-	{
-		path	= "data/scripts/projectiles/colour_spell.lua",
-		from	= [[rainbow]],
-		to		= [[white = {particle = "spark_white",}, 
-	mimic		= {particle = "mimic_liquid",},
-	pink		= {particle = "plasma_fading_pink",},
-	teal		= {particle = "spark_teal",},
-	blood		= {particle = "blood",},
-	freezing	= {particle="blood_cold",},
-	acid		= {particle="acid",},
-	weakness	= {particle="magic_liquid_weakness",},
-	lava		= {particle="lava",},
-	darkness	= {particle="material_darkness",},
-	fungi		= {particle="fungi",},
-	lc			= {particle="magic_liquid_hp_regeneration_unstable",},
-	midas		= {particle="midas",},
-	trueRainbow	= {particle="material_rainbow",},
-	void		= {particle="void_liquid",},
-	rainbow]],
-	},
-	{ -- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
-        path    = "data/scripts/projectiles/colour_spell.lua",
-        from    = "comps %= EntityGetComponent%( entity_id, \"ParticleEmitterComponent\" %)",
-        to      = "comps = EntityGetComponent( entity_id, \"LaserEmitterComponent\" ) or {} for k=1,#comps do local v = comps[k] ComponentObjectSetValue2( v, \"laser\", \"beam_particle_type\", CellFactory_GetType(particle)) end comps = EntityGetComponent( entity_id, \"ParticleEmitterComponent\" )",
-    },
+	-- {
+	-- 	path	= "data/scripts/projectiles/colour_spell.lua",
+	-- 	from	= [[rainbow]],
+	-- 	to		= [[white = {particle = "spark_white",}, 
+	-- mimic		= {particle = "mimic_liquid",},
+	-- pink		= {particle = "plasma_fading_pink",},
+	-- teal		= {particle = "spark_teal",},
+	-- blood		= {particle = "blood",},
+	-- freezing	= {particle = "blood_cold",},
+	-- acid		= {particle = "acid",},
+	-- weakness	= {particle = "magic_liquid_weakness",},
+	-- lava		= {particle = "lava",},
+	-- darkness	= {particle = "material_darkness",},
+	-- fungi		= {particle = "fungi",},
+	-- lc			= {particle = "magic_liquid_hp_regeneration_unstable",},
+	-- midas		= {particle = "midas",},
+	-- trueRainbow	= {particle = "material_rainbow",},
+	-- void		= {particle = "void_liquid",},
+	-- rainbow]],
+	-- },
+	-- { -- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
+    --     path    = "data/scripts/projectiles/colour_spell.lua",
+    --     from    = "comps %= EntityGetComponent%( entity_id, \"ParticleEmitterComponent\" %)",
+	-- 	-- to      = "comps = EntityGetComponent( entity_id, \"LaserEmitterComponent\" ) or {} for k=1,#comps do local v = comps[k] if ( particle ~= nil ) then ComponentObjectSetValue2( v, \"laser\", \"beam_particle_type\", CellFactory_GetType(particle)) ComponentObjectSetValue2( v, \"laser\", \"beam_particle_chance\", 90) else ComponentObjectSetValue2( v, \"laser\", \"beam_particle_chance\", 0) end end comps = EntityGetComponent( entity_id, \"ParticleEmitterComponent\" )",
+	-- 	to      = [[comps = EntityGetComponent( entity_id, "LaserEmitterComponent" ) or {} for k=1,#comps do local v = comps[k] if ( particle ~= nil ) then ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle)) ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90) else ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0) end end comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )]],
+	-- 	--[[to      = [[comps = EntityGetComponent( entity_id, "LaserEmitterComponent" ) or {}
+	-- for k=1,#comps do
+	-- 	local v = comps[k]
+	-- 	if ( particle ~= nil ) then
+	-- 		ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
+	-- 		ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90)
+	-- 	else
+	-- 		ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
+	-- 	end
+	-- end
+	-- comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" ),]]
+    -- },
 }
-  
+
 
 -- Thanks Graham for this bit of code, it looks very useful
 for i=1, #patches do
@@ -87,9 +99,13 @@ function OnPlayerSpawned(player_id)
     local x, y = EntityGetTransform(player_id)
 	
 	
-	-- GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
+	GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
 
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
+		CreateItemActionEntity( "COLOUR_INVIS", x, y )
+		CreateItemActionEntity( "LASER_EMITTER", x, y )
+		CreateItemActionEntity( "LASER_EMITTER_CUTTER", x, y )
+
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
