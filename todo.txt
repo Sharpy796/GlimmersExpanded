@@ -10,3 +10,4 @@
 [x] Allow for tinkering inside the lab & bunker
 [x] Add lore and make that spawn in the lab
 [ ] Add the sensors in basins to allow for glimmer alchemy
+[x] Possibly keep the lab un-populated until you enter the portal the correct way?

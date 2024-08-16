@@ -87,7 +87,7 @@ function OnPlayerSpawned(player_id)
     local x, y = EntityGetTransform(player_id)
 	
 	
-	GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
+	-- GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
 
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
