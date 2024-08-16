@@ -114,8 +114,7 @@ local data =
 	["???"] = {particle="material_confusion",},
 
 	-- ["_EMPTY_"] = {particle=""},
-	["_EMPTY_"] = {	
-	},
+	["_EMPTY_"] = {},
 
 	[""] = {particle="vomit",},
 
