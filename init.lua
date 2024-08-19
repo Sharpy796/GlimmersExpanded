@@ -214,9 +214,9 @@ function OnPlayerSpawned(player_id)
 	GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
 
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
-		CreateItemActionEntity( "COLOUR_INVIS", x, y )
-		CreateItemActionEntity( "LASER_EMITTER", x, y )
-		CreateItemActionEntity( "LASER_EMITTER_CUTTER", x, y )
+		-- CreateItemActionEntity( "COLOUR_INVIS", x, y )
+		-- CreateItemActionEntity( "LASER_EMITTER", x, y )
+		-- CreateItemActionEntity( "LASER_EMITTER_CUTTER", x, y )
 
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
@@ -225,4 +225,5 @@ function OnPlayerSpawned(player_id)
 end
 
 -- This code runs when all mods' filesystems are registered
+ModMaterialsFileAdd( "mods/GlimmersExpanded/files/materials.xml" )
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua

@@ -1,0 +1,18 @@
+glimmer_list = {
+    ["acid"]="acid",
+    -- [nil]="biome",
+    ["blood"]="blood",
+    ["material_darkness"]="darkness",
+    ["blood_cold"]="freezing",
+    ["fungi"]="fungi",
+    ["lava"]="lava",
+    ["magic_liquid_hp_regeneration_unstable"]="lc",
+    ["midas"]="midas",
+    ["mimic_liquid"]="mimic",
+    -- [nil]="pink",
+    -- [nil]="teal",
+    ["material_rainbow"]="true_rainbow",
+    ["void_liquid"]="void",
+    ["magic_liquid_weakness"]="weakness",
+    -- [nil]="white",
+}

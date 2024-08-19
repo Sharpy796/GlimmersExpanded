@@ -16,3 +16,5 @@
 [x] Possibly keep the lab un-populated until you enter the portal the correct way?
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
 [ ] Find a way append the new glimmer changes into colour_spell.lua instead of gsubbing?
+[ ] Find a way to systematically create glimmer .xml scripts
+ - [ ] Possibly allow for the creation of unique glimmers for every color material? I could use chem curiosities' color finder function
