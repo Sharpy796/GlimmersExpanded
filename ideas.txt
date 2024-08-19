@@ -31,6 +31,7 @@ Gonna try and add a quest to unlock these. Ideas for the Glimmer Quest:
     - Material
     - Catalyst? 
       - Australium? (lava + gate opener (pus + urine + flummoxium))
+      - Solid rainbow? Doesn't exist, but could be (lava + rainbow)
       - Unique material? ("Magiterial Catalyst") made from slightly more accessible materials
   - Once a glimmer is unlocked, it can spawn there by default
   - Have an option to have these spells unlocked by default

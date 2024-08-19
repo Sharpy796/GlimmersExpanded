@@ -10,5 +10,9 @@
 [x] Add compatibility with Pride Glimmers mod
 [x] Allow for tinkering inside the lab & bunker
 [x] Add lore and make that spawn in the lab
-[ ] Add the sensors in basins to allow for glimmer alchemy
+[ ] Figure out a way to allow glimmer alchemy
+    - add sensors in basins? (simple)
+    - make it into a reaction (complex)
 [x] Possibly keep the lab un-populated until you enter the portal the correct way?
+[ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
+[ ] Find a way append the new glimmer changes into colour_spell.lua instead of gsubbing?
