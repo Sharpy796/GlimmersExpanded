@@ -1,0 +1,13 @@
+<Entity>
+	<LifetimeComponent
+		lifetime="1"
+    ></LifetimeComponent>
+    <MagicConvertMaterialComponent
+        _enabled="1"
+        kill_when_finished="1"
+        from_material="static_magic_material"
+        steps_per_frame="20"
+        to_material="air"
+        radius="20"
+    ></MagicConvertMaterialComponent>
+</Entity>

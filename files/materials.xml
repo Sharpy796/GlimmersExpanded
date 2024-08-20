@@ -16,12 +16,18 @@
 	  blob_restrict_to_input_material1="1" 	blob_restrict_to_input_material2="1"
     entity="mods/GlimmersExpanded/files/alchemy/glimmer_alchemy.xml"
   ></Reaction> -->
-  <Reaction probability="10"
+  <!-- <Reaction probability="10"
     input_cell1="static_magic_material"   input_cell2="[liquid]"
     output_cell1="air"                    output_cell2="[liquid]"
     convert_all="1"
     entity="mods/GlimmersExpanded/files/alchemy/glimmer_alchemy.xml"
-  ></Reaction>
+  ></Reaction> -->
+  <!-- <Reaction probability="10"
+    input_cell1="static_magic_material"    input_cell2="lava"
+    output_cell1="air"                     output_cell2="lava"
+    convert_all="1"
+    entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_lava.xml"
+  ></Reaction> -->
   
 </Materials>
   
