@@ -40,7 +40,7 @@ local function find_closest_color_name_rgb(r, g, b)
         local distance = math.sqrt((color[1] - r)^2 + (color[2] - g)^2 + (color[3] - b)^2)
         if(distance < closest_distance)then
             closest_distance = distance
-            closest_color = color_name
+            closest_color = color_name:gsub("%A","")
         end
     end
     return closest_color
