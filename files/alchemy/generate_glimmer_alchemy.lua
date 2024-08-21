@@ -1,16 +1,17 @@
 dofile_once("mods/GlimmersExpanded/files/alchemy/all_liquids.lua")
 dofile_once("mods/GlimmersExpanded/files/glimmer_list.lua")
-local debug = false
-local _print = print
-function print(...)
-    if (debug) then print(...) end
-end
+local debug = true
+-- local _print = print
+-- function print(...)
+--     if (debug) then print(...) end
+-- end
 
 print("Start of alchemy script")
 local materials_xml = [[<Materials>
 ]]
 -- local liquids = CellFactory_GetAllLiquids(false, false) or {}
-local liquids = all_liquids
+-- local liquids = all_liquids
+local liquids = {}
 local colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
 -- local dummy_potion_id = EntityLoad("mods/GlimmersExpanded/files/alchemy/dummy_material_comp.xml")
 print("Initialized variables")
@@ -56,7 +57,76 @@ local function find_closest_color_name_uint(uint)
     return find_closest_color_name_rgb(r, g, b)
 end
 
+local function lamas_stats_get_graphics_info(elem)
+    local graphics = elem:first_of("Graphics")
+    if graphics == nil then
+        return elem.attr["wang_color"]
+    else
+        --color
+        if graphics.attr["color"] == nil then return elem.attr["wang_color"]
+        else return graphics.attr["color"] end
+    end
+end
+
+-- local function lamas_stats_gather_material() --function to get table of material and whatever
+--     local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+--     local materials = "data/materials.xml"
+--     local xml = nxml.parse(ModTextFileGetContent(materials))
+    
+--     local files = ModMaterialFilesGet()
+--     for _, file in ipairs(files) do --add modded materials
+--         if file ~= materials then
+--             for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
+--                 xml.children[#xml.children+1] = comp
+--             end
+--         end
+--     end
+        
+--     for _,element_name in ipairs({"CellData","CellDataChild"}) do
+--         for elem in xml:each_of(element_name) do
+--             if elem.attr["ui_name"] ~= nil then    
+--                 local color = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
+--             end
+--         end
+--     end
+-- end
+
+local function lamas_stats_gather_liquids() --function to get table of material and whatever
+    local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+    local materials = "data/materials.xml"
+    local xml = nxml.parse(ModTextFileGetContent(materials))
+    
+    local files = ModMaterialFilesGet()
+    for _, file in ipairs(files) do --add modded materials
+        if file ~= materials then
+            for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
+                xml.children[#xml.children+1] = comp
+            end
+        end
+    end
+        
+    for _,element_name in ipairs({"CellData","CellDataChild"}) do
+        for elem in xml:each_of(element_name) do
+            local tags = elem.attr["tags"]
+            local isLiquid
+            if tags ~= nil then -- TODO: Find a way to gather liquids that inherit the [liquid] tag
+                isLiquid = tags:find("liquid")
+            end
+            if (elem.attr["ui_name"] ~= nil and tags and isLiquid) then
+                local name = elem.attr["name"]
+                local hex = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
+                -- table.insert(liquids, name, hex)
+                liquids[name] = hex
+            end
+        end
+    end
+end
+
 print("Initialized helper functions")
+
+lamas_stats_gather_liquids()
+print("gathered liquids:")
+
 
 -- REACTION GENERATION START
 -- for _,liquid in ipairs(liquids) do
@@ -205,4 +275,4 @@ print("set materials.xml in the mod")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_materials.xml")
 
 print("Generated Glimmers Expanded alchemy content.")
-print = _print
+-- print = _print

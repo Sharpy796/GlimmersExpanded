@@ -12,7 +12,7 @@
 [x] Add lore and make that spawn in the lab
 [x] Figure out a way to allow glimmer alchemy
  - [ ] Add a way to systematically determine the color of materials with nxml
- - [ ] Fix up the list of colors so that more of a breadth of colors can be tagged with increased accuracy
+ - [x] Fix up the list of colors so that more of a breadth of colors can be tagged with increased accuracy
  - [ ] Clean up the glimmer alchemy code
 [x] Possibly keep the lab un-populated until you enter the portal the correct way?
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
