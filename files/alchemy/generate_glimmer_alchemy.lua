@@ -93,6 +93,21 @@ local function lamas_stats_gather_material() --function to get table of material
     end
 end
 
+local function get_elem_data(elem, data)
+    local _parent = elem.attr["_parent"]
+    local dt = elem.attr[data]
+    if dt then
+        return dt
+    else
+        if _parent then
+            return get_elem_data(all_materials[_parent], data)
+        else
+            if (data == "cell_type") then return "liquid"
+            else return "0" end
+        end
+    end
+end
+
 local function lamas_stats_gather_liquids() --function to get table of material and whatever
     local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
     local materials = "data/materials.xml"
@@ -166,30 +181,33 @@ local function lamas_stats_gather_liquids() --function to get table of material 
                             if liquid_sand == nil then liquid_sand = "0" end
                             if liquid_static == nil then liquid_static = "0" end
                         elseif liquids[_parent] == nil then -- if it inherits from something that is not a valid liquid
+                            cell_type = get_elem_data(elem, "cell_type")
+                            liquid_sand = get_elem_data(elem, "liquid_sand")
+                            liquid_static = get_elem_data(elem, "liquid_static")
                             -- check the parent's value
                             -- TODO: this needs to be recursive
-                            repeat
-                                local _parent_cell_type = all_materials[_parent].attr["cell_type"]
-                                local _parent_liquid_sand = all_materials[_parent].attr["liquid_sand"]
-                                local _parent_liquid_static = all_materials[_parent].attr["liquid_static"]
-                            _parent = elem.attr["_parent"]
-                            until _parent == nil
+                            -- repeat
+                            --     local _parent_cell_type = all_materials[_parent].attr["cell_type"]
+                            --     local _parent_liquid_sand = all_materials[_parent].attr["liquid_sand"]
+                            --     local _parent_liquid_static = all_materials[_parent].attr["liquid_static"]
+                            -- _parent = elem.attr["_parent"]
+                            -- until _parent == nil
 
-                            if cell_type == nil then
-                                if _parent_cell_type ~= nil then cell_type = _parent_cell_type
-                                end
-                                -- else cell_type = "liquid" end
-                            end
-                            if liquid_sand == nil then
-                                if _parent_liquid_sand ~= nil then liquid_sand = _parent_liquid_sand
-                                end
-                                -- else liquid_sand = "0" end
-                            end
-                            if liquid_static == nil then
-                                if _parent_liquid_static ~= nil then liquid_static = _parent_liquid_static
-                                end
-                                -- else liquid_static = "0" end
-                            end
+                            -- if cell_type == nil then
+                            --     if _parent_cell_type ~= nil then cell_type = _parent_cell_type
+                            --     end
+                            --     -- else cell_type = "liquid" end
+                            -- end
+                            -- if liquid_sand == nil then
+                            --     if _parent_liquid_sand ~= nil then liquid_sand = _parent_liquid_sand
+                            --     end
+                            --     -- else liquid_sand = "0" end
+                            -- end
+                            -- if liquid_static == nil then
+                            --     if _parent_liquid_static ~= nil then liquid_static = _parent_liquid_static
+                            --     end
+                            --     -- else liquid_static = "0" end
+                            -- end
                         elseif liquids[_parent] ~= nil then -- if the parent is a valid liquid
                             -- if it doesn't override it, then we assume it follows the valid liquid guidelines
                             if cell_type == nil then cell_type = "liquid" end
