@@ -1,20 +1,13 @@
 dofile_once("mods/GlimmersExpanded/files/alchemy/all_liquids.lua")
 dofile_once("mods/GlimmersExpanded/files/glimmer_list.lua")
 local debug = true
--- local _print = print
--- function print(...)
---     if (debug) then print(...) end
--- end
 
 -- print("Start of alchemy script")
 local materials_xml = [[<Materials>
 ]]
--- local liquids = CellFactory_GetAllLiquids(false, false) or {}
--- local liquids = all_liquids
 local liquids = {}
 local all_materials = {}
 local colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
--- local dummy_potion_id = EntityLoad("mods/GlimmersExpanded/files/alchemy/dummy_material_comp.xml")
 -- print("Initialized variables")
 
 local function hex_to_rgba(hex)
@@ -61,11 +54,11 @@ end
 local function lamas_stats_get_graphics_info(elem)
     local graphics = elem:first_of("Graphics")
     if graphics == nil then
-        return elem.attr["wang_color"]
+        return elem:get("wang_color")
     else
         --color
-        if graphics.attr["color"] == nil then return elem.attr["wang_color"]
-        else return graphics.attr["color"] end
+        if graphics:get("color") == nil then return elem:get("wang_color")
+        else return graphics:get("color") end
     end
 end
 
@@ -85,7 +78,7 @@ local function lamas_stats_gather_material() --function to get table of material
         
     for _,element_name in ipairs({"CellData","CellDataChild"}) do
         for elem in xml:each_of(element_name) do
-            local name = elem.attr["name"]
+            local name = elem:get("name")
             if name ~= nil then
                 all_materials[name] = elem
             end
@@ -94,8 +87,8 @@ local function lamas_stats_gather_material() --function to get table of material
 end
 
 local function get_elem_data(elem, data)
-    local _parent = elem.attr["_parent"]
-    local dt = elem.attr[data]
+    local _parent = elem:get("_parent")
+    local dt = elem:get(data)
     if dt then
         return dt
     else
@@ -121,115 +114,24 @@ local function lamas_stats_gather_liquids() --function to get table of material 
             end
         end
     end
-    
-    -- local liquidsTagged = {}
-    -- for _,element_name in ipairs({"CellData","CellDataChild"}) do
-    --     for elem in xml:each_of(element_name) do
-    --         local name = elem:get("name")
-    --         local tags = elem:get("tags")
-    --         local isLiquid
-    --         if tags ~= nil then -- TODO: Find a way to gather liquids that inherit the [liquid] tag
-    --             isLiquid = tags:find("%[liquid%]")
-    --         end
-    --         if (elem:get("ui_name") ~= nil and tags and isLiquid) then
-    --             local hex = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
-    --             -- table.insert(liquids, name, hex)
-    --             liquidsTagged[name] = name
-    --             print("inserting tagged material: '"..name.."'")
-    --             liquids[name] = hex
-    --         end
-    --     end
-    -- end
-
-    -- for _,element_name in ipairs({"CellData","CellDataChild"}) do
-    --     for elem in xml:each_of(element_name) do
-    --         local parent = elem:get("_parent")
-    --         local isLiquid = false
-    --         if parent ~= nil then
-    --             isLiquid = liquidsTagged[parent]
-    --         end
-    --         print("-----")
-    --         print("parent: '"..tostring(parent).."'")
-    --         print("isLiquid: '"..tostring(isLiquid).."'")
-    --         if not isLiquid then print("'"..elem:get("name").."' is not isLiquid")
-    --         else print("'"..elem:get("name").."' is indeed isLiquid") end
-    --         if (elem:get("ui_name") ~= nil and parent ~= nil and isLiquid) then
-    --             local name = elem:get("name")
-    --             local hex = lamas_stats_get_graphics_info(elem)
-    --             liquids[name] = hex
-    --         end
-    --     end
-    -- end
     repeat
         print("start of loop")
         local actualLiquids = {}
         local liquidLength = 0
         for _,element_name in ipairs({"CellData","CellDataChild"}) do
             for elem in xml:each_of(element_name) do
-                local name = elem.attr["name"]
+                local name = elem:get("name")
                 if liquids[name] == nil and name ~= "air" and name ~= nil then -- if we haven't already accepted this material
-                    local cell_type = elem.attr["cell_type"] -- if this is nil, then check if it inherits.
-                    local liquid_sand = elem.attr["liquid_sand"] -- if this is nil, then check if it inherits.
-                    local liquid_static = elem.attr["liquid_static"]
-
-                    if cell_type == nil or liquid_sand == nil or liquid_static == nil then -- if either of these are empty
-                        -- does it inherit?
-                        local _parent = elem.attr["_parent"]
-                        
-                        if _parent == nil then -- if it doens't inherit, if either is nil, set it to default
-                            if cell_type == nil then cell_type = "liquid" end
-                            if liquid_sand == nil then liquid_sand = "0" end
-                            if liquid_static == nil then liquid_static = "0" end
-                        elseif liquids[_parent] == nil then -- if it inherits from something that is not a valid liquid
-                            cell_type = get_elem_data(elem, "cell_type")
-                            liquid_sand = get_elem_data(elem, "liquid_sand")
-                            liquid_static = get_elem_data(elem, "liquid_static")
-                            -- check the parent's value
-                            -- TODO: this needs to be recursive
-                            -- repeat
-                            --     local _parent_cell_type = all_materials[_parent].attr["cell_type"]
-                            --     local _parent_liquid_sand = all_materials[_parent].attr["liquid_sand"]
-                            --     local _parent_liquid_static = all_materials[_parent].attr["liquid_static"]
-                            -- _parent = elem.attr["_parent"]
-                            -- until _parent == nil
-
-                            -- if cell_type == nil then
-                            --     if _parent_cell_type ~= nil then cell_type = _parent_cell_type
-                            --     end
-                            --     -- else cell_type = "liquid" end
-                            -- end
-                            -- if liquid_sand == nil then
-                            --     if _parent_liquid_sand ~= nil then liquid_sand = _parent_liquid_sand
-                            --     end
-                            --     -- else liquid_sand = "0" end
-                            -- end
-                            -- if liquid_static == nil then
-                            --     if _parent_liquid_static ~= nil then liquid_static = _parent_liquid_static
-                            --     end
-                            --     -- else liquid_static = "0" end
-                            -- end
-                        elseif liquids[_parent] ~= nil then -- if the parent is a valid liquid
-                            -- if it doesn't override it, then we assume it follows the valid liquid guidelines
-                            if cell_type == nil then cell_type = "liquid" end
-                            if liquid_sand == nil then liquid_sand = "0" end
-                            if liquid_static == nil then liquid_static = "0" end
-                        end
-                        
-                        -- after everything, if it's still nil, then set to default
-                        -- if cell_type == nil then cell_type = "liquid" end
-                        -- if liquid_sand == nil then liquid_sand = "0" end
-                        -- if liquid_static == nil then liquid_static = "0" end
-                    end
-
-                    local isLiquid = cell_type == "liquid" and liquid_sand == "0" and liquid_static == "0"
+                    local cell_type = get_elem_data(elem, "cell_type")
+                    local liquid_sand = get_elem_data(elem, "liquid_sand")
+                    local liquid_static = get_elem_data(elem, "liquid_static")
+                    local isLiquid = cell_type == "liquid" and liquid_sand == "0" and liquid_static == "0" -- TODO: What is different about the fungus particle?
 
                     if (isLiquid) then
                         local hex = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
-                        -- table.insert(liquids, name, hex)
                         actualLiquids[name] = hex
                         liquidLength = liquidLength + 1
                         print("inserting valid material: '"..name.."'")
-                        -- liquids[name] = hex
                     end
                 end
             end
@@ -247,7 +149,6 @@ lamas_stats_gather_liquids()
 
 
 -- REACTION GENERATION START
--- for _,liquid in ipairs(liquids) do
 for liquid,color in pairs(liquids) do
     -- print("Liquid is '"..liquid.."'")
     -- Find the appropriate glimmer to spawn
@@ -266,13 +167,6 @@ for liquid,color in pairs(liquids) do
     end
     -- print("Did it get past transmuted?")
     if not transmuted then
-        -- AddMaterialInventoryMaterial(dummy_potion_id, liquid, 1)
-        -- print("added inventory material")
-        -- local mat_color = GameGetPotionColorUint(dummy_potion_id)
-        -- local mat_color = all_liquids[liquid]
-        -- print("got material color")
-        -- print("got game potion color uint")
-        -- local mat_color_name = find_closest_color_name_uint(mat_color)
         local mat_color_name = find_closest_color_name_hex(color)
         -- print("got closest color name")
         if (mat_color_name ~= nil) then
@@ -299,11 +193,6 @@ for liquid,color in pairs(liquids) do
     entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_]] .. liquid .. [[.xml"
 />
 ]]
---     local reaction_xml = [[<Reaction probability="10"
---     input_cell_1="static_magic_material"    input_cell_2="]] .. liquid .. [["
---     output_cell_1="air"                     output_cell_2="]] .. liquid .. [["
--- />]]
-    -- local reaction_xml = [[<Reaction probability="10" input_cell_1="static_magic_material" input_cell_2="lava" output_cell_1="acid" output_cell_2="lava"></Reaction>]]
     if false then print(reaction_xml) end
     materials_xml = materials_xml .. reaction_xml
 
@@ -324,7 +213,6 @@ for liquid,color in pairs(liquids) do
 
     -- print("compiled entity for '"..liquid.."'")
 
-    -- ModTextFileSetContent("data/alchemy/entities/glimmer_alchemy_" .. liquid .. ".xml", entity_xml)
     ModTextFileSetContent("mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_" .. liquid .. ".xml", entity_xml)
 
     -- print("generated entity for '"..liquid.."'")
@@ -369,7 +257,7 @@ for liquid,color in pairs(liquids) do
         -- Get rid of australium
         EntityLoad("mods/GlimmersExpanded/files/alchemy/glimmer_effect.xml", x, y - 10)
         -- Spawn new glimmer
-        CreateItemActionEntity( "]] .. glimmer_to_spawn:upper() .. [[", x, y )
+        CreateItemActionEntity( ")] .. glimmer_to_spawn:upper() .. [[", x, y )
     end
     ]]
 
@@ -393,4 +281,3 @@ ModTextFileSetContent("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_mater
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_materials.xml")
 
 print("Generated Glimmers Expanded alchemy content.")
--- print = _print
