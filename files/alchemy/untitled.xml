@@ -1,590 +1,105 @@
-<Materials>
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="juhannussima"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="juhannussima" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_juhannussima.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="slime_yellow"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="slime_yellow" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_slime_yellow.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="milk"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="milk" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_milk.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="metal_rust_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="metal_rust_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_metal_rust_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="steelmoss_static_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="steelmoss_static_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_steelmoss_static_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="steelsmoke_static_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="steelsmoke_static_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_steelsmoke_static_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="slush"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="slush" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_slush.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_unstable_teleportation"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_unstable_teleportation" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_unstable_teleportation.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="plasma_fading_bright"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="plasma_fading_bright" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_plasma_fading_bright.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="plastic_grey_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="plastic_grey_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_plastic_grey_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="swamp"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="swamp" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_swamp.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="beer"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="beer" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_beer.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_mana_regeneration"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_mana_regeneration" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_mana_regeneration.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="rocket_particles"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="rocket_particles" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_rocket_particles.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="vomit"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="vomit" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_vomit.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="acid"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="acid" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_acid.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="copper_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="copper_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_copper_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_invisibility"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_invisibility" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_invisibility.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="steel_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="steel_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_steel_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="blood"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="blood" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_blood.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="midas_precursor"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="midas_precursor" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_midas_precursor.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="steel_static_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="steel_static_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_steel_static_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="blood_fungi"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="blood_fungi" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_blood_fungi.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="cloud_radioactive"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="cloud_radioactive" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_cloud_radioactive.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="water_fading"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="water_fading" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_water_fading.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="creepy_liquid"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="creepy_liquid" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_creepy_liquid.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="cement"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="cement" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_cement.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="cloud_blood"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="cloud_blood" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_cloud_blood.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="plastic_red_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="plastic_red_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_plastic_red_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="glass_broken_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="glass_broken_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_glass_broken_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_hp_regeneration_unstable"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_hp_regeneration_unstable" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_hp_regeneration_unstable.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="water_temp"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="water_temp" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_water_temp.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="wax_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="wax_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_wax_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="liquid_fire"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="liquid_fire" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_liquid_fire.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="material_rainbow"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="material_rainbow" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_material_rainbow.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="metal_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="metal_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_metal_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_charm"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_charm" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_charm.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="liquid_fire_weak"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="liquid_fire_weak" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_liquid_fire_weak.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="gold_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="gold_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_gold_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="pea_soup"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="pea_soup" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_pea_soup.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="slime_green"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="slime_green" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_slime_green.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_movement_faster"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_movement_faster" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_movement_faster.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="midas"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="midas" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_midas.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="metal_sand_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="metal_sand_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_metal_sand_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="blood_fading_slow"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="blood_fading_slow" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_blood_fading_slow.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="radioactive_liquid"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="radioactive_liquid" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_radioactive_liquid.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="cursed_liquid"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="cursed_liquid" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_cursed_liquid.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="cloud_slime"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="cloud_slime" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_cloud_slime.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="poison"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="poison" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_poison.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="molut"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="molut" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_molut.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="steel_rust_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="steel_rust_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_steel_rust_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_faster_levitation_and_movement"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_faster_levitation_and_movement" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_faster_levitation_and_movement.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_polymorph"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_polymorph" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_polymorph.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="plasma_fading"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="plasma_fading" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_plasma_fading.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="steelmoss_slanted_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="steelmoss_slanted_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_steelmoss_slanted_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="porridge"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="porridge" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_porridge.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="material_confusion"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="material_confusion" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_material_confusion.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="pus"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="pus" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_pus.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_teleportation"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_teleportation" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_teleportation.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_protection_all"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_protection_all" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_protection_all.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="glass_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="glass_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_glass_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="metal_nohit_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="metal_nohit_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_metal_nohit_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="brass_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="brass_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_brass_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="lava"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="lava" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_lava.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="aluminium_oxide_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="aluminium_oxide_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_aluminium_oxide_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="plastic_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="plastic_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_plastic_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_weakness"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_weakness" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_weakness.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="plastic_prop_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="plastic_prop_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_plastic_prop_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_random_polymorph"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_random_polymorph" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_random_polymorph.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="peat"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="peat" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_peat.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_berserk"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_berserk" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_berserk.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="urine"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="urine" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_urine.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_faster_levitation"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_faster_levitation" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_faster_levitation.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="slime"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="slime" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_slime.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="void_liquid"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="void_liquid" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_void_liquid.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="material_darkness"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="material_darkness" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_material_darkness.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="mimic_liquid"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="mimic_liquid" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_mimic_liquid.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_worm_attractor"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_worm_attractor" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_worm_attractor.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="sima"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="sima" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_sima.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="water"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="water" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_water.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="just_death"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="just_death" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_just_death.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="oil"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="oil" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_oil.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="radioactive_liquid_yellow"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="radioactive_liquid_yellow" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_radioactive_liquid_yellow.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="aluminium_robot_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="aluminium_robot_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_aluminium_robot_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_hp_regeneration"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_hp_regeneration" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_hp_regeneration.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="blood_fading"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="blood_fading" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_blood_fading.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="water_ice"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="water_ice" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_water_ice.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="radioactive_liquid_fading"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="radioactive_liquid_fading" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_radioactive_liquid_fading.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="blood_worm"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="blood_worm" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_blood_worm.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="water_swamp"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="water_swamp" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_water_swamp.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="silver_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="silver_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_silver_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="blood_cold"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="blood_cold" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_blood_cold.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="magic_liquid_unstable_polymorph"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="magic_liquid_unstable_polymorph" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_magic_liquid_unstable_polymorph.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="alcohol"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="alcohol" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_alcohol.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="metal_prop_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="metal_prop_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_metal_prop_molten.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="water_salt"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="water_salt" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_water_salt.xml"
-    />
-    <Reaction probability="10"
-        input_cell_1="static_magic_material"    input_cell_2="aluminium_molten"  input_cell_3="air"
-        output_cell_1="air"                     output_cell_2="aluminium_molten" output_cell_3="air"
-        convert_all="1"
-        entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_aluminium_molten.xml"
-    />
-    </Materials>
+{
+    <!-- "water_static", -->
+    <!-- "endslime_static", -->
+    <!-- "slime_static", -->
+    <!-- "spore_pod_stalk", -->
+    "water",
+    "water_temp",
+    "water_ice",
+    "water_swamp",
+    "oil",
+    "alcohol",
+    "beer",
+    "milk",
+    "molut",
+    "sima",
+    "juhannussima",
+    "magic_liquid",
+    "material_confusion",
+    "material_darkness",
+    "material_rainbow",
+    "magic_liquid_weakness",
+    "magic_liquid_movement_faster",
+    "magic_liquid_faster_levitation",
+    "magic_liquid_faster_levitation_and_movement",
+    "magic_liquid_worm_attractor",
+    "magic_liquid_protection_all",
+    "magic_liquid_mana_regeneration",
+    "magic_liquid_unstable_teleportation",
+    "magic_liquid_teleportation",
+    "magic_liquid_hp_regeneration",
+    "magic_liquid_hp_regeneration_unstable",
+    "magic_liquid_polymorph",
+    "magic_liquid_random_polymorph",
+    "magic_liquid_unstable_polymorph",
+    "magic_liquid_berserk",
+    "magic_liquid_charm",
+    "magic_liquid_invisibility",
+    "cloud_radioactive",
+    "cloud_blood",
+    "cloud_slime",
+    "swamp",
+    "blood",
+    "blood_fading",
+    "blood_fungi",
+    "blood_worm",
+    "porridge",
+    "blood_cold",
+    "radioactive_liquid",
+    "radioactive_liquid_fading",
+    "plasma_fading",
+    "gold_molten",
+    "wax_molten",
+    "silver_molten",
+    "copper_molten",
+    "brass_molten",
+    "glass_molten",
+    "glass_broken_molten",
+    "steel_molten",
+    "creepy_liquid",
+    "cement",
+    "slime",
+    "slush",
+    "vomit",
+    "plastic_red_molten",
+    "plastic_grey_molten",
+    "acid",
+    "lava",
+    "urine",
+    "rocket_particles",
+    <!-- "fungal_shift_particle_fx", -->
+    "peat",
+    "plastic_prop_molten",
+    "plastic_molten",
+    "slime_yellow",
+    "slime_green",
+    "aluminium_oxide_molten",
+    "steel_rust_molten",
+    "metal_prop_molten",
+    "aluminium_robot_molten",
+    "aluminium_molten",
+    "metal_nohit_molten",
+    "metal_rust_molten",
+    "metal_molten",
+    "metal_sand_molten",
+    "steelsmoke_static_molten",
+    "steelmoss_static_molten",
+    "steelmoss_slanted_molten",
+    "steel_static_molten",
+    "plasma_fading_bright",
+    "radioactive_liquid_yellow",
+    "cursed_liquid",
+    "poison",
+    "blood_fading_slow",
+    "pus",
+    "midas",
+    "midas_precursor",
+    "liquid_fire_weak",
+    "liquid_fire",
+    "just_death",
+    "mimic_liquid",
+    "void_liquid",
+    "water_salt",
+    "water_fading",
+    "pea_soup",
+  }
