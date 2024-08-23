@@ -54,6 +54,24 @@ journal_entries = {
         generate_notes = false,
         icon = nil,
     },
+    {
+        id = "entry_7",
+        category = "Alchemist's Diary",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_7",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_7",
+        unlocked_default = true,
+        generate_notes = false,
+        icon = nil,
+    },
+    {
+        id = "entry_8",
+        category = "Alchemist's Diary",
+        title = "$bookname_glimmers_expanded_hidden_alchemy_8",
+        description = "$bookdesc_glimmers_expanded_hidden_alchemy_8",
+        unlocked_default = true,
+        generate_notes = false,
+        icon = nil,
+    },
     -- Alchemy
     -- {
     --     id = "gate_opener_recipe",
