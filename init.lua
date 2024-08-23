@@ -234,5 +234,7 @@ end
 
 -- This code runs when all mods' filesystems are registered
 -- ModMaterialsFileAdd( "mods/GlimmersExpanded/files/materials.xml" )
-dofile("mods/GlimmersExpanded/files/alchemy/generate_glimmer_alchemy.lua")
+function OnModPostInit()
+	dofile("mods/GlimmersExpanded/files/alchemy/generate_glimmer_alchemy.lua")
+end
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
