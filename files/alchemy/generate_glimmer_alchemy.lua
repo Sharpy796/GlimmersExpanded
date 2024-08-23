@@ -88,31 +88,18 @@ local function get_modded_material_files()
     local files = ModMaterialFilesGet()
 
     for _, file in ipairs(files) do
-        print("modded material files: "..file)
+        -- print("modded material files: "..file)
         if file ~= materials then
             for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
                 xml.children[#xml.children+1] = comp
             end
         end
     end
-    return nxml, materials, xml, files
+    return xml
 end
 
-local function lamas_stats_gather_material() --function to get table of material and whatever
-    -- local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
-    -- local materials = "data/materials.xml"
-    -- local xml = nxml.parse(ModTextFileGetContent(materials))
-    
-    -- local files = ModMaterialFilesGet()
-    -- for _, file in ipairs(files) do
-    --     print("modded material files: "..file)
-    --     if file ~= materials then
-    --         for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
-    --             xml.children[#xml.children+1] = comp
-    --         end
-    --     end
-    -- end
-    local nxml, materials, xml, files = get_modded_material_files()
+local function lamas_stats_gather_material()
+    local xml = get_modded_material_files()
         
     for _,element_name in ipairs({"CellData","CellDataChild"}) do
         for elem in xml:each_of(element_name) do
@@ -124,23 +111,11 @@ local function lamas_stats_gather_material() --function to get table of material
     end
 end
 
-local function lamas_stats_gather_liquids() --function to get table of material and whatever
-    -- local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
-    -- local materials = "data/materials.xml"
-    -- local xml = nxml.parse(ModTextFileGetContent(materials))
-    
-    -- local files = ModMaterialFilesGet()
-    -- for _, file in ipairs(files) do --add modded materials
-    --     if file ~= materials then
-    --         for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
-    --             xml.children[#xml.children+1] = comp
-    --         end
-    --     end
-    -- end
-    local nxml, materials, xml, files = get_modded_material_files()
+local function lamas_stats_gather_liquids()
+    local xml = get_modded_material_files()
 
     repeat
-        print("start of loop")
+        -- print("start of loop")
         local actualLiquids = {}
         local liquidLength = 0
         for _,element_name in ipairs({"CellData","CellDataChild"}) do
@@ -157,7 +132,7 @@ local function lamas_stats_gather_liquids() --function to get table of material 
                         local hex = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
                         actualLiquids[name] = hex
                         liquidLength = liquidLength + 1
-                        print("inserting valid material: '"..name.."'")
+                        -- print("inserting valid material: '"..name.."'")
                     end
                 end
             end
@@ -217,7 +192,7 @@ for liquid,color in pairs(liquids) do
     entity="mods/GlimmersExpanded/files/alchemy/entities/glimmer_alchemy_]] .. liquid .. [[.xml"
 />
 ]]
-    if false then print(reaction_xml) end
+    -- if false then print(reaction_xml) end
     materials_xml = materials_xml .. reaction_xml
 
     -- print("Generated reaction for '"..liquid.."'")
@@ -298,7 +273,7 @@ end
 materials_xml = materials_xml .. "</Materials>"
 -- print("Finished generating all reactions!")
 
-print(materials_xml)
+-- print(materials_xml)
 
 ModTextFileSetContent("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_materials.xml", materials_xml)
 -- print("set materials.xml in the mod")
