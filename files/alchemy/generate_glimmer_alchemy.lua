@@ -56,16 +56,18 @@ local function find_closest_color_name_uint(uint)
 end
 
 local function get_elem_data(elem, data)
-    local _parent = elem:get("_parent")
-    local dt = elem:get(data)
-    if dt then
-        return dt
-    else
-        if _parent then
-            return get_elem_data(all_materials[_parent], data)
+    if elem then
+        local _parent = elem:get("_parent")
+        local dt = elem:get(data)
+        if dt then
+            return dt
         else
-            if (data == "cell_type") then return "liquid"
-            else return "0" end
+            if _parent then
+                return get_elem_data(all_materials[_parent], data)
+            else
+                if (data == "cell_type") then return "liquid"
+                else return "0" end
+            end
         end
     end
 end
@@ -120,19 +122,21 @@ local function lamas_stats_gather_liquids()
         local liquidLength = 0
         for _,element_name in ipairs({"CellData","CellDataChild"}) do
             for elem in xml:each_of(element_name) do
-                local name = elem:get("name")
-                if liquids[name] == nil and name ~= "air" and name ~= nil then -- if we haven't already accepted this material
-                    local cell_type = get_elem_data(elem, "cell_type")
-                    local liquid_sand = get_elem_data(elem, "liquid_sand")
-                    local liquid_static = get_elem_data(elem, "liquid_static")
-                    local is_just_particle_fx = get_elem_data(elem, "is_just_particle_fx")
-                    local isLiquid = cell_type == "liquid" and liquid_sand == "0" and liquid_static == "0" and is_just_particle_fx == "0"
+                if elem ~= nil then
+                    local name = elem:get("name")
+                    if liquids[name] == nil and name ~= "air" and name ~= nil then -- if we haven't already accepted this material
+                        local cell_type = get_elem_data(elem, "cell_type")
+                        local liquid_sand = get_elem_data(elem, "liquid_sand")
+                        local liquid_static = get_elem_data(elem, "liquid_static")
+                        local is_just_particle_fx = get_elem_data(elem, "is_just_particle_fx")
+                        local isLiquid = cell_type == "liquid" and liquid_sand == "0" and liquid_static == "0" and is_just_particle_fx == "0"
 
-                    if (isLiquid) then
-                        local hex = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
-                        actualLiquids[name] = hex
-                        liquidLength = liquidLength + 1
-                        -- print("inserting valid material: '"..name.."'")
+                        if (isLiquid) then
+                            local hex = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
+                            actualLiquids[name] = hex
+                            liquidLength = liquidLength + 1
+                            -- print("inserting valid material: '"..name.."'")
+                        end
                     end
                 end
             end
