@@ -185,7 +185,7 @@ for liquid,color in pairs(liquids) do
     end
 
     -- Generate a list of reactions for materials.xml
-    local reaction_xml = [[<Reaction probability="100"
+    local reaction_xml = [[<Reaction probability="25"
     input_cell1="static_magic_material"    input_cell2="]] .. liquid .. [["
     output_cell1="static_magic_material"   output_cell2="]] .. liquid .. [["
     convert_all="1"
