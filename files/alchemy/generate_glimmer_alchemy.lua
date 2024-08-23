@@ -1,14 +1,11 @@
-dofile_once("mods/GlimmersExpanded/files/alchemy/all_liquids.lua")
 dofile_once("mods/GlimmersExpanded/files/glimmer_list.lua")
 local debug = true
 
--- print("Start of alchemy script")
 local materials_xml = [[<Materials>
 ]]
 local liquids = {}
 local all_materials = {}
 local colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
--- print("Initialized variables")
 
 local function hex_to_rgba(hex)
     -- convert ARGB hex to rgba
@@ -56,7 +53,6 @@ local function lamas_stats_get_graphics_info(elem)
     if graphics == nil then
         return elem:get("wang_color")
     else
-        --color
         if graphics:get("color") == nil then return elem:get("wang_color")
         else return graphics:get("color") end
     end
@@ -68,7 +64,8 @@ local function lamas_stats_gather_material() --function to get table of material
     local xml = nxml.parse(ModTextFileGetContent(materials))
     
     local files = ModMaterialFilesGet()
-    for _, file in ipairs(files) do --add modded materials
+    for _, file in ipairs(files) do --TODO: add modded materials
+        print("modded material files: "..file)
         if file ~= materials then
             for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
                 xml.children[#xml.children+1] = comp
@@ -125,7 +122,8 @@ local function lamas_stats_gather_liquids() --function to get table of material 
                     local cell_type = get_elem_data(elem, "cell_type")
                     local liquid_sand = get_elem_data(elem, "liquid_sand")
                     local liquid_static = get_elem_data(elem, "liquid_static")
-                    local isLiquid = cell_type == "liquid" and liquid_sand == "0" and liquid_static == "0" -- TODO: What is different about the fungus particle?
+                    local is_just_particle_fx = get_elem_data(elem, "is_just_particle_fx")
+                    local isLiquid = cell_type == "liquid" and liquid_sand == "0" and liquid_static == "0" and is_just_particle_fx == "0"
 
                     if (isLiquid) then
                         local hex = lamas_stats_get_graphics_info(elem) -- in will return color, use color_abgr_split or whatever
@@ -142,10 +140,8 @@ local function lamas_stats_gather_liquids() --function to get table of material 
     until liquidLength <= 0
 end
 
--- print("Initialized helper functions")
 lamas_stats_gather_material()
 lamas_stats_gather_liquids()
--- print("gathered liquids:")
 
 
 -- REACTION GENERATION START
@@ -186,7 +182,7 @@ for liquid,color in pairs(liquids) do
     end
 
     -- Generate a list of reactions for materials.xml
-    local reaction_xml = [[<Reaction probability="10"
+    local reaction_xml = [[<Reaction probability="100"
     input_cell1="static_magic_material"    input_cell2="]] .. liquid .. [["
     output_cell1="static_magic_material"   output_cell2="]] .. liquid .. [["
     convert_all="1"
@@ -250,6 +246,7 @@ for liquid,color in pairs(liquids) do
     end
 
     if (#valid_spells > 0 and valid_spells ~= nil) then
+        print("Spawning ']]..glimmer_to_spawn:upper()..[[' using ']]..liquid..[['")
         -- Remove the old glimmer spell
         EntityKill(chosen_spell_old)
         -- Explosion gfx
@@ -257,7 +254,7 @@ for liquid,color in pairs(liquids) do
         -- Get rid of australium
         EntityLoad("mods/GlimmersExpanded/files/alchemy/glimmer_effect.xml", x, y - 10)
         -- Spawn new glimmer
-        CreateItemActionEntity( ")] .. glimmer_to_spawn:upper() .. [[", x, y )
+        CreateItemActionEntity( "]] .. glimmer_to_spawn:upper() .. [[", x, y )
     end
     ]]
 

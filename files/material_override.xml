@@ -6,7 +6,7 @@
 	    ui_name="$mat_void_liquid"
 	    wang_color="ffa2332a"
 	    density="14.5"
-      gfx_glow="0"
+      	gfx_glow="0"
 	    lifetime="200"
 	    show_in_creative_mode="1"
 	    >
