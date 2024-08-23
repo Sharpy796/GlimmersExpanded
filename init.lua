@@ -20,7 +20,7 @@ local patches = {
     --     to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550]]..((isPrideGlimmersEnabled and [[+60,]]) or [[,]])..[[ 396]]..((isPrideGlimmersEnabled and [[-5)]]) or [[)]])..[[
 	-- 	EntityKill%( entity_id %)]],
     -- },
-	{ -- This can break if someone else modifies this file.
+	{ -- This can break if someone else modifies this file. TODO: Find a way to append this, rather than gsubbing
         path    = "data/scripts/buildings/bunker_check.lua",
         from    = [[CreateItemActionEntity%( "COLOUR_RED"]],
         to      = [[CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_WHITE", x %+ 14, y %- 7%)
@@ -207,14 +207,6 @@ for i=1, #patches do
 	end
 end
 
--- function OnModInit()
-	set_content = ModTextFileSetContent
-	append_materials = ModMaterialsFileAdd
--- end
-
--- function OnBiomeConfigLoaded()
--- end
-
 function OnPlayerSpawned(player_id)
     local x, y = EntityGetTransform(player_id)
 	
@@ -232,9 +224,12 @@ function OnPlayerSpawned(player_id)
 	end
 end
 
+
 -- This code runs when all mods' filesystems are registered
--- ModMaterialsFileAdd( "mods/GlimmersExpanded/files/materials.xml" )
-function OnModPostInit()
+ModMaterialsFileAdd("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_materials.xml")
+function OnMagicNumbersAndWorldSeedInitialized()
 	dofile("mods/GlimmersExpanded/files/alchemy/generate_glimmer_alchemy.lua")
+end
+function OnModPostInit()
 end
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua

@@ -15,7 +15,7 @@
  - [x] Fix up the list of colors so that more of a breadth of colors can be tagged with increased accuracy
  - [x] Clean up the glimmer alchemy code
 [x] Possibly keep the lab un-populated until you enter the portal the correct way?
-[ ] Make modded materials work with glimmer alchemy
+[x] Make modded materials work with glimmer alchemy
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
 [ ] Find a way append the new glimmer changes into colour_spell.lua instead of gsubbing?
 [ ] Find a way to systematically create glimmer .xml scripts

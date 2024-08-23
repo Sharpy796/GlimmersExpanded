@@ -9,10 +9,17 @@ local colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
 
 local function hex_to_rgba(hex)
     -- convert ARGB hex to rgba
-    local a = tonumber("0x"..string.sub(hex, 1, 2)) / 255
-    local r = tonumber("0x"..string.sub(hex, 3, 4)) / 255
-    local g = tonumber("0x"..string.sub(hex, 5, 6)) / 255
-    local b = tonumber("0x"..string.sub(hex, 7, 8)) / 255
+    local a, r, g, b
+    if #hex == 8 then
+        a = tonumber("0x"..string.sub(hex, 1, 2)) / 255
+        r = tonumber("0x"..string.sub(hex, 3, 4)) / 255
+        g = tonumber("0x"..string.sub(hex, 5, 6)) / 255
+        b = tonumber("0x"..string.sub(hex, 7, 8)) / 255
+    else
+        r = tonumber("0x"..string.sub(hex, 1, 2)) / 255
+        g = tonumber("0x"..string.sub(hex, 3, 4)) / 255
+        b = tonumber("0x"..string.sub(hex, 5, 6)) / 255
+    end
     return r, g, b, a
 end
 
@@ -48,41 +55,6 @@ local function find_closest_color_name_uint(uint)
     return find_closest_color_name_rgb(r, g, b)
 end
 
-local function lamas_stats_get_graphics_info(elem)
-    local graphics = elem:first_of("Graphics")
-    if graphics == nil then
-        return elem:get("wang_color")
-    else
-        if graphics:get("color") == nil then return elem:get("wang_color")
-        else return graphics:get("color") end
-    end
-end
-
-local function lamas_stats_gather_material() --function to get table of material and whatever
-    local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
-    local materials = "data/materials.xml"
-    local xml = nxml.parse(ModTextFileGetContent(materials))
-    
-    local files = ModMaterialFilesGet()
-    for _, file in ipairs(files) do --TODO: add modded materials
-        print("modded material files: "..file)
-        if file ~= materials then
-            for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
-                xml.children[#xml.children+1] = comp
-            end
-        end
-    end
-        
-    for _,element_name in ipairs({"CellData","CellDataChild"}) do
-        for elem in xml:each_of(element_name) do
-            local name = elem:get("name")
-            if name ~= nil then
-                all_materials[name] = elem
-            end
-        end
-    end
-end
-
 local function get_elem_data(elem, data)
     local _parent = elem:get("_parent")
     local dt = elem:get(data)
@@ -98,19 +70,75 @@ local function get_elem_data(elem, data)
     end
 end
 
-local function lamas_stats_gather_liquids() --function to get table of material and whatever
+local function lamas_stats_get_graphics_info(elem)
+    local graphics = elem:first_of("Graphics")
+    if graphics == nil then
+        return elem:get("wang_color")
+    else
+        if graphics:get("color") == nil then return elem:get("wang_color")
+        else return graphics:get("color") end
+    end
+end
+
+local function get_modded_material_files()
     local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
     local materials = "data/materials.xml"
     local xml = nxml.parse(ModTextFileGetContent(materials))
-    
+
     local files = ModMaterialFilesGet()
-    for _, file in ipairs(files) do --add modded materials
+
+    for _, file in ipairs(files) do
+        print("modded material files: "..file)
         if file ~= materials then
             for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
                 xml.children[#xml.children+1] = comp
             end
         end
     end
+    return nxml, materials, xml, files
+end
+
+local function lamas_stats_gather_material() --function to get table of material and whatever
+    -- local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+    -- local materials = "data/materials.xml"
+    -- local xml = nxml.parse(ModTextFileGetContent(materials))
+    
+    -- local files = ModMaterialFilesGet()
+    -- for _, file in ipairs(files) do
+    --     print("modded material files: "..file)
+    --     if file ~= materials then
+    --         for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
+    --             xml.children[#xml.children+1] = comp
+    --         end
+    --     end
+    -- end
+    local nxml, materials, xml, files = get_modded_material_files()
+        
+    for _,element_name in ipairs({"CellData","CellDataChild"}) do
+        for elem in xml:each_of(element_name) do
+            local name = elem:get("name")
+            if name ~= nil then
+                all_materials[name] = elem
+            end
+        end
+    end
+end
+
+local function lamas_stats_gather_liquids() --function to get table of material and whatever
+    -- local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+    -- local materials = "data/materials.xml"
+    -- local xml = nxml.parse(ModTextFileGetContent(materials))
+    
+    -- local files = ModMaterialFilesGet()
+    -- for _, file in ipairs(files) do --add modded materials
+    --     if file ~= materials then
+    --         for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
+    --             xml.children[#xml.children+1] = comp
+    --         end
+    --     end
+    -- end
+    local nxml, materials, xml, files = get_modded_material_files()
+
     repeat
         print("start of loop")
         local actualLiquids = {}
