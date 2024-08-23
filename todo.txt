@@ -18,6 +18,6 @@
 [x] Make modded materials work with glimmer alchemy
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
 [ ] Find a way append the new glimmer changes into colour_spell.lua instead of gsubbing?
-[ ] Reorder all glimmers inside of progress menu into alphabetical order
+[ ] Reorder all glimmers inside of progress menu into color order
 [ ] Find a way to systematically create glimmer .xml scripts
  - [ ] Possibly allow for the creation of unique glimmers for every color material? I could use chem curiosities' color finder function
