@@ -26,7 +26,7 @@ SYSTEMATIC GLIMMER CREATION:
  - [x] Material for glimmer
  - [x] Spell tiers
  - [x] Cast delay reduction
-[ ] Create a function for creating a glimmer
+[x] Create a function for creating a glimmer
  - [x] Create gun_actions.lua entry
  - [x] Create .xml file
  - [x] Insert material into colour_spell.lua
