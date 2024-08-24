@@ -75,28 +75,92 @@ local myFancyNewColors = {
 	createGlimmer("biome", Mod_Id .. "mimic", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
 }
 
-if ModSettingGet("GlimmersExpanded.glimmers_inject_spells") then
-	-- GamePrint(tostring(ModSettingGet("GlimmersExpanded.glimmers_inject_spells")))
-	for k=1,#myFancyNewColors do -- TODO: Organize all the glimmers in rainbow order
-		local v = myFancyNewColors[k]
-		v.author    = v.author  or "Sharpy796"
-		v.mod       = v.mod     or "Glimmers Expanded"
+local organizedGlimmerList = {
+	"GLIMMERS_EXPANDED_COLOUR_WHITE",
+	"GLIMMERS_EXPANDED_COLOUR_PINK",
+	"GLIMMERS_EXPANDED_COLOUR_FUNGI",
+	"COLOUR_RED",
+	"GLIMMERS_EXPANDED_COLOUR_BLOOD",
+	"COLOUR_ORANGE",
+	"GLIMMERS_EXPANDED_COLOUR_LAVA",
+	"COLOUR_YELLOW",
+	"COLOUR_GREEN",
+	"GLIMMERS_EXPANDED_COLOUR_ACID",
+	"GLIMMERS_EXPANDED_COLOUR_WEAKNESS",
+	"GLIMMERS_EXPANDED_COLOUR_TEAL",
+	"COLOUR_BLUE",
+	"GLIMMERS_EXPANDED_COLOUR_FREEZING",
+	"COLOUR_PURPLE",
+	"GLIMMERS_EXPANDED_COLOUR_DARKNESS",
+	"GLIMMERS_EXPANDED_COLOUR_VOID",
+	"GLIMMERS_EXPANDED_COLOUR_MIMIC",
+	"COLOUR_RAINBOW",
+	"GLIMMERS_EXPANDED_COLOUR_TRUE_RAINBOW",
+	"GLIMMERS_EXPANDED_COLOUR_BIOME",
+	"GLIMMERS_EXPANDED_COLOUR_MIDAS",
+	"GLIMMERS_EXPANDED_COLOUR_LC",
+	"COLOUR_INVIS",
+}
 
 
-		if v.id_matchup == nil then
-			table.insert(actions,v)
-		else
-			for z=1,#actions do
-				c = actions[z]
-				if c.id == v.id_matchup or z == #actions then
-					table.insert(actions,z + 1,v)
-					break
-				end
+for _, color in ipairs(myFancyNewColors) do
+	table.insert(actions,color)
+end
+
+if ModSettingGet("GlimmersExpanded.inject_spells") then
+
+		local glimmer_list = {}
+
+		-- for pos=1, #actions do
+			-- local action = actions[pos]
+		for pos, action in ipairs(actions) do
+			if string.find(action.id, "COLOUR") then
+				-- print("Found '"..action.id.."' at pos "..pos)
+				-- glimmer_list[action.id] = table.remove(actions, pos)
+				glimmer_list[action.id] = {
+					action = action,
+					position = pos
+				}
 			end
 		end
-	end
-else
-	for _, color in ipairs(myFancyNewColors) do 
-		table.insert(actions,color) 
-	end
+		-- print("Finished populating glimmer_list")
+
+		local finishedRemoving = false
+		repeat
+			-- for id, action in pairs(glimmer_list) do
+				-- print("removing '"..actions[pos].id)
+				-- table.remove(actions, action.pos)
+			-- end
+			for pos, action in ipairs(actions) do
+				if glimmer_list[action.id] then
+					repeat
+						-- -- print("removing '"..actions[pos].id.."' at position "..pos)
+						table.remove(actions, pos)
+					until not glimmer_list[actions[pos].id]
+				elseif pos >= #actions then
+					finishedRemoving = true
+				end
+			end
+		until finishedRemoving
+		-- print("Finished removing spells from the list")
+
+		for pos, action in ipairs(actions) do
+			if action.id == "IF_ELSE" or pos >= #actions then
+				-- -- insert white glimmer
+				-- print("inserting 'GLIMMERS_EXPANDED_COLOUR_WHITE' at position "..(pos+1))
+				-- table.insert(actions, pos+1, glimmer_list["GLIMMERS_EXPANDED_COLOUR_WHITE"].action)
+				pos = pos + 1
+				for _,id in ipairs(organizedGlimmerList) do
+					-- print("inserting '"..id.."' at position "..(pos))
+					-- table.insert(actions, pos+1, glimmer_list[id])
+					if glimmer_list[id] then
+						table.insert(actions, pos, glimmer_list[id].action)
+						pos = pos + 1
+					end
+				end
+				break
+			end
+		end
+		-- print("Finished inserting spells back into list")
+	-- end
 end

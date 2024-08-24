@@ -1,3 +1,4 @@
+REQUIRED:
 [x] Update art for existing glimmers so they look pretty (i.e. ominous, fungus)
 [x] Give all glimmers spawn rates
 [ ] Fix glimmer spawn rates so that it averages out and doesn't inflate the spawn chances of all glimmers
@@ -16,8 +17,13 @@
  - [x] Clean up the glimmer alchemy code
 [x] Possibly keep the lab un-populated until you enter the portal the correct way?
 [x] Make modded materials work with glimmer alchemy
+[x] Add a mod setting that can toggle glimmer alchemy on and off
+[ ] Actually decide on a catalyst for glimmer alchemy
+
+OPTIMIZATION:
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
 [ ] Find a way append the new glimmer changes into colour_spell.lua instead of gsubbing?
-[ ] Reorder all glimmers inside of progress menu into color order
+[x] Reorder all glimmers inside of progress menu into color order
+ - [ ] Optimize this code
 [ ] Find a way to systematically create glimmer .xml scripts
  - [ ] Possibly allow for the creation of unique glimmers for every color material? I could use chem curiosities' color finder function

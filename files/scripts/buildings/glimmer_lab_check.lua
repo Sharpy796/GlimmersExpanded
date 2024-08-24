@@ -45,7 +45,7 @@ local glimmer_lab_spell_locations = {
     ["GLIMMERS_EXPANDED_COLOUR_FUNGI"] = { 171, 8 },
     ["GLIMMERS_EXPANDED_COLOUR_BLOOD"] = { 146, 6 },
     -- ["GLIMMERS_EXPANDED_COLOUR_LAVA"] = { 121, 4 },
-    ["COLOUR_ORANGE"] = { 80, 90 },
+    -- ["COLOUR_ORANGE"] = { 80, 90 },
     ["GLIMMERS_EXPANDED_COLOUR_ACID"] = { 96, 2 },
     ["GLIMMERS_EXPANDED_COLOUR_WEAKNESS"] = { 173, -21 },
     ["GLIMMERS_EXPANDED_COLOUR_FREEZING"] = { 148, -23 },
@@ -57,6 +57,12 @@ local glimmer_lab_spell_locations = {
     ["GLIMMERS_EXPANDED_COLOUR_MIMIC"] = { 101, -56 },
     ["GLIMMERS_EXPANDED_COLOUR_BIOME"] = { 178, -79 },
 }
+
+if (ModSettingGet("GlimmersExpanded.allow_alchemy")) then
+    glimmer_lab_spell_locations["COLOUR_ORANGE"] = { 80, 90 }
+else
+    glimmer_lab_spell_locations["GLIMMERS_EXPANDED_COLOUR_LAVA"] = { 121, 4 }
+end
 
 local function spawn_glimmer_lab_spell( spell_id, x, y )
     CreateItemActionEntity( spell_id, x, y )

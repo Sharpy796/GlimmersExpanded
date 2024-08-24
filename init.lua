@@ -2,7 +2,7 @@ dofile_once("data/scripts/lib/utilities.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
--- ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
+ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
@@ -209,27 +209,18 @@ end
 
 function OnPlayerSpawned(player_id)
     -- local x, y = EntityGetTransform(player_id)
-	
-	
-	-- GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
-
+	GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
-	-- 	-- CreateItemActionEntity( "COLOUR_INVIS", x, y )
-	-- 	-- CreateItemActionEntity( "LASER_EMITTER", x, y )
-	-- 	-- CreateItemActionEntity( "LASER_EMITTER_CUTTER", x, y )
-
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
 	end
 end
 
+function OnMagicNumbersAndWorldSeedInitialized()
+	if (ModSettingGet("GlimmersExpanded.allow_alchemy")) then dofile("mods/GlimmersExpanded/files/alchemy/generate_glimmer_alchemy.lua") end
+end
 
 -- This code runs when all mods' filesystems are registered
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_materials.xml")
-function OnMagicNumbersAndWorldSeedInitialized()
-	dofile("mods/GlimmersExpanded/files/alchemy/generate_glimmer_alchemy.lua")
-end
-function OnModPostInit()
-end
 ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
