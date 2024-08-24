@@ -7,8 +7,7 @@ mod_settings =
     {
         id = "inject_spells",
         ui_name = "Inject Spells",
-        ui_description = "Injects the new glimmer spells into their appropriate spots in the progress menu.",
-        -- ui_description = "Injects the new glimmer spells into their appropriate spots in the progress menu.\nIt also organizes all of the glimmer spells in color order.",
+        ui_description = "Injects the new glimmer spells into their appropriate spots in the progress menu.\nIt also organizes all of the glimmer spells in color order.",
         value_default = true,
         scope = MOD_SETTING_SCOPE_RUNTIME_RESTART
     },
