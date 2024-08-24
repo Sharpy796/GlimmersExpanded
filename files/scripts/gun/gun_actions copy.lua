@@ -76,30 +76,30 @@ local myFancyNewColors = {
 }
 
 local organizedGlimmerList = {
-	{id="GLIMMERS_EXPANDED_COLOUR_WHITE", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_PINK", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_FUNGI", action={}},
-	{id="COLOUR_RED", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_BLOOD", action={}},
-	{id="COLOUR_ORANGE", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_LAVA", action={}},
-	{id="COLOUR_YELLOW", action={}},
-	{id="COLOUR_GREEN", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_ACID", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_WEAKNESS", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_TEAL", action={}},
-	{id="COLOUR_BLUE", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_FREEZING", action={}},
-	{id="COLOUR_PURPLE", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_DARKNESS", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_VOID", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_MIMIC", action={}},
-	{id="COLOUR_RAINBOW", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_TRUE_RAINBOW", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_BIOME", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_MIDAS", action={}},
-	{id="GLIMMERS_EXPANDED_COLOUR_LC", action={}},
-	{id="COLOUR_INVIS", action={}},
+	["GLIMMERS_EXPANDED_COLOUR_WHITE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_PINK"]={},
+	["GLIMMERS_EXPANDED_COLOUR_FUNGI"]={},
+	["COLOUR_RED"]={},
+	["GLIMMERS_EXPANDED_COLOUR_BLOOD"]={},
+	["COLOUR_ORANGE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_LAVA"]={},
+	["COLOUR_YELLOW"]={},
+	["COLOUR_GREEN"]={},
+	["GLIMMERS_EXPANDED_COLOUR_ACID"]={},
+	["GLIMMERS_EXPANDED_COLOUR_WEAKNESS"]={},
+	["GLIMMERS_EXPANDED_COLOUR_TEAL"]={},
+	["COLOUR_BLUE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_FREEZING"]={},
+	["COLOUR_PURPLE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_DARKNESS"]={},
+	["GLIMMERS_EXPANDED_COLOUR_VOID"]={},
+	["GLIMMERS_EXPANDED_COLOUR_MIMIC"]={},
+	["COLOUR_RAINBOW"]={},
+	["GLIMMERS_EXPANDED_COLOUR_TRUE_RAINBOW"]={},
+	["GLIMMERS_EXPANDED_COLOUR_BIOME"]={},
+	["GLIMMERS_EXPANDED_COLOUR_MIDAS"]={},
+	["GLIMMERS_EXPANDED_COLOUR_LC"]={},
+	["COLOUR_INVIS"]={},
 }
 
 
@@ -120,13 +120,9 @@ if ModSettingGet("GlimmersExpanded.inject_spells") then
 				id = actions[pos].id
 				isGlimmer = string.find(id, "COLOUR")
 				-- store the action & remove it
-				if isGlimmer then
+				if isGlimmer or organizedGlimmerList[id] then
 					print("'"..id.."' is a glimmer, removing ("..pos.."/"..#actions..")")
-					for _,entry in ipairs(organizedGlimmerList) do
-						if entry.id == id then
-							entry.action = table.remove(actions, pos)
-						end
-					end
+					organizedGlimmerList[id] = table.remove(actions, pos)
 				end
 				-- check if the new action at that position is a glimmer
 				-- if so, repeat until it's not or we reach the end
@@ -156,15 +152,15 @@ if ModSettingGet("GlimmersExpanded.inject_spells") then
 
 	for pos, action in ipairs(actions) do
 		if pos > #actions then
-			for _, entry in ipairs(organizedGlimmerList) do
-				table.insert(actions, entry.action)
+			for id, action_glimmer in pairs(organizedGlimmerList) do
+				table.insert(actions, action_glimmer)
 			end
 		elseif action.id == "IF_ELSE" then
-			for _, entry in ipairs(organizedGlimmerList) do
+			for id, action_glimmer in pairs(organizedGlimmerList) do
 				-- print("inserting '"..id.."' at position "..(pos))
-				if entry.action then
+				if action_glimmer then
 					pos = pos + 1
-					table.insert(actions, pos, entry.action)
+					table.insert(actions, pos, action_glimmer)
 				end
 			end
 			break
