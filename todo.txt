@@ -20,6 +20,17 @@ REQUIRED:
 [x] Add a mod setting that can toggle glimmer alchemy on and off
 [ ] Actually decide on a catalyst for glimmer alchemy
 
+SYSTEMATIC GLIMMER CREATION:
+[ ] Compile a list of the materials I want to use for glimmers
+ - [ ] Name of glimmer
+ - [ ] Material for glimmer
+ - [ ] Spell tiers
+ - [ ] Cast delay reduction
+[ ] Create a function for creating a glimmer
+ - [ ] Create gun_actions.lua entry
+ - [ ] Create .xml file
+ - [ ] Insert material into colour_spell.lua
+
 OPTIMIZATION:
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
 [ ] Find a way to append the new glimmer changes into colour_spell.lua instead of gsubbing?
