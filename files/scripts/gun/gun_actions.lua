@@ -125,23 +125,24 @@ if ModSettingGet("GlimmersExpanded.inject_spells") then
 		end
 		-- print("Finished populating glimmer_list")
 
-		local finishedRemoving = false
-		repeat
+		-- local finishedRemoving = false
+		-- repeat
 			-- for id, action in pairs(glimmer_list) do
 				-- print("removing '"..actions[pos].id)
 				-- table.remove(actions, action.pos)
 			-- end
 			for pos, action in ipairs(actions) do
-				if glimmer_list[action.id] then
+				if pos >= #actions then
+					-- finishedRemoving = true
+					break
+				elseif glimmer_list[action.id] then
 					repeat
-						-- -- print("removing '"..actions[pos].id.."' at position "..pos)
+						print("removing '"..actions[pos].id.."' at position "..pos)
 						table.remove(actions, pos)
-					until not glimmer_list[actions[pos].id]
-				elseif pos >= #actions then
-					finishedRemoving = true
+					until (not glimmer_list[actions[pos].id]) or pos >= #actions
 				end
 			end
-		until finishedRemoving
+		-- until finishedRemoving
 		-- print("Finished removing spells from the list")
 
 		for pos, action in ipairs(actions) do
