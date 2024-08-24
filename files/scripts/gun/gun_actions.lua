@@ -76,30 +76,30 @@ local myFancyNewColors = {
 }
 
 local organizedGlimmerList = {
-	"GLIMMERS_EXPANDED_COLOUR_WHITE",
-	"GLIMMERS_EXPANDED_COLOUR_PINK",
-	"GLIMMERS_EXPANDED_COLOUR_FUNGI",
-	"COLOUR_RED",
-	"GLIMMERS_EXPANDED_COLOUR_BLOOD",
-	"COLOUR_ORANGE",
-	"GLIMMERS_EXPANDED_COLOUR_LAVA",
-	"COLOUR_YELLOW",
-	"COLOUR_GREEN",
-	"GLIMMERS_EXPANDED_COLOUR_ACID",
-	"GLIMMERS_EXPANDED_COLOUR_WEAKNESS",
-	"GLIMMERS_EXPANDED_COLOUR_TEAL",
-	"COLOUR_BLUE",
-	"GLIMMERS_EXPANDED_COLOUR_FREEZING",
-	"COLOUR_PURPLE",
-	"GLIMMERS_EXPANDED_COLOUR_DARKNESS",
-	"GLIMMERS_EXPANDED_COLOUR_VOID",
-	"GLIMMERS_EXPANDED_COLOUR_MIMIC",
-	"COLOUR_RAINBOW",
-	"GLIMMERS_EXPANDED_COLOUR_TRUE_RAINBOW",
-	"GLIMMERS_EXPANDED_COLOUR_BIOME",
-	"GLIMMERS_EXPANDED_COLOUR_MIDAS",
-	"GLIMMERS_EXPANDED_COLOUR_LC",
-	"COLOUR_INVIS",
+	["GLIMMERS_EXPANDED_COLOUR_WHITE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_PINK"]={},
+	["GLIMMERS_EXPANDED_COLOUR_FUNGI"]={},
+	["COLOUR_RED"]={},
+	["GLIMMERS_EXPANDED_COLOUR_BLOOD"]={},
+	["COLOUR_ORANGE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_LAVA"]={},
+	["COLOUR_YELLOW"]={},
+	["COLOUR_GREEN"]={},
+	["GLIMMERS_EXPANDED_COLOUR_ACID"]={},
+	["GLIMMERS_EXPANDED_COLOUR_WEAKNESS"]={},
+	["GLIMMERS_EXPANDED_COLOUR_TEAL"]={},
+	["COLOUR_BLUE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_FREEZING"]={},
+	["COLOUR_PURPLE"]={},
+	["GLIMMERS_EXPANDED_COLOUR_DARKNESS"]={},
+	["GLIMMERS_EXPANDED_COLOUR_VOID"]={},
+	["GLIMMERS_EXPANDED_COLOUR_MIMIC"]={},
+	["COLOUR_RAINBOW"]={},
+	["GLIMMERS_EXPANDED_COLOUR_TRUE_RAINBOW"]={},
+	["GLIMMERS_EXPANDED_COLOUR_BIOME"]={},
+	["GLIMMERS_EXPANDED_COLOUR_MIDAS"]={},
+	["GLIMMERS_EXPANDED_COLOUR_LC"]={},
+	["COLOUR_INVIS"]={},
 }
 
 
@@ -109,59 +109,62 @@ end
 
 if ModSettingGet("GlimmersExpanded.inject_spells") then
 
-		local glimmer_list = {}
+	-- local glimmer_list = {}
 
-		-- for pos=1, #actions do
-			-- local action = actions[pos]
-		for pos, action in ipairs(actions) do
-			if string.find(action.id, "COLOUR") then
-				-- print("Found '"..action.id.."' at pos "..pos)
-				-- glimmer_list[action.id] = table.remove(actions, pos)
-				glimmer_list[action.id] = {
-					action = action,
-					position = pos
-				}
-			end
-		end
-		-- print("Finished populating glimmer_list")
-
-		-- local finishedRemoving = false
-		-- repeat
-			-- for id, action in pairs(glimmer_list) do
-				-- print("removing '"..actions[pos].id)
-				-- table.remove(actions, action.pos)
-			-- end
-			for pos, action in ipairs(actions) do
-				if pos >= #actions then
-					-- finishedRemoving = true
-					break
-				elseif glimmer_list[action.id] then
-					repeat
-						print("removing '"..actions[pos].id.."' at position "..pos)
-						table.remove(actions, pos)
-					until (not glimmer_list[actions[pos].id]) or pos >= #actions
+	for pos, action in ipairs(actions) do
+		if pos >= #actions then break end
+		local id = action.id
+		local isGlimmer = string.find(id, "COLOUR")
+		if isGlimmer then
+			repeat
+				id = actions[pos].id
+				isGlimmer = string.find(id, "COLOUR")
+				-- store the action & remove it
+				if isGlimmer or organizedGlimmerList[id] then
+					print("'"..id.."' is a glimmer, removing ("..pos.."/"..#actions..")")
+					organizedGlimmerList[id] = table.remove(actions, pos)
 				end
-			end
-		-- until finishedRemoving
-		-- print("Finished removing spells from the list")
+				-- check if the new action at that position is a glimmer
+				-- if so, repeat until it's not or we reach the end
+			until (not isGlimmer) or pos > #actions
 
-		for pos, action in ipairs(actions) do
-			if action.id == "IF_ELSE" or pos >= #actions then
-				-- -- insert white glimmer
-				-- print("inserting 'GLIMMERS_EXPANDED_COLOUR_WHITE' at position "..(pos+1))
-				-- table.insert(actions, pos+1, glimmer_list["GLIMMERS_EXPANDED_COLOUR_WHITE"].action)
-				pos = pos + 1
-				for _,id in ipairs(organizedGlimmerList) do
-					-- print("inserting '"..id.."' at position "..(pos))
-					-- table.insert(actions, pos+1, glimmer_list[id])
-					if glimmer_list[id] then
-						table.insert(actions, pos, glimmer_list[id].action)
-						pos = pos + 1
-					end
-				end
-				break
-			end
+			-- print("Found '"..action.id.."' at pos "..pos)
+			-- glimmer_list[action.id] = {
+			-- 	action = action,
+			-- 	position = pos
+			-- }
 		end
-		-- print("Finished inserting spells back into list")
+	end
+	print("Finished populating glimmer_list and removing spells from list")
+	-- print("Finished populating glimmer_list")
+
+	-- for pos, action in ipairs(actions) do
+	-- 	if pos >= #actions then
+	-- 		break
+	-- 	elseif glimmer_list[action.id] then
+	-- 		repeat
+	-- 			print("removing '"..actions[pos].id.."' at position "..pos)
+	-- 			table.remove(actions, pos)
+	-- 		until (not glimmer_list[actions[pos].id]) or pos >= #actions
+	-- 	end
 	-- end
+	-- print("Finished removing spells from the list")
+
+	for pos, action in ipairs(actions) do
+		if pos > #actions then
+			for id, action_glimmer in pairs(organizedGlimmerList) do
+				table.insert(actions, action_glimmer)
+			end
+		elseif action.id == "IF_ELSE" then
+			for id, action_glimmer in pairs(organizedGlimmerList) do
+				-- print("inserting '"..id.."' at position "..(pos))
+				if action_glimmer then
+					pos = pos + 1
+					table.insert(actions, pos, action_glimmer)
+				end
+			end
+			break
+		end
+	end
+	-- print("Finished inserting spells back into list")
 end
