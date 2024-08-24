@@ -1,0 +1,16 @@
+<Mod
+    name="Glimmers Expanded"
+    description="Cast your spells with expanded flair!
+
+This mod adds 16 new glimmer spells! 3 of them can be found in the usual bunker that the glimmer spells are at, but the other 13 have a bit of a... twist to them. Visit the glimmer bunker for more details!
+This mod also adds glimmer alchemy! The process includes:
+- A recipe: [spoiler]Australium + any Glimmer spell + any liquid.[/spoiler]
+- This creates [spoiler]a glimmer colored similarly to the liquid involved.[/spoiler]
+- The secondary recipe for [spoiler]Australium[/spoiler] is [spoiler]urine + pus + flummoxium[/spoiler], three materials that may be hard to come by.
+
+Please, especially give me feedback on the alchemy part of the mod! Depending on how difficult or tedious the alchemy ends up being, I may change the materials involved.
+
+Also, for those wondering, this *is* compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). If you do find a bug, please let me know and I'll look into patching it as soon as I can."
+    tags="gameplay, spells, alchemy"
+    dont_upload_files="balancing_glimmers.png"
+></Mod>
