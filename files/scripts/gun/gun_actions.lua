@@ -1,12 +1,10 @@
 local Mod_Id = "GLIMMERS_EXPANDED_COLOUR_"
 
-local function createGlimmer (Name, Matchup, wait_frames, spawn_list, unlock_flag)
+local function createGlimmer (Name, wait_frames, spawn_list, unlock_flag)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
 	local NAME = Name:upper()
 	local name = Name:lower()
-	if Matchup == nil then Matchup = "COLOUR_INVIS" end
-	local MATCHUP = Matchup:upper()
 	if wait_frames == nil then wait_frames = 8 end
 	if spawn_list == nil then spawn_list = {["1"]="0.2",["2"]="0.2",["3"]="0.4",["4"]="0.2",["5"]="0.2",["6"]="0.2"} end
 	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
@@ -24,7 +22,6 @@ local function createGlimmer (Name, Matchup, wait_frames, spawn_list, unlock_fla
 	local newGlimmer = 
 	{
 		id 						= MOD_ID .. NAME,
-		id_matchup				= MATCHUP,
 		name 					= "$action_" .. mod_id .. name,
 		description 			= "$actiondesc_" .. mod_id .. name,
 		sprite 					= "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_" .. name .. ".png",
@@ -49,30 +46,30 @@ local function createGlimmer (Name, Matchup, wait_frames, spawn_list, unlock_fla
 end
 
 local myFancyNewColors = {
-	createGlimmer("white", "IF_ELSE", nil, {["1"]="0.4",["2"]="0.2",["3"]="0.4",["4"]="0.2"}),
-	createGlimmer("pink", Mod_Id .. "white", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1"}),
-	createGlimmer("fungi", Mod_Id .. "pink", nil, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
+	createGlimmer("white", nil, {["1"]="0.4",["2"]="0.2",["3"]="0.4",["4"]="0.2"}),
+	createGlimmer("pink", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1"}),
+	createGlimmer("fungi", nil, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
 	-- red glimmer
-	createGlimmer("blood", "COLOUR_RED", nil, {["2"]="0.2",["3"]="0.2",["4"]="0.4",["5"]="0.2",["6"]="0.2",["10"]="0.2"}),
+	createGlimmer("blood", nil, {["2"]="0.2",["3"]="0.2",["4"]="0.4",["5"]="0.2",["6"]="0.2",["10"]="0.2"}),
 	-- orange glimmer
-	createGlimmer("lava", "COLOUR_ORANGE", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	createGlimmer("lava", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
 	-- createGlimmer("transmuted yellow??", nil, "2,3,4", "0.1,0.4,0.1"),
 	-- green glimmer
-	createGlimmer("acid", "COLOUR_GREEN", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
-	createGlimmer("weakness", Mod_Id .. "acid", 15, {["3"]="0.1",["4"]="0.4",["5"]="0.1"}),
-	createGlimmer("teal", Mod_Id .. "weakness", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	createGlimmer("acid", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
+	createGlimmer("weakness", 15, {["3"]="0.1",["4"]="0.4",["5"]="0.1"}),
+	createGlimmer("teal", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
 	-- createGlimmer("transmuted teal??", "2,3,4", "0.4,0.1,0.1"),
 	-- blue glimmer
-	createGlimmer("freezing", "COLOUR_BLUE", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
+	createGlimmer("freezing", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
 	-- purple glimmer
-	createGlimmer("darkness", "COLOUR_PURPLE", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
-	createGlimmer("void", Mod_Id .. "darkness", nil, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
-	createGlimmer("lc", Mod_Id .. "void", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
-	createGlimmer("midas", Mod_Id .. "lc", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	createGlimmer("darkness", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	createGlimmer("void", nil, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	createGlimmer("lc", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	createGlimmer("midas", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
 	-- rainbow glimmer
-	createGlimmer("true_rainbow", "COLOUR_RAINBOW", nil, {["2"]="0.1",["3"]="0.1",["4"]="0.1",["10"]="0.2"}),
-	createGlimmer("mimic", Mod_Id .. "true_rainbow", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
-	createGlimmer("biome", Mod_Id .. "mimic", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	createGlimmer("true_rainbow", nil, {["2"]="0.1",["3"]="0.1",["4"]="0.1",["10"]="0.2"}),
+	createGlimmer("mimic", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	createGlimmer("biome", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
 }
 
 local organizedGlimmerList = {
