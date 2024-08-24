@@ -2,13 +2,11 @@ dofile_once("data/scripts/lib/utilities.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
--- ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
+ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
 
+local glimmer_list_revamped = dofile_once("mods/GlimmersExpanded/files/glimmer_list_revamped.lua")
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
-translations = translations .. new_translations
-translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
-ModTextFileSetContent("data/translations/common.csv", translations)
 
 local isPrideGlimmersEnabled = ModIsEnabled("pride_glimmers")
 
@@ -47,7 +45,7 @@ local patches = {
 	{
 		path	= "data/scripts/projectiles/colour_spell.lua",
 		from	= [[rainbow]],
-		to		= [[white 	= {particle = "spark_white",}, 
+		to		= [[white 	= {particle = "spark_white",},
 	mimic		= {particle = "mimic_liquid",},
 	pink		= {particle = "plasma_fading_pink",},
 	teal		= {particle = "spark_teal",},
@@ -195,6 +193,278 @@ local colour,particle]],
     },
 }
 
+local Mod_Id = "GLIMMERS_EXPANDED_COLOUR_"
+
+local myFancyNewColors = {
+	-- createGlimmer("white", nil, {["1"]="0.4",["2"]="0.2",["3"]="0.4",["4"]="0.2"}),
+	-- createGlimmer("pink", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1"}),
+	-- createGlimmer("fungi", nil, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
+	-- -- red glimmer
+	-- createGlimmer("blood", nil, {["2"]="0.2",["3"]="0.2",["4"]="0.4",["5"]="0.2",["6"]="0.2",["10"]="0.2"}),
+	-- -- orange glimmer
+	-- createGlimmer("lava", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	-- -- createGlimmer("transmuted yellow??", nil, "2,3,4", "0.1,0.4,0.1"),
+	-- -- green glimmer
+	-- createGlimmer("acid", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
+	-- createGlimmer("weakness", 15, {["3"]="0.1",["4"]="0.4",["5"]="0.1"}),
+	-- createGlimmer("teal", nil, {["2"]="0.4",["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	-- -- createGlimmer("transmuted teal??", "2,3,4", "0.4,0.1,0.1"),
+	-- -- blue glimmer
+	-- createGlimmer("freezing", 15, {["3"]="0.4",["4"]="0.1",["5"]="0.1"}),
+	-- -- purple glimmer
+	-- createGlimmer("darkness", 15, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	-- createGlimmer("void", nil, {["3"]="0.1",["4"]="0.1",["5"]="0.4"}),
+	-- createGlimmer("lc", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	-- createGlimmer("midas", 4, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	-- -- rainbow glimmer
+	-- createGlimmer("true_rainbow", nil, {["2"]="0.1",["3"]="0.1",["4"]="0.1",["10"]="0.2"}),
+	-- createGlimmer("mimic", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+	-- createGlimmer("biome", nil, {["5"]="0.1",["6"]="0.1",["10"]="0.2"}),
+}
+
+local organizedGlimmerList = {
+	-- "GLIMMERS_EXPANDED_COLOUR_WHITE",
+	-- "GLIMMERS_EXPANDED_COLOUR_PINK",
+	-- "GLIMMERS_EXPANDED_COLOUR_FUNGI",
+	"COLOUR_RED",
+	-- "GLIMMERS_EXPANDED_COLOUR_BLOOD",
+	"COLOUR_ORANGE",
+	-- "GLIMMERS_EXPANDED_COLOUR_LAVA",
+	"COLOUR_YELLOW",
+	"COLOUR_GREEN",
+	-- "GLIMMERS_EXPANDED_COLOUR_ACID",
+	-- "GLIMMERS_EXPANDED_COLOUR_WEAKNESS",
+	-- "GLIMMERS_EXPANDED_COLOUR_TEAL",
+	"COLOUR_BLUE",
+	-- "GLIMMERS_EXPANDED_COLOUR_FREEZING",
+	"COLOUR_PURPLE",
+	-- "GLIMMERS_EXPANDED_COLOUR_DARKNESS",
+	-- "GLIMMERS_EXPANDED_COLOUR_VOID",
+	-- "GLIMMERS_EXPANDED_COLOUR_MIMIC",
+	"COLOUR_RAINBOW",
+	-- "GLIMMERS_EXPANDED_COLOUR_TRUE_RAINBOW",
+	-- "GLIMMERS_EXPANDED_COLOUR_BIOME",
+	-- "GLIMMERS_EXPANDED_COLOUR_MIDAS",
+	-- "GLIMMERS_EXPANDED_COLOUR_LC",
+	"COLOUR_INVIS",
+}
+
+local function createGlimmerXML(id, data)
+	local xml = [[<Entity>
+   
+	<LuaComponent
+		script_source_file="data/scripts/projectiles/colour_spell.lua"
+		execute_every_n_frame="1"
+		remove_after_executed="1"
+		>
+	</LuaComponent>
+	
+	<LuaComponent
+		script_source_file="data/scripts/projectiles/colour_spell.lua"
+		execute_on_added="1"
+		remove_after_executed="1"
+		>
+	</LuaComponent>
+	
+	<VariableStorageComponent
+		name="colour_name"
+		value_string="]]..id:lower()..[["
+		>
+	</VariableStorageComponent>
+  
+    <ParticleEmitterComponent 
+          emitted_material_name="]]..data.materials[1]..[["
+          offset.x="0"
+          offset.y="0"
+          x_pos_offset_min="-1"
+          x_pos_offset_max="1"
+          y_pos_offset_min="-1"
+          y_pos_offset_max="1"
+          gravity.y="0"
+          x_vel_min="-2"
+          x_vel_max="2"
+          y_vel_min="-2"
+          y_vel_max="2"
+          count_min="1"
+          count_max="1"
+          is_trail="1"
+          trail_gap="1"
+          fade_based_on_lifetime="1"
+          lifetime_min="0.8"
+          lifetime_max="2.0"
+          airflow_force="1.5"
+          airflow_time="0.401"
+          airflow_scale="0.05"
+          create_real_particles="0"
+          emit_cosmetic_particles="1"
+          render_on_grid="1"
+          emission_interval_min_frames="1"
+          emission_interval_max_frames="2"
+          is_emitting="1" >
+      </ParticleEmitterComponent>
+</Entity>]]
+	ModTextFileSetContent("mods/GlimmersExpanded/files/entities/misc/"..id..".xml", xml)
+	return xml
+end
+
+local function createColourSpellLuaEntry(id, data)
+	patches[4].to = [["]]..data.materials[1]..[[", ]]..patches[4].to
+	patches[5].to = id:lower()..[[ = {particle = "]]..data.materials[1]..[[",},
+	]]..patches[5].to
+end
+
+local function createTranslation(id, data)
+	new_translations = new_translations..[[
+	action_]]..id:lower()..[[,]]..data.name..[[,,,,,,,,,,,,,
+	actiondesc_]]..id:lower()..[[,]]..data.name..[[,,,,,,,,,,,,,]]
+end
+
+local function insertIntoProgress(id)
+	table.insert(organizedGlimmerList, id)
+end
+
+local function createGlimmerAction (Name, wait_frames, spawn_tiers, unlock_flag)
+	local MOD_ID = Mod_Id:upper()
+	local mod_id = Mod_Id:lower()
+	local NAME = Name:upper()
+	local name = Name:lower()
+	if wait_frames == nil then wait_frames = 8 end
+	-- if spawn_list == nil then spawn_list = {["1"]="0.2",["2"]="0.2",["3"]="0.4",["4"]="0.2",["5"]="0.2",["6"]="0.2"} end
+	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
+	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
+
+	-- local spawn_tiers, spawn_probs = "", ""
+	-- for tier, prob in pairs(spawn_list) do
+	-- 	spawn_tiers = spawn_tiers .. tier
+	-- 	spawn_probs = spawn_probs .. prob
+	-- 	if spawn_list[tier] ~= spawn_list[#spawn_list] then
+	-- 		spawn_tiers = spawn_tiers .. ","
+	-- 		spawn_probs = spawn_probs .. ","
+	-- 	end
+	-- end
+
+
+	-- TODO: Somehow add new glimmers into the organized list
+	local newGlimmer =
+	{
+		-- id 						= MOD_ID .. NAME,
+		-- name 					= "$action_" .. mod_id .. name,
+		-- description 			= "$actiondesc_" .. mod_id .. name,
+		-- sprite 					= "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_" .. name .. ".png",
+		-- related_extra_entities 	= { "mods/GlimmersExpanded/files/entities/misc/colour_" .. name .. ".xml" },
+		id 						= NAME,
+		name 					= "$action_" .. name,  -- TODO: Add translations dynamically
+		description 			= "$actiondesc_" .. name,
+		sprite 					= "mods/GlimmersExpanded/files/gfx/ui_gfx/" .. name .. ".png",
+		related_extra_entities 	= { "mods/GlimmersExpanded/files/entities/misc/" .. name .. ".xml" },
+		type 					= ACTION_TYPE_MODIFIER,
+		spawn_level 			= spawn_tiers,
+		spawn_probability 		= "0.2,0.2,0.2,0.2,0.2,0.2", -- TODO: Make this more dynamic and averaged
+		spawn_requires_flag 	= unlock_flag,
+		price 					= 40,
+		mana 					= 0,
+		action 					= function()
+			c.extra_entities = c.extra_entities .. "mods/GlimmersExpanded/files/entities/misc/" .. name .. ".xml,"
+			c.fire_rate_wait = c.fire_rate_wait - wait_frames
+			c.screenshake = c.screenshake - 2.5
+			if ( c.screenshake < 0 ) then
+				c.screenshake = 0
+			end
+			draw_actions( 1, true )
+		end,
+	}
+	table.insert(myFancyNewColors, newGlimmer)
+	return newGlimmer
+end
+
+for id, data in pairs(glimmer_list_revamped) do
+	-- if GameHasFlagRun("glimmers_expanded_initialized_glimmers") then
+		
+	-- else
+		createGlimmerXML(id, data)
+		createColourSpellLuaEntry(id, data)
+		insertIntoProgress(id)
+		createTranslation(id, data)
+	-- end
+	-- createGlimmerAction(id, data.cast_delay, data.spawn_tiers)
+end
+
+local function tableToString(name, table)
+	local string = "local "..name.." = "
+	for k,v in pairs(table) do
+		string = string..[[
+		[]]..k..[[] = ]]..v
+	end
+end
+
+translations = translations .. new_translations
+translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
+ModTextFileSetContent("data/translations/common.csv", translations)
+
+print("organizedGlimmerList = "..tostring(organizedGlimmerList))
+print("myFancyNewColors = "..tostring(myFancyNewColors))
+
+local actions_appends = [[local organizedGlimmerList = ]]..tostring(organizedGlimmerList)..[[
+
+local myFancyNewColors = ]]..tostring(myFancyNewColors)..[[
+
+for _, color in ipairs(myFancyNewColors) do
+	table.insert(actions,color)
+end
+
+if ModSettingGet("GlimmersExpanded.inject_spells") then
+
+	local allGlimmerList = {}
+	for pos, entry in ipairs(organizedGlimmerList) do
+		allGlimmerList[entry] = pos
+	end
+
+	for pos, action in ipairs(actions) do
+		if pos >= #actions then break end
+		local id = action.id
+		local isGlimmer = allGlimmerList[id]
+		if isGlimmer then
+			repeat
+				id = actions[pos].id
+				isGlimmer = allGlimmerList[id]
+				if isGlimmer then
+					organizedGlimmerList[isGlimmer] = table.remove(actions, pos)
+				end
+			until (not isGlimmer) or pos > #actions
+		end
+	end
+	-- print("Finished populating glimmer_list and removing spells from list")
+
+	for pos, action in ipairs(actions) do
+		if pos > #actions then
+			for _, entry in ipairs(organizedGlimmerList) do
+				table.insert(actions, entry)
+			end
+		elseif action.id == "IF_ELSE" then
+			for _, entry in ipairs(organizedGlimmerList) do
+				-- print("inserting '"..id.."' at position "..(pos))
+				if entry then
+					pos = pos + 1
+					table.insert(actions, pos, entry)
+				end
+			end
+			break
+		end
+	end
+	-- print("Finished inserting spells back into list")
+end]]
+-- ModTextFileSetContent("mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua", actions_appends)
+
+
+
+
+
+
+
+
+
+
+
 
 -- Thanks Graham for this bit of code, it looks very useful
 for i=1, #patches do
@@ -209,7 +479,7 @@ end
 
 function OnPlayerSpawned(player_id)
     -- local x, y = EntityGetTransform(player_id)
-	-- GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
+	GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
