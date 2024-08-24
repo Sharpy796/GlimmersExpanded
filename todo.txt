@@ -3,7 +3,7 @@ REQUIRED:
 [x] Give all glimmers spawn rates
 [ ] Fix glimmer spawn rates so that it averages out and doesn't inflate the spawn chances of all glimmers
 [x] Make glimmers work with plasma beams
- - [x] Make Copi's new code not crash when invis glimmer is used
+ - [x] Make Conga's new code not crash when invis glimmer is used
 [x] Inject new glimmers into the spell list
 [x] Make the new glimmers spawn somewhere
  - [x] Bunker
