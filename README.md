@@ -12,7 +12,7 @@ Also, for those wondering, this is compatible with a multitude of mods, the most
 Here's the link to the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3316355233) version of the mod!
 
 ## Modding!!
-For the modders out there, you might be wondering, "How can I create my own glimmers for this mod?" It's fairly easy! There's a few simple steps you have to follow:
+For the modders out there, you might be wondering, "How can I create my own glimmers for this mod?" It's fairly easy! There's a few simple steps you have to follow: 
 - Make sure your mod is *above* this one in the mod list.
 - Create a file to contain your new glimmers.
 - For each glimmer you want, fill out an `addGlimmer()` function (explanation below).
