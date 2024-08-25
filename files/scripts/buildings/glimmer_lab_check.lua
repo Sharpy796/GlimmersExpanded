@@ -55,7 +55,7 @@ local glimmer_lab_spell_locations = {
     ["GLIMMERS_EXPANDED_COLOUR_MIDAS"] = { 151, -52 },
     ["GLIMMERS_EXPANDED_COLOUR_VOID"] = { 126, -54 },
     ["GLIMMERS_EXPANDED_COLOUR_MIMICIUM"] = { 101, -56 },
-    -- ["GLIMMERS_EXPANDED_COLOUR_BIOME"] = { 178, -79 }, -- TODO: Enable this once it is done
+    ["GLIMMERS_EXPANDED_COLOUR_BIOME"] = { 178, -79 }, -- TODO: Enable this once it is done
 }
 
 if (ModSettingGet("GlimmersExpanded.allow_alchemy")) then

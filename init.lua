@@ -256,12 +256,104 @@ action_]]..id:lower()..[[,"]]..data.name..[[",,,,,,,,,,,,,
 actiondesc_]]..id:lower()..[[,"]]..data.desc..[[",,,,,,,,,,,,,]]
 end
 
-local function insertIntoProgress(id)
-	-- print("Inserting '"..id.."' into progress")
-	table.insert(organizedGlimmerList, id)
+local function insertIntoProgress(id, data)
+	local sort_after = data.sort_after
+	local entry = {id=id, sort_after=sort_after}
+	print("Inserting '"..id.."' into '"..sort_after.."' in progress")
+	table.insert(organizedGlimmerList, entry)
 end
 
-local action_appends = [[local myFancyNewColors = {]]
+local function checkForSameSortTag(list, entry, index)
+	if index-1 < 1 and entry.sort_after == "FIRST" then
+		return true
+	elseif index-1 < 1 then
+		return false
+	else
+		
+	end
+
+
+	return entry.sort_after == list[index-1]
+end
+
+local function sortProgress()
+	table.sort(organizedGlimmerList, sortingFunction)
+end
+
+function sortingFunction(entry1, entry2)
+	return entry1.sort_after < entry2.sort_after
+end
+
+-- local function sortProgress()
+-- 	repeat
+-- 		local isSorted = true
+-- 		-- take the organized table...
+-- 		-- then loop through it...
+-- 		for index1,entry1 in ipairs(organizedGlimmerList) do
+-- 			-- when we encounter one of the spells...
+-- 			-- check what it should actually be after
+-- 			local sort_after = entry1.sort_after
+-- 			-- if it's not after what it should be after...
+-- 			if sort_after ~= "" then
+-- 				if sort_after == "FIRST" and index1-1 > 1 then
+-- 					local misplaced_entry = table.remove(organizedGlimmerList, index1)
+-- 					table.insert(organizedGlimmerList, 1, misplaced_entry)
+-- 					isSorted = false
+-- 					break
+-- 				-- elseif(index1-1 < 1 and sort_after ~= "FIRST") or (index1-1 > 0 and organizedGlimmerList[index1-1].id ~= sort_after ) then
+-- 				elseif(index1-1 < 1 and sort_after ~= "FIRST") or (index1-1 > 0 and organizedGlimmerList[index1-1].id ~= sort_after ) then
+-- 					-- remove it from the list
+-- 					local misplaced_entry = table.remove(organizedGlimmerList, index1)
+-- 					-- find where it should be
+-- 					for index2,entry2 in ipairs(organizedGlimmerList) do
+-- 						if entry2.id == sort_after then
+-- 							-- put it back
+-- 							-- print("Moving '"..entry1.id.."' from after '"..tostring(organizedGlimmerList[index1-1].id).."' to after '"..entry2.id.."' (sort_after is '"..sort_after.."')")
+-- 							table.insert(organizedGlimmerList, index2+1, misplaced_entry)
+-- 							isSorted = false
+-- 							break
+-- 						end
+-- 					end
+-- 					isSorted = false
+-- 					break
+-- 				end
+-- 			end
+-- 		end
+-- 	until isSorted
+-- end
+
+local action_appends = [[local originalGlimmers = {
+	["COLOUR_RED"]=true,
+	["COLOUR_ORANGE"]=true,
+	["COLOUR_YELLOW"]=true,
+	["COLOUR_GREEN"]=true,
+	["COLOUR_BLUE"]=true,
+	["COLOUR_PURPLE"]=true,
+	["COLOUR_RAINBOW"]=true,
+	["COLOUR_INVIS"]=true,
+}
+
+local function split(string)
+	local myTable = {}
+	for i in string.gmatch(string, "%P+") do
+		table.insert(myTable, i)
+	end
+	return myTable
+end
+
+-- Add together all spawn rates (hardcoded bc I did the math myself)
+local total_spawns = {
+	["1"]={prob=0.2,amt=1},
+	["2"]={prob=1.5,amt=8},
+	["3"]={prob=1.4,amt=8},
+	["4"]={prob=1.5,amt=8},
+	["5"]={prob=0.2,amt=1},
+	["6"]={prob=0.2,amt=1},
+	["7"]={prob=0,amt=0},
+	["10"]={prob=0.3,amt=2},
+}
+
+local myFancyNewColors = {]]
 local function createGlimmerAction (Id, image, wait_frames, spawn_tiers, unlock_flag)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
@@ -289,7 +381,6 @@ local function createGlimmerAction (Id, image, wait_frames, spawn_tiers, unlock_
 		id 						= "]]..ID..[[",
 		name 					= "$action_]]..id..[[",
 		description 			= "$actiondesc_]]..id..[[",
-		-- sprite 					= "mods/GlimmersExpanded/files/gfx/ui_gfx/]]..id..[[.png",
 		sprite 					= "]]..image..[[",
 		related_extra_entities 	= { "mods/GlimmersExpanded/files/entities/misc/]]..id..[[.xml" },
 		type 					= ACTION_TYPE_MODIFIER,
@@ -309,40 +400,71 @@ local function createGlimmerAction (Id, image, wait_frames, spawn_tiers, unlock_
 		end,
 	},]]
 	action_appends = action_appends .. newGlimmer
-	-- print("Inserting '"..newGlimmer.id.."' into myFancyNewColors")
-	-- table.insert(myFancyNewColors, newGlimmer)
 	return newGlimmer
 end
 
 for id, data in pairs(glimmer_list_revamped) do
-	-- if GameHasFlagRun("glimmers_expanded_initialized_glimmers") then
-		
-	-- else
-		createTranslation(id, data)
-		createGlimmerXML(id, data)
-		createColourSpellLuaEntry(id, data)
-		insertIntoProgress(id)
-	-- end
+	createTranslation(id, data)
+	createGlimmerXML(id, data)
+	createColourSpellLuaEntry(id, data)
+	insertIntoProgress(id, data)
 	createGlimmerAction(id, data.image, data.cast_delay, data.spawn_tiers)
-	-- createGlimmerAction(id)
 end
--- print("PATCHES[5].TO")
--- print(patches[5].to)
--- print("NEW TRANSLATIONS")
--- print(new_translations)
+
+sortProgress()
 
 action_appends = action_appends..[[}
 local organizedGlimmerList = {]]
-for _,id in ipairs(organizedGlimmerList) do
-	action_appends = action_appends..[["]]..id..[[",
+for _,entry in ipairs(organizedGlimmerList) do
+	action_appends = action_appends..[["]].. entry.id ..[[",
 ]]
 end
 
 action_appends = action_appends..[[}
 
+-- Take the average of all spawn rates
+for level,data in pairs(total_spawns) do
+	total_spawns[level].prob = total_spawns[level].prob/(total_spawns[level].amt)
+end
+
+
+local function setSpawnProbs(action)
+    -- print("----------- "..action.id.." -----------")
+	-- replace spawn probs with averaged ones
+	local spawn_levels = split(action.spawn_level)
+	-- local spawn_probability = split(color.spawn_probability, ",")
+	local new_probabilities = ""
+	for index,level in ipairs(spawn_levels) do
+        -- print("'"..action.id.."', tier '"..level.."', probability '"..total_spawns[level].prob.."', amount '"..total_spawns[level].amt.."'")
+		new_probabilities = new_probabilities..total_spawns[level].prob
+		if index < #spawn_levels then
+			new_probabilities = new_probabilities .. ","
+		end
+	end
+    return new_probabilities
+end
+
+-- Find averages
 for _, color in ipairs(myFancyNewColors) do
+	local spawn_levels = split(color.spawn_level)
+	for index,level in ipairs(spawn_levels) do
+        total_spawns[level].prob = total_spawns[level].prob * total_spawns[level].amt
+        total_spawns[level].amt = total_spawns[level].amt+1
+        total_spawns[level].prob = total_spawns[level].prob / total_spawns[level].amt
+    end
+end
+
+for _, color in ipairs(myFancyNewColors) do
+	color.spawn_probability = setSpawnProbs(color)
+
 	-- print("inserting spell '"..color.id.."' into actions")
 	table.insert(actions,color)
+end
+
+for _, action in ipairs(actions) do
+    if originalGlimmers[action.id] then
+        action.spawn_probability = setSpawnProbs(action)
+    end
 end
 
 if ModSettingGet("GlimmersExpanded.inject_spells") then
@@ -386,10 +508,6 @@ if ModSettingGet("GlimmersExpanded.inject_spells") then
 	end
 	-- print("Finished inserting spells back into list")
 end]]
--- print("PRINTING ALL FANCY COLORS")
--- for _,color in ipairs(myFancyNewColors) do
--- 	print("spell '"..color.id.."'")
--- end
 
 local function tableToString(name, table)
 	local string = "local "..name.." = "
@@ -402,71 +520,7 @@ end
 translations = translations .. new_translations
 translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
 ModTextFileSetContent("data/translations/common.csv", translations)
-
--- print("organizedGlimmerList = "..tostring(organizedGlimmerList))
--- print("myFancyNewColors = "..tostring(myFancyNewColors))
-
--- local actions_appends = [[local organizedGlimmerList = ]]..tostring(organizedGlimmerList)..[[
-
--- local myFancyNewColors = ]]..tostring(myFancyNewColors)..[[
-
--- for _, color in ipairs(myFancyNewColors) do
--- 	table.insert(actions,color)
--- end
-
--- if ModSettingGet("GlimmersExpanded.inject_spells") then
-
--- 	local allGlimmerList = {}
--- 	for pos, entry in ipairs(organizedGlimmerList) do
--- 		allGlimmerList[entry] = pos
--- 	end
-
--- 	for pos, action in ipairs(actions) do
--- 		if pos >= #actions then break end
--- 		local id = action.id
--- 		local isGlimmer = allGlimmerList[id]
--- 		if isGlimmer then
--- 			repeat
--- 				id = actions[pos].id
--- 				isGlimmer = allGlimmerList[id]
--- 				if isGlimmer then
--- 					organizedGlimmerList[isGlimmer] = table.remove(actions, pos)
--- 				end
--- 			until (not isGlimmer) or pos > #actions
--- 		end
--- 	end
--- 	-- print("Finished populating glimmer_list and removing spells from list")
-
--- 	for pos, action in ipairs(actions) do
--- 		if pos > #actions then
--- 			for _, entry in ipairs(organizedGlimmerList) do
--- 				table.insert(actions, entry)
--- 			end
--- 		elseif action.id == "IF_ELSE" then
--- 			for _, entry in ipairs(organizedGlimmerList) do
--- 				-- print("inserting '"..id.."' at position "..(pos))
--- 				if entry then
--- 					pos = pos + 1
--- 					table.insert(actions, pos, entry)
--- 				end
--- 			end
--- 			break
--- 		end
--- 	end
--- 	-- print("Finished inserting spells back into list")
--- end]]
 ModTextFileSetContent("mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua", action_appends)
-
-
-
-
-
-
-
-
-
-
-
 
 -- Thanks Graham for this bit of code, it looks very useful
 for i=1, #patches do
