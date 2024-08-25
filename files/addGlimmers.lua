@@ -5,7 +5,7 @@ glimmer_list_revamped = {}
 ---@param name string
 ---@param desc string
 ---@param materials string[]
----@param image string? '"unknown"'
+---@param image string? '"mods/GlimmersExpanded/files/gfx/ui_gfx/colour_unknown.png"'
 ---@param cast_delay integer? 8
 ---@param spawn_tiers string? '"1,2,3,4,5,6"'
 ---@param sort_after number? 100
