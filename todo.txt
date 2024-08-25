@@ -34,8 +34,9 @@ SYSTEMATIC GLIMMER CREATION:
  - [x] Image
  - [x] etc
 [x] Get progress menu fixed
-[ ] Get glimmer alchemy working
+[x] Get glimmer alchemy working
 [ ] Find a way for modders to easily add new glimmers
+[ ] Clean up code
 
 OPTIMIZATION:
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
