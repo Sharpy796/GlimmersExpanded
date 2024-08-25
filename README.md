@@ -1,6 +1,17 @@
 # GlimmersExpanded
-A Noita mod that adds new glimmer colors!
+Cast your spells with expanded flair!
 
+This mod adds 17 new glimmer spells! 3 of them can be found in the usual bunker that the glimmer spells are at, but the other 14 have a bit of a... twist to them. Visit the glimmer bunker for more details!
+This mod also adds glimmer alchemy! The process includes:
+- A recipe: Australium + any Glimmer spell + any liquid.
+  - The secondary recipe for Australium is urine + pus + flummoxium, three materials that may be hard to come by.
+This creates a glimmer colored similarly to the liquid involved.
+
+Please, especially give me feedback on the alchemy part of the mod! Depending on how difficult or tedious the alchemy ends up being, I may change the materials involved.
+
+Also, for those wondering, this is compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). If you do find a bug, please let me know and I'll look into patching it as soon as I can.
+
+Here's the link to the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3316355233)!
 
 ## Modding!!
 For the modders out there, you might be wondering, "how can I create my own glimmers for this mod?" It's fairly easy! There's a few simple steps you have to follow:
