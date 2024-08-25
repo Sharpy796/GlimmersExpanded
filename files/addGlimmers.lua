@@ -2,6 +2,13 @@
 local mod_id = "GLIMMERS_EXPANDED_COLOUR_"
 glimmer_list_revamped = {}
 
+---@param name string
+---@param desc string
+---@param materials string[]
+---@param image string? unknown
+---@param cast_delay integer
+---@param spawn_tiers string
+---@param sort_after number
 function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after)
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil") end
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end
