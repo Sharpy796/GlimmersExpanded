@@ -22,7 +22,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
         spawn_tiers = spawn_tiers,
         sort_after = sort_after,
     }
-    print("Adding '"..newGlimmer.name.."' with material '"..newGlimmer.materials[1].."' to glimmer_list_revamped")
+    -- print("Adding '"..newGlimmer.name.."' with material '"..newGlimmer.materials[1].."' to glimmer_list_revamped")
     glimmer_list_revamped[id] = newGlimmer
 end
 
@@ -37,6 +37,7 @@ addGlimmer("Lava", "Gives a projectile a molten sparkly trail", {"lava"}, "mods/
 -- COLOUR_GREEN - sort_after = 4
 addGlimmer("Acid", "Gives a projectile a caustic sparkly trail", {"acid"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_acid.png", 15, "2,3,4,5,6", 4.1)
 addGlimmer("Diminution", "Gives a projectile a weakened sparkly trail", {"magic_liquid_weakness"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_diminution.png", 15, "2,3,4,5", 4.2)
+-- addGlimmer("Vomit", "Gives a projectile a sickeningly sparkly trail", {"vomit"}, nil, nil, nil, 4.21)
 addGlimmer("Teal", "Gives a projectile a teal sparkly trail", {"spark_teal"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_teal.png", nil, "1,2,3,4", 4.3)
 -- COLOUR_BLUE - sort_after = 5
 addGlimmer("Freezing Liquid", "Gives a projectile a frozen sparkly trail", {"blood_cold"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_freezing_liquid.png", 15, "2,3,4,5", 5.1)
@@ -48,12 +49,6 @@ addGlimmer("Mimicium", "Gives a projectile an iridescent sparkly trail", {"mimic
 addGlimmer("True Rainbow", "Gives a projectile a truly rainbow sparkly trail", {"material_rainbow"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_true_rainbow.png", nil, "4,5,6,10", 7.1)
 addGlimmer("Midas", "Gives a projectile a wealthy sparkly trail", {"midas"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_midas.png", 4, "4,5,6,10", 7.2)
 addGlimmer("Lively Concoction", "Gives a projectile a regenerative sparkly trail", {"magic_liquid_hp_regeneration_unstable"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_lively_concoction.png", 4, "4,5,6,10", 7.3)
+addGlimmer("Divine Ground", "Gives a projectile a holy sparkly trail", {"grass_holy"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_divine_ground.png", 4, "4,5,6,10", 7.31)
 addGlimmer("Biome", "Gives a projectile a sparkly trail that changes depending on the biome you are in!", {"sand","sand_surface","sandstone","sandstone_surface","snow","snow_sticky","slush","water","water_ice","water_salt","water_fading","water_temp","water","water_swamp","grass",}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_biome.png", nil, "4,5,6,10",7.4)
 -- COLOUR_INVIS - sort_after = 8
-addGlimmer("Vomit", "Gives a projectile a sickeningly sparkly trail", {"vomit"}, nil, nil, nil, 4.1)
-addGlimmer("Divine Ground", "Gives a projectile a holy sparkly trail", {"grass_holy"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_divine_ground.png", 4, "4,5,6,10", 7.41)
-
--- print("ALL THINGS IN GLIMMER_LIST_REVAMPED")
--- for id,data in pairs(glimmer_list_revamped) do
---     print("'"..id.."' with material '"..data.materials[1].."'")
--- end

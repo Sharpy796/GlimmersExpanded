@@ -43,23 +43,6 @@ local function spawn_glimmer_lab_potions( locations )
 end
 
 local glimmer_lab_spell_locations = {
-    ["GLIMMERS_EXPANDED_COLOUR_WEIRD_FUNGUS"] = { 171, 8 },
-    ["GLIMMERS_EXPANDED_COLOUR_BLOOD"] = { 146, 6 },
-    -- ["GLIMMERS_EXPANDED_COLOUR_LAVA"] = { 121, 4 },
-    -- ["COLOUR_ORANGE"] = { 80, 90 },
-    ["GLIMMERS_EXPANDED_COLOUR_ACID"] = { 96, 2 },
-    ["GLIMMERS_EXPANDED_COLOUR_DIMINUTION"] = { 173, -21 },
-    ["GLIMMERS_EXPANDED_COLOUR_FREEZING_LIQUID"] = { 148, -23 },
-    ["GLIMMERS_EXPANDED_COLOUR_OMINOUS"] = { 124, -25 },
-    ["GLIMMERS_EXPANDED_COLOUR_TRUE_RAINBOW"] = { 99, -27 },
-    ["GLIMMERS_EXPANDED_COLOUR_LIVELY_CONCOCTION"] = { 176, -50 },
-    ["GLIMMERS_EXPANDED_COLOUR_MIDAS"] = { 151, -52 },
-    ["GLIMMERS_EXPANDED_COLOUR_VOID"] = { 126, -54 },
-    ["GLIMMERS_EXPANDED_COLOUR_MIMICIUM"] = { 101, -56 },
-    ["GLIMMERS_EXPANDED_COLOUR_BIOME"] = { 178, -79 },
-}
-
-local glimmer_lab_spell_locations = {
     { 96, 2 },
     { 146, 6 },
     { 121, 4 },
@@ -104,9 +87,6 @@ local function spawn_glimmer_lab_spells( locations )
         end
         
     end
-    -- for spell,coordinates in pairs(locations) do
-    --     spawn_glimmer_lab_spell(spell, x+coordinates[1], y+coordinates[2])
-    -- end
 end
 
 if ( #p > 0 ) and GameHasFlagRun( "fishing_hut_a" ) then

@@ -313,17 +313,6 @@ local function createGlimmerAction (Id, image, wait_frames, spawn_tiers, unlock_
 	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
 	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
 
-	-- local spawn_tiers, spawn_probs = "", ""
-	-- for tier, prob in pairs(spawn_list) do
-	-- 	spawn_tiers = spawn_tiers .. tier
-	-- 	spawn_probs = spawn_probs .. prob
-	-- 	if spawn_list[tier] ~= spawn_list[#spawn_list] then
-	-- 		spawn_tiers = spawn_tiers .. ","
-	-- 		spawn_probs = spawn_probs .. ","
-	-- 	end
-	-- end
-
-
 	local newGlimmer = [[
 	{
 		id 						= "]]..ID..[[",

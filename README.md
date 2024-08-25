@@ -11,7 +11,7 @@ Please, especially give me feedback on the alchemy part of the mod! Depending on
 
 Also, for those wondering, this is compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). If you do find a bug, please let me know and I'll look into patching it as soon as I can.
 
-Here's the link to the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3316355233)!
+Here's the link to the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3316355233) version of the mod!
 
 ## Modding!!
 For the modders out there, you might be wondering, "how can I create my own glimmers for this mod?" It's fairly easy! There's a few simple steps you have to follow:

@@ -175,7 +175,6 @@ for liquid,color in pairs(liquids) do
         end
         if transmuted then
             glimmer_to_spawn = data.id
-            -- glimmer_to_spawn = "GLIMMERS_EXPANDED_COLOUR_" .. glimmer_tag:upper()
             break
         end
     end
