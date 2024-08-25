@@ -1,16 +1,19 @@
 <Mod
     name="Glimmers Expanded"
-    description="Cast your spells with expanded flair!
+    description="[h1] GlimmersExpanded [/h1]
+Cast your spells with expanded flair!
 
-This mod adds 16 new glimmer spells! 3 of them can be found in the usual bunker that the glimmer spells are at, but the other 13 have a bit of a... twist to them. Visit the glimmer bunker for more details!
-This mod also adds glimmer alchemy! The process includes:
-- A recipe: [spoiler]Australium + any Glimmer spell + any liquid.[/spoiler]
-- This creates [spoiler]a glimmer colored similarly to the liquid involved.[/spoiler]
-- The secondary recipe for [spoiler]Australium[/spoiler] is [spoiler]urine + pus + flummoxium[/spoiler], three materials that may be hard to come by.
+This mod adds 17 new glimmer spells! 3 of them can be found in the usual bunker that the glimmer spells are at, but the other 14 have a bit of a... twist to them. Visit the glimmer bunker for more details!
+
+This mod also adds glimmer alchemy! The process includes a recipe: [spoiler]Australium + any Glimmer spell + any liquid[/spoiler]. (The secondary recipe for Australium is [spoiler]urine + pus + flummoxium[/spoiler], three materials that may be hard to come by.) The result of this is [spoiler]a glimmer that is similarly-colored to the material[/spoiler]!
 
 Please, especially give me feedback on the alchemy part of the mod! Depending on how difficult or tedious the alchemy ends up being, I may change the materials involved.
 
-Also, for those wondering, this *is* compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). If you do find a bug, please let me know and I'll look into patching it as soon as I can."
+Also, for those wondering, this is compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). If you do find a bug, please let me know and I'll look into patching it as soon as I can.
+
+Here's the link to the [url=https://github.com/Sharpy796/GlimmersExpanded]GitHub[/url] version of the mod!
+[hr][/hr]
+[h2] Modding!! [/h2]
+For the modders out there, you might be wondering, 'How can I create my own glimmers for this mod?' It's fairly easy! However, it is difficult to explain them in the Steam workshop, so head over to this mod's GitHub page for more info on this."
     tags="gameplay, spells, alchemy"
-    dont_upload_files="balancing_glimmers.png"
 ></Mod>
