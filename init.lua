@@ -385,7 +385,7 @@ local function createGlimmerAction (Id, image, wait_frames, spawn_tiers, unlock_
 		related_extra_entities 	= { "mods/GlimmersExpanded/files/entities/misc/]]..id..[[.xml" },
 		type 					= ACTION_TYPE_MODIFIER,
 		spawn_level 			= "]]..spawn_tiers..[[",
-		spawn_probability 		= "0.2,0.2,0.2,0.2,0.2,0.2", -- TODO: Make this more dynamic and averaged
+		spawn_probability 		= "0.2,0.2,0.2,0.2,0.2,0.2",
 		spawn_requires_flag 	= "]]..unlock_flag..[[",
 		price 					= 40,
 		mana 					= 0,

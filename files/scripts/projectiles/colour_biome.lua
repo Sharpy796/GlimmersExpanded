@@ -11,7 +11,7 @@ local entity_id = GetUpdatedEntityID()
 local biome,particle,comps
 local player_id = EntityGetWithTag("player_unit")[1]
 
--- TODO: This needs to be the part where we identify the current biome we are in
+-- This needs to be the part where we identify the current biome we are in
 if ( player_id ~= nil ) then
 	local x, y = EntityGetTransform(player_id)
 	biome = BiomeMapGetName(x,y)

@@ -17,7 +17,7 @@ REQUIRED:
 [x] Possibly keep the lab un-populated until you enter the portal the correct way?
 [x] Make modded materials work with glimmer alchemy
 [x] Add a mod setting that can toggle glimmer alchemy on and off
-[ ] Fix glimmer spawn rates so that it averages out and doesn't inflate the spawn chances of all glimmers
+[x] Fix glimmer spawn rates so that it averages out and doesn't inflate the spawn chances of all glimmers
 [ ] Actually decide on a catalyst for glimmer alchemy
 
 SYSTEMATIC GLIMMER CREATION:
@@ -33,6 +33,9 @@ SYSTEMATIC GLIMMER CREATION:
  - [x] Create translation for the spell
  - [x] Image
  - [x] etc
+[x] Get progress menu fixed
+[ ] Get glimmer alchemy working
+[ ] Find a way for modders to easily add new glimmers
 
 OPTIMIZATION:
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?

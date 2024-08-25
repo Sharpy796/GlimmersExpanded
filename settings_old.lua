@@ -50,7 +50,7 @@ local mod_id = "GlimmersExpanded" -- This should match the name of your mod's fo
 mod_settings_version = 1 -- This is a magic global that can be used to migrate settings to new mod versions. call mod_settings_get_version() before mod_settings_update() to get the old value. 
 mod_settings =
 {
-	{ -- TODO: Make this work
+	{
 		id = "glimmers_inject_spells",
 		ui_name = "Inject Spells",
 		ui_description = "If enabled, spells will be placed between vanilla spells in progress.",
