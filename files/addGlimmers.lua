@@ -51,7 +51,7 @@ addGlimmer("Lively Concoction", "Gives a projectile a regenerative sparkly trail
 addGlimmer("Biome", "Gives a projectile a sparkly trail that changes depending on the biome you are in!", {"sand","sand_surface","sandstone","sandstone_surface","snow","snow_sticky","slush","water","water_ice","water_salt","water_fading","water_temp","water","water_swamp","grass",}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_biome.png", nil, "4,5,6,10",7.4)
 -- COLOUR_INVIS - sort_after = 8
 addGlimmer("Vomit", "Gives a projectile a sickeningly sparkly trail", {"vomit"}, nil, nil, nil, 4.1)
-addGlimmer("Divine Soil", "Gives a projectile a lush sparkly trail", {"grass_holy"}, nil, 4, "4,5,6,10", 7.41)
+addGlimmer("Divine Ground", "Gives a projectile a holy sparkly trail", {"grass_holy"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_divine_ground.png", 4, "4,5,6,10", 7.41)
 
 -- print("ALL THINGS IN GLIMMER_LIST_REVAMPED")
 -- for id,data in pairs(glimmer_list_revamped) do

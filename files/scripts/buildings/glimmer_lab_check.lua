@@ -1,4 +1,5 @@
 dofile_once("data/scripts/lib/utilities.lua")
+dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
 
 local entity_id = GetUpdatedEntityID()
 local x, y = EntityGetTransform( entity_id )
@@ -58,26 +59,53 @@ local glimmer_lab_spell_locations = {
     ["GLIMMERS_EXPANDED_COLOUR_BIOME"] = { 178, -79 },
 }
 
-if (ModSettingGet("GlimmersExpanded.allow_alchemy")) then
-    glimmer_lab_spell_locations["COLOUR_ORANGE"] = { 80, 90 }
-else
-    glimmer_lab_spell_locations["GLIMMERS_EXPANDED_COLOUR_LAVA"] = { 121, 4 }
+local glimmer_lab_spell_locations = {
+    { 96, 2 },
+    { 146, 6 },
+    { 121, 4 },
+    { 171, 8 },
+    { 173, -21 },
+    { 148, -23 },
+    { 124, -25 },
+    { 99, -27 },
+    { 176, -50 },
+    { 151, -52 },
+    { 126, -54 },
+    { 101, -56 },
+    { 103, -81 },
+    { 128, -77 },
+    { 153, -75 },
+    { 178, -73 },
+}
+local spell_ids = {}
+
+local function gather_spell_ids()
+    for id,data in pairs(glimmer_list_revamped) do
+        if id ~= "GLIMMERS_EXPANDED_COLOUR_PINK" and id ~= "GLIMMERS_EXPANDED_COLOUR_WHITE" and id ~= "GLIMMERS_EXPANDED_COLOUR_TEAL" then
+            table.insert(spell_ids, id)
+        end
+    end
 end
+gather_spell_ids()
 
 local function spawn_glimmer_lab_spell( spell_id, x, y )
     CreateItemActionEntity( spell_id, x, y )
 end
 
-local totalSpellsGenerated = 0
 local function spawn_glimmer_lab_spells( locations )
-    for spell_id, coordinates in pairs(locations) do
-        spawn_glimmer_lab_spell(spell_id, x+coordinates[1], y+coordinates[2])
+    for index,coordinates in ipairs(locations) do
+        local spell_id = spell_ids[index]
+        if spell_id ~= nil then
+            if (ModSettingGet("GlimmersExpanded.allow_alchemy") and spell_id == "GLIMMERS_EXPANDED_COLOUR_LAVA") then
+                spawn_glimmer_lab_spell("COLOUR_ORANGE", x+80, y+90)
+            elseif spell_id ~= "GLIMMERS_EXPANDED_COLOUR_PINK" and spell_id ~= "GLIMMERS_EXPANDED_COLOUR_WHITE" and spell_id ~= "GLIMMERS_EXPANDED_COLOUR_TEAL" then
+                spawn_glimmer_lab_spell(spell_id, x+coordinates[1], y+coordinates[2])
+            end
+        end
+        
     end
-
-
-    -- totalSpellsGenerated = totalSpellsGenerated + 1
-    -- local glimmer_name = glimmer_lab_spells[totalSpellsGenerated]
-    -- if glimmer_name ~= nil then
+    -- for spell,coordinates in pairs(locations) do
+    --     spawn_glimmer_lab_spell(spell, x+coordinates[1], y+coordinates[2])
     -- end
 end
 

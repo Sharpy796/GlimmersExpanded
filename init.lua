@@ -258,21 +258,8 @@ end
 local function insertIntoProgress(id, data)
 	local sort_after = data.sort_after
 	local entry = {id=id, sort_after=sort_after}
-	print("Inserting '"..id.."' into '"..sort_after.."' in progress")
+	-- print("Inserting '"..id.."' into '"..sort_after.."' in progress")
 	table.insert(organizedGlimmerList, entry)
-end
-
-local function checkForSameSortTag(list, entry, index)
-	if index-1 < 1 and entry.sort_after == "FIRST" then
-		return true
-	elseif index-1 < 1 then
-		return false
-	else
-		
-	end
-
-
-	return entry.sort_after == list[index-1]
 end
 
 local function sortProgress()
@@ -282,44 +269,6 @@ end
 function sortingFunction(entry1, entry2)
 	return entry1.sort_after < entry2.sort_after
 end
-
--- local function sortProgress()
--- 	repeat
--- 		local isSorted = true
--- 		-- take the organized table...
--- 		-- then loop through it...
--- 		for index1,entry1 in ipairs(organizedGlimmerList) do
--- 			-- when we encounter one of the spells...
--- 			-- check what it should actually be after
--- 			local sort_after = entry1.sort_after
--- 			-- if it's not after what it should be after...
--- 			if sort_after ~= "" then
--- 				if sort_after == "FIRST" and index1-1 > 1 then
--- 					local misplaced_entry = table.remove(organizedGlimmerList, index1)
--- 					table.insert(organizedGlimmerList, 1, misplaced_entry)
--- 					isSorted = false
--- 					break
--- 				-- elseif(index1-1 < 1 and sort_after ~= "FIRST") or (index1-1 > 0 and organizedGlimmerList[index1-1].id ~= sort_after ) then
--- 				elseif(index1-1 < 1 and sort_after ~= "FIRST") or (index1-1 > 0 and organizedGlimmerList[index1-1].id ~= sort_after ) then
--- 					-- remove it from the list
--- 					local misplaced_entry = table.remove(organizedGlimmerList, index1)
--- 					-- find where it should be
--- 					for index2,entry2 in ipairs(organizedGlimmerList) do
--- 						if entry2.id == sort_after then
--- 							-- put it back
--- 							-- print("Moving '"..entry1.id.."' from after '"..tostring(organizedGlimmerList[index1-1].id).."' to after '"..entry2.id.."' (sort_after is '"..sort_after.."')")
--- 							table.insert(organizedGlimmerList, index2+1, misplaced_entry)
--- 							isSorted = false
--- 							break
--- 						end
--- 					end
--- 					isSorted = false
--- 					break
--- 				end
--- 			end
--- 		end
--- 	until isSorted
--- end
 
 local action_appends = [[local originalGlimmers = {
 	["COLOUR_RED"]=true,
@@ -507,14 +456,6 @@ if ModSettingGet("GlimmersExpanded.inject_spells") then
 	end
 	-- print("Finished inserting spells back into list")
 end]]
-
-local function tableToString(name, table)
-	local string = "local "..name.." = "
-	for k,v in pairs(table) do
-		string = string..[[
-		[]]..k..[[] = ]]..v
-	end
-end
 
 translations = translations .. new_translations
 translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
