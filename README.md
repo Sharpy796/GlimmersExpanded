@@ -29,7 +29,7 @@ And that should be it!!
 ```
 addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number)
 ```
-- `string` is what you want this spell to be called. For example, `"Custom Material"` would end up naming the glimmer "Custom Material Glimmer". The spell's ID will also use this, and will be `GLIMMERS_EXPANDED_COLOUR_CUSTOM_MATERIAL`.
+- `name` is what you want this spell to be called. For example, `"Custom Material"` would end up naming the glimmer "Custom Material Glimmer". The spell's ID will also use this, and will be `GLIMMERS_EXPANDED_COLOUR_CUSTOM_MATERIAL`.
 - `desc` is the spell's description. This can be any string you want!
 - `materials` is a table of material IDs. The first material inside the table will be used as the glimmer's color, but all of the materials will be used in the glimmer's alchemy. For example, `{"custom_mat1", "custom_mat2"}` would use `"custom_mat1"` as the glimmer's color, but both materials would be used for glimmer alchemy.
 - `image` is the filepath to the image you want to use for your glimmer. This is optional, but will default to an "unknown" image if you don't specify one.
