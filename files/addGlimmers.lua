@@ -18,7 +18,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
     if sort_after == nil then sort_after = 100 end
 
-    local id = mod_id..name:upper():gsub(" ","_")
+    local id = mod_id..name:upper():gsub("%W","_")
     local newGlimmer = {
         id = id,
         name = name.." Glimmer",

@@ -1,5 +1,3 @@
-dofile_once("mods/GlimmersExpanded/files/lib/glimmer_list_revamped.lua")
-
 local materials_xml = [[<Materials>
 ]]
 local liquids = {}
