@@ -5,7 +5,7 @@ glimmer_list = {
 
     ["acid"]={"acid",},
     -- How do I want to implement the biome glimmer?
-    ["biome"]={"sand","snow","water","water_ice","water_salt","water_fading","water_temp","water","water_swamp","grass",},
+    ["biome"]={},
     ["blood"]={"blood","blood_fading","blood_fading_slow","cloud_blood",},
     ["darkness"]={"material_darkness",},
     ["freezing"]={"blood_cold",},

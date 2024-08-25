@@ -1,6 +1,5 @@
 dofile_once("data/scripts/lib/utilities.lua")
 dofile_once("mods/GlimmersExpanded/files/lib/myFancyNewColors.lua")
-dofile_once("mods/GlimmersExpanded/files/lib/glimmer_list_revamped.lua")
 dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")

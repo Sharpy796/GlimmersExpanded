@@ -1,5 +1,4 @@
-dofile_once("mods/GlimmersExpanded/files/glimmer_list.lua")
-local debug = true
+dofile_once("mods/GlimmersExpanded/files/lib/glimmer_list_revamped.lua")
 
 local materials_xml = [[<Materials>
 ]]
@@ -145,11 +144,21 @@ local function lamas_stats_gather_liquids()
             liquids[liquid] = hex
         end
     until liquidLength <= 0
+
+    for id,data in pairs(glimmer_list_revamped) do
+        local materials = data.materials
+        for id,material in ipairs(materials) do
+            if not liquids[material] then
+                local missingMaterial = all_materials[material]
+                local hex = lamas_stats_get_graphics_info(missingMaterial)
+                liquids[material] = hex
+            end
+        end
+    end
 end
 
 lamas_stats_gather_material()
 lamas_stats_gather_liquids()
-
 
 -- REACTION GENERATION START
 for liquid,color in pairs(liquids) do
@@ -158,13 +167,15 @@ for liquid,color in pairs(liquids) do
     local transmuted = false
     local glimmer_to_spawn
 
-    for glimmer_tag,materials in pairs(glimmer_list) do
+    for id,data in pairs(glimmer_list_revamped) do
+        local materials = data.materials
         for _,material in ipairs(materials) do
             transmuted = material == liquid
             if transmuted then break end
         end
         if transmuted then
-            glimmer_to_spawn = "GLIMMERS_EXPANDED_COLOUR_" .. glimmer_tag:upper()
+            glimmer_to_spawn = data.id
+            -- glimmer_to_spawn = "GLIMMERS_EXPANDED_COLOUR_" .. glimmer_tag:upper()
             break
         end
     end

@@ -1,6 +1,6 @@
 
-dofile("mods/GlimmersExpanded/files/lib/glimmer_list_revamped.lua")
 local mod_id = "GLIMMERS_EXPANDED_COLOUR_"
+glimmer_list_revamped = {}
 
 function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after)
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil") end
@@ -13,6 +13,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
 
     local id = mod_id..name:upper():gsub(" ","_")
     local newGlimmer = {
+        id = id,
         name = name.." Glimmer",
         desc = desc,
         image = image,
@@ -47,9 +48,10 @@ addGlimmer("Mimicium", "Gives a projectile an iridescent sparkly trail", {"mimic
 addGlimmer("True Rainbow", "Gives a projectile a truly rainbow sparkly trail", {"material_rainbow"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_true_rainbow.png", nil, "4,5,6,10", 7.1)
 addGlimmer("Midas", "Gives a projectile a wealthy sparkly trail", {"midas"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_midas.png", 4, "4,5,6,10", 7.2)
 addGlimmer("Lively Concoction", "Gives a projectile a regenerative sparkly trail", {"magic_liquid_hp_regeneration_unstable"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_lively_concoction.png", 4, "4,5,6,10", 7.3)
-addGlimmer("Biome", "Gives a projectile a sparkly trail that changes depending on the biome you are in!", {"material_rainbow"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_biome.png", nil, "4,5,6,10",7.4)
+addGlimmer("Biome", "Gives a projectile a sparkly trail that changes depending on the biome you are in!", {"sand","sand_surface","sandstone","sandstone_surface","snow","snow_sticky","slush","water","water_ice","water_salt","water_fading","water_temp","water","water_swamp","grass",}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_biome.png", nil, "4,5,6,10",7.4)
 -- COLOUR_INVIS - sort_after = 8
 addGlimmer("Vomit", "Gives a projectile a sickeningly sparkly trail", {"vomit"}, nil, nil, nil, 4.1)
+addGlimmer("Divine Soil", "Gives a projectile a lush sparkly trail", {"grass_holy"}, nil, 4, "4,5,6,10", 7.41)
 
 -- print("ALL THINGS IN GLIMMER_LIST_REVAMPED")
 -- for id,data in pairs(glimmer_list_revamped) do
