@@ -2,6 +2,7 @@
 Cast your spells with expanded flair!
 
 This mod adds 17 new glimmer spells! 3 of them can be found in the usual bunker that the glimmer spells are at, but the other 14 have a bit of a... twist to them. Visit the glimmer bunker for more details!
+
 This mod also adds glimmer alchemy! The process includes a recipe: Australium + any Glimmer spell + any liquid. (The secondary recipe for Australium is urine + pus + flummoxium, three materials that may be hard to come by.) The result of this is a glimmer that is similarly-colored to the material!
 
 Please, especially give me feedback on the alchemy part of the mod! Depending on how difficult or tedious the alchemy ends up being, I may change the materials involved.
