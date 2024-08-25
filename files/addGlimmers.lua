@@ -6,7 +6,7 @@ glimmer_list_revamped = {}
 ---@param desc string
 ---@param materials string[]
 ---@param image string? unknown
----@param cast_delay integer
+---@param cast_delay integer? unknown
 ---@param spawn_tiers string
 ---@param sort_after number
 function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after)
