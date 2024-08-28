@@ -27,15 +27,15 @@ And that should be it!!
 
 ### Modding Functions
 ```
-addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number)
+addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number, mod_prefix: string)
 ```
-- `name` is what you want this spell to be called. For example, `"Custom Material"` would end up naming the glimmer "Custom Material Glimmer". The spell's ID will also use this, and will be `GLIMMERS_EXPANDED_COLOUR_CUSTOM_MATERIAL`.
+- `name` is what you want this spell to be called. For example, `"Custom Material"` would end up naming the glimmer "Custom Material Glimmer". The spell's ID will also use this, and will be `GLIMMERS_EXPANDED_COLOUR_CUSTOM_MATERIAL` (unless you specify a `mod_prefix`).
 - `desc` is the spell's description. This can be any string you want!
 - `materials` is a table of material IDs. The first material inside the table will be used as the glimmer's color, but all of the materials will be used in the glimmer's alchemy. For example, `{"custom_mat1", "custom_mat2"}` would use `"custom_mat1"` as the glimmer's color, but both materials would be used for glimmer alchemy.
 - `image` is the filepath to the image you want to use for your glimmer. This is optional, but will default to `"mods/GlimmersExpanded/files/gfx/ui_gfx/colour_unknown.png"` if you don't specify one.
-- `cast_delay` is the number of frames of cast delay reduction you want the spell to have. This is optional, and will default to 8 frames (or 12.5 seconds).
+- `cast_delay` is the number of frames of cast delay reduction you want the spell to have. This is optional, and will default to `8` frames (or 12.5 seconds).
 - `spawn_tiers` is a string containing the spell tiers you want this spell to reside in, each number separated by commas. A few examples might be `"1,2,3"`, `"3,4,10"`, or `"1"`. The valid tiers you can put spells into are `"1,2,3,4,5,6,10"`. This is optional, and will default to `"1,2,3,4,5,6"`.
-- `sort_after` is where you want this spell to reside in the progress menu. This mod sorts both its and vanilla's glimmer spells by number. `sort_after` should be somewhere above/between/below the following numbers. This is optional, and will default to 100.
+- `sort_after` is where you want this spell to reside in the progress menu. This mod sorts both its and vanilla's glimmer spells by number. `sort_after` should be somewhere above/between/below the following numbers. This is optional, and will default to `100`.
   - `COLOUR_RED` is 1
   - `COLOUR_ORANGE` is 2
   - `COLOUR_YELLOW` is 3
@@ -44,5 +44,6 @@ addGlimmer(name: string, desc: string, materials: table, image: string, cast_del
   - `COLOUR_PURPLE` is 6
   - `COLOUR_RAINBOW` is 7
   - `COLOUR_INVIS` is 8
+- `mod_prefix` is a string that will be inserted into the ID of your glimmer. This is so I can credit you for glimmers that come from your mod! When specified, the ID of the spell will be `GLIMMERS_EXPANDED_[MOD_PREFIX]_COLOUR_CUSTOM_MATERIAL`. For example, if I wanted to specify the glimmer is from "My Awesome Mod," I might set the mod prefix as `"awesomeMod"`, and it would set the ID to `GLIMMERS_EXPANDED_AWESOMEMOD_COLOUR_CUSTOM_MATERIAL`. This is optional, and will default to `""`.
 
 You can check out `mods/GlimmersExpanded/files/addGlimmers.lua` for examples of using `addGlimmer()`.

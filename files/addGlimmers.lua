@@ -1,5 +1,5 @@
 
-local mod_id = "GLIMMERS_EXPANDED_COLOUR_"
+local mod_id = "GLIMMERS_EXPANDED_"
 glimmer_list_revamped = {}
 
 ---@param name string
@@ -9,7 +9,8 @@ glimmer_list_revamped = {}
 ---@param cast_delay integer? 8
 ---@param spawn_tiers string? '"1,2,3,4,5,6"'
 ---@param sort_after number? 100
-function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after)
+---@param mod_prefix string? '""'
+function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix)
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil") end
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end
     if materials == nil then error("attempted to call addGlimmer() with 'materials' as nil") end
@@ -17,8 +18,10 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     if cast_delay == nil then cast_delay = 8 end
     if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
     if sort_after == nil then sort_after = 100 end
+    if not mod_prefix then mod_prefix = "" else
+    mod_prefix = mod_prefix:upper():gsub("%W","_").."_" end
 
-    local id = mod_id..name:upper():gsub("%W","_")
+    local id = mod_id..mod_prefix.."COLOUR_"..name:upper():gsub("%W","_")
     local newGlimmer = {
         id = id,
         name = name.." Glimmer",
@@ -44,7 +47,6 @@ addGlimmer("Lava", "Gives a projectile a molten sparkly trail", {"lava"}, "mods/
 -- COLOUR_GREEN - sort_after = 4
 addGlimmer("Acid", "Gives a projectile a caustic sparkly trail", {"acid"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_acid.png", 15, "2,3,4,5,6", 4.1)
 addGlimmer("Diminution", "Gives a projectile a weakened sparkly trail", {"magic_liquid_weakness"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_diminution.png", 15, "2,3,4,5", 4.2)
--- addGlimmer("Vomit", "Gives a projectile a sickeningly sparkly trail", {"vomit"}, nil, nil, nil, 4.21)
 addGlimmer("Teal", "Gives a projectile a teal sparkly trail", {"spark_teal"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_teal.png", nil, "1,2,3,4", 4.3)
 -- COLOUR_BLUE - sort_after = 5
 addGlimmer("Freezing Liquid", "Gives a projectile a frozen sparkly trail", {"blood_cold"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_freezing_liquid.png", 15, "2,3,4,5", 5.1)
@@ -59,3 +61,6 @@ addGlimmer("Lively Concoction", "Gives a projectile a regenerative sparkly trail
 addGlimmer("Divine Ground", "Gives a projectile a holy sparkly trail", {"grass_holy"}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_divine_ground.png", 4, "4,5,6,10", 7.31)
 addGlimmer("Biome", "Gives a projectile a sparkly trail that changes depending on the biome you are in!", {"sand","sand_surface","sandstone","sandstone_surface","snow","snow_sticky","slush","water","water_ice","water_salt","water_fading","water_temp","water","water_swamp","grass",}, "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_biome.png", nil, "4,5,6,10",7.4)
 -- COLOUR_INVIS - sort_after = 8
+
+-- Example Line:
+-- addGlimmer("Vomit", "Gives a projectile a sickeningly sparkly trail", {"vomit"}, nil, 15, "1,2", 4.21, "EXAMPLE")
