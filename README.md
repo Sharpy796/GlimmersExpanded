@@ -96,10 +96,11 @@ if ModIsEnabled("GlimmersExpanded") then
 	ModLuaFileAppend("mods/GlimmersExpanded/files/lib/glimmer_data.lua", "mods/your_mod/path/to/your/file.lua")
 end
 ```
+
+You can check out `mods/GlimmersExpanded/files/lib/glimmer_data.lua` for more examples of creating glimmers.
+
 ### "Deprecated" Functions
 This function has had functionality added to it, and is not very readable anymore. However, it is still usable, if you so prefer.
 ```lua
 addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number, mod_prefix: string, is_rare: boolean, trail_mods: table)
 ```
-
-You can check out `mods/GlimmersExpanded/files/lib/glimmer_data.lua` for more examples of creating glimmers.
