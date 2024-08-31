@@ -22,7 +22,8 @@ organizedGlimmerList = {
 ---@param sort_after number? 100
 ---@param mod_prefix string? '""'
 ---@param is_rare boolean? false
-function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare)
+---@param custom_action function? function custom_action() end
+function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action)
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil") end
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end
     if materials == nil then error("attempted to call addGlimmer() with 'materials' as nil") end
@@ -33,6 +34,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     if not mod_prefix then mod_prefix = "" else
     mod_prefix = mod_prefix:upper():gsub("%W","_").."_" end
     if is_rare == nil then is_rare = false end
+    if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
 
     local id = mod_id..mod_prefix.."COLOUR_"..name:upper():gsub("%W","_")
     local newGlimmer = {
@@ -44,7 +46,8 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
         cast_delay = cast_delay,
         spawn_tiers = spawn_tiers,
         sort_after = sort_after,
-        is_rare = is_rare
+        is_rare = is_rare,
+        custom_action = custom_action,
     }
     -- print("Adding '"..newGlimmer.name.."' with material '"..newGlimmer.materials[1].."' to glimmer_list_revamped")
     glimmer_list_revamped[id] = newGlimmer
@@ -89,5 +92,6 @@ for _,glimmer in ipairs(glimmer_data) do
             glimmer.spawn_tiers,
             glimmer.sort_after,
             glimmer.mod_prefix,
-            glimmer.is_rare)
+            glimmer.is_rare,
+            glimmer.custom_action)
 end

@@ -37,7 +37,7 @@ local myFancyNewColors =
 
 }
 
-local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_tiers, unlock_flag)
+local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_tiers, unlock_flag, custom_action)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
 	local ID = Id:upper()
@@ -47,6 +47,16 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
     if spawn_probs == nil then spawn_probs = "0.2,0.2,0.2,0.2,0.2,0.2" end
 	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
 	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
+    if type(custom_action) ~= "function" then custom_action = function(c) --[[Do nothing]] end end
+
+
+    local action = function()
+        c.extra_entities    = c.extra_entities .. "mods/GlimmersExpanded/files/entities/misc/"..id..".xml,"
+        custom_action(c)
+        c.fire_rate_wait    = c.fire_rate_wait - wait_frames
+        c.screenshake       = math.max(0, c.screenshake - 2.5)
+        draw_actions( 1, true )
+    end
 
     local newGlimmer = {
         id                      = ID,
@@ -60,15 +70,7 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
         spawn_requires_flag     = unlock_flag,
         price                   = 40,
         mana                    = 0,
-        action 					= function()
-			c.extra_entities    = c.extra_entities .. "mods/GlimmersExpanded/files/entities/misc/"..id..".xml,"
-			c.fire_rate_wait    = c.fire_rate_wait - wait_frames
-			c.screenshake       = c.screenshake - 2.5
-			if ( c.screenshake < 0 ) then
-				c.screenshake   = 0
-			end
-			draw_actions( 1, true )
-		end,
+        action 					= action,
     }
     table.insert(myFancyNewColors, newGlimmer)
 	return newGlimmer
@@ -91,7 +93,7 @@ end
 
 for id, data in pairs(glimmer_list_revamped) do
 	insertIntoProgress(id, data)
-	createGlimmerAction(id, data.image, data.cast_delay, nil, data.spawn_tiers)
+	createGlimmerAction(id, data.image, data.cast_delay, nil, data.spawn_tiers, nil, data.custom_action)
 end
 
 sortProgress()

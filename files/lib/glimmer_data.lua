@@ -196,18 +196,30 @@ glimmer_data = {
     -- COLOUR_INVIS - sort_after = 8
 }
 
--- local my_modded_glimmers = {
---     {
---         name = "Vomit",
---         desc = "Gives a projectile a sickeningly sparkly trail",
---         materials = {"vomit"},
---         image = nil,
---         cast_delay = 15,
---         spawn_tiers = "1,2",
---         sort_after = 4.21,
---         mod_prefix = "EXAMPLE",
---         is_rare = false -- Determines whether the glimmer shows up in the glimmer lab
---     },
--- }
--- 
--- table.insert(glimmer_data, my_modded_glimmers)
+-- An example entry of a modded glimmer
+local my_modded_glimmers = {
+    {
+        -- REQUIRED
+        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIIMMERS_EXPANDED_COLOUR_VOMIT")
+        desc            = "Gives a projectile a sickeningly sparkly trail", -- The glimmer's description
+        materials       = {"vomit"}, -- The material(s) involved. The first one will color the glimmer, and the rest are used in glimmer alchemy.
+        -- OPTIONAL
+        image           = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_vomit.png", -- The filepath to the spell icon
+        cast_delay      = 15, -- The cast delay reduction
+        spawn_tiers     = "1,2", -- The spell tiers this spawns in
+        sort_after      = 4.21, -- Where this is sorted in the progress menu
+        mod_prefix      = "EXAMPLE", -- Will be used in the ID (i.e. "GLIMMERS_EXPANDED_EXAMPLE_COLOUR_VOMIT")
+        is_rare         = false, -- Determines whether the glimmer shows up in the glimmer lab
+        custom_action   = function() -- A custom action, if you'd like to specify one
+            c.fire_rate_wait = c.fire_rate_wait - 45
+			current_reload_time = current_reload_time - 20
+			c.speed_multiplier = c.speed_multiplier * 2.5
+			c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
+        end,
+    },
+}
+
+-- This is what adds all of your new glimmers into glimmer_data
+-- for _,entry in ipairs(my_modded_glimmers) do
+--     table.insert(glimmer_data, entry)
+-- end
