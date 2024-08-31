@@ -1,4 +1,3 @@
--- This file is being overwritten in init.lua. I don't think I need anything here.
 dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
 local Mod_Id = "GLIMMERS_EXPANDED_COLOUR_"
 
@@ -38,7 +37,7 @@ local myFancyNewColors =
 
 }
 
-local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_tiers, unlock_flag, sort_by)
+local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_tiers, unlock_flag)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
 	local ID = Id:upper()
@@ -48,7 +47,6 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
     if spawn_probs == nil then spawn_probs = "0.2,0.2,0.2,0.2,0.2,0.2" end
 	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
 	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
-    -- if sort_by == nil then sort_by = 100 end
 
     local newGlimmer = {
         id                      = ID,
@@ -71,7 +69,6 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
 			end
 			draw_actions( 1, true )
 		end,
-        -- sort_by = sort_by,
     }
     table.insert(myFancyNewColors, newGlimmer)
 	return newGlimmer
@@ -93,9 +90,6 @@ function sortGlimmers(entry1, entry2)
 end
 
 for id, data in pairs(glimmer_list_revamped) do
-	-- createTranslation(id, data)
-	-- createGlimmerXML(id, data)
-	-- createColourSpellLuaEntry(id, data)
 	insertIntoProgress(id, data)
 	createGlimmerAction(id, data.image, data.cast_delay, nil, data.spawn_tiers)
 end
@@ -107,7 +101,6 @@ local function parseSpawnProbs(action)
     -- print("----------- "..action.id.." -----------")
 	-- replace spawn probs with averaged ones
 	local spawn_levels = split(action.spawn_level)
-	-- local spawn_probability = split(color.spawn_probability, ",")
 	local new_probabilities = ""
 	for index,level in ipairs(spawn_levels) do
         -- print("'"..action.id.."', tier '"..level.."', probability '"..total_spawns[level].prob.."', amount '"..total_spawns[level].amt.."'")
@@ -123,9 +116,7 @@ end
 for _, color in ipairs(myFancyNewColors) do
 	local spawn_levels = split(color.spawn_level)
 	for index,level in ipairs(spawn_levels) do
-        -- total_spawns[level].prob = total_spawns[level].prob * total_spawns[level].amt
         total_spawns[level].amt = total_spawns[level].amt+1
-        -- total_spawns[level].prob = total_spawns[level].prob / total_spawns[level].amt
     end
 end
 
