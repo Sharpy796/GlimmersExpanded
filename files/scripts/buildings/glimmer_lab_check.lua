@@ -64,7 +64,7 @@ local spell_ids = {}
 
 local function gather_spell_ids()
     for id,data in pairs(glimmer_list_revamped) do
-        if id ~= "GLIMMERS_EXPANDED_COLOUR_PINK" and id ~= "GLIMMERS_EXPANDED_COLOUR_WHITE" and id ~= "GLIMMERS_EXPANDED_COLOUR_TEAL" then
+        if (not data.is_rare) and id ~= "GLIMMERS_EXPANDED_COLOUR_PINK" and id ~= "GLIMMERS_EXPANDED_COLOUR_WHITE" and id ~= "GLIMMERS_EXPANDED_COLOUR_TEAL" then
             table.insert(spell_ids, id)
         end
     end
