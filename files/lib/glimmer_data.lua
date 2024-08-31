@@ -4,22 +4,16 @@ glimmer_data = {
         desc = "Gives a projectile a white sparkly trail",
         materials = {"spark_white"},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_white.png",
-        cast_delay = nil,
         spawn_tiers = "2,3,4",
         sort_after = -100,
-        mod_prefix = nil,
-        is_rare = false,
     },
     {
         name = "Pink",
         desc = "Gives a projectile a pink sparkly trail",
         materials = {"plasma_fading_pink"},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_pink.png",
-        cast_delay = nil,
         spawn_tiers = "1,2,3",
         sort_after = 0,
-        mod_prefix = nil,
-        is_rare = false,
         trail_mods = {
             count_max = "3",
             lifetime_min = "0.25",
@@ -31,11 +25,8 @@ glimmer_data = {
         desc = "Gives a projectile a trippy sparkly trail",
         materials = {"fungi","blood_fungi"},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_weird_fungus.png",
-        cast_delay = nil,
         spawn_tiers = "2,3,4,5",
         sort_after = 0.1,
-        mod_prefix = nil,
-        is_rare = false,
     },
     -- COLOUR_RED - sort_after = 1
     {
@@ -43,11 +34,8 @@ glimmer_data = {
         desc = "Gives a projectile a bloody sparkly trail",
         materials = {"blood","blood_fading","blood_fading_slow","cloud_blood",},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_blood.png",
-        cast_delay = nil,
         spawn_tiers = "1,2,3,4,5,6",
         sort_after = 1.1,
-        mod_prefix = nil,
-        is_rare = false,
         trail_mods = {
             count_max = "2",
             trail_gap = "0.7"
@@ -62,8 +50,6 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "2,3,4,5,6",
         sort_after = 2.1,
-        mod_prefix = nil,
-        is_rare = false,
     },
     -- COLOUR_YELLOW - sort_after = 3
     -- COLOUR_GREEN - sort_after = 4
@@ -75,8 +61,6 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "2,3,4,5,6",
         sort_after = 4.1,
-        mod_prefix = nil,
-        is_rare = false,
         trail_mods = {
             trail_gap = "0.5",
         },
@@ -89,19 +73,14 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "2,3,4,5,6",
         sort_after = 4.2,
-        mod_prefix = nil,
-        is_rare = false,
     },
     {
         name = "Teal",
         desc = "Gives a projectile a teal sparkly trail",
         materials = {"spark_teal"},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_teal.png",
-        cast_delay = nil,
         spawn_tiers = "1,2,3,4",
         sort_after = 4.3,
-        mod_prefix = nil,
-        is_rare = false,
     },
     -- COLOUR_BLUE - sort_after = 5
     {
@@ -112,8 +91,6 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "2,3,4,5",
         sort_after = 5.1,
-        mod_prefix = nil,
-        is_rare = false,
     },
     -- COLOUR_PURPLE - sort_after = 6
     {
@@ -124,30 +101,22 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "3,4,5",
         sort_after = 6.1,
-        mod_prefix = nil,
-        is_rare = false,
     },
     {
         name = "Void",
         desc = "Gives a projectile a trail darker than the void itself",
         materials = {"void_liquid"},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_void.png",
-        cast_delay =  nil,
         spawn_tiers = "3,4,5,6",
         sort_after = 6.2,
-        mod_prefix = nil,
-        is_rare = false,
     },
     {
         name = "Mimicium",
         desc = "Gives a projectile an iridescent sparkly trail",
         materials = {"mimic_liquid"},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_mimicium.png",
-        cast_delay = nil,
         spawn_tiers = "4,5,6,10",
         sort_after = 6.3,
-        mod_prefix = nil,
-        is_rare = false,
     },
     -- COLOUR_RAINBOW - sort_after = 7
     {
@@ -155,11 +124,8 @@ glimmer_data = {
         desc = "Gives a projectile a truly rainbow sparkly trail",
         materials = {"material_rainbow"},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_true_rainbow.png",
-        cast_delay = nil,
         spawn_tiers = "4,5,6,10",
         sort_after = 7.1,
-        mod_prefix = nil,
-        is_rare = false,
     },
     {
         name = "Midas",
@@ -169,7 +135,6 @@ glimmer_data = {
         cast_delay = 4,
         spawn_tiers = "5,6,10",
         sort_after = 7.2,
-        mod_prefix = nil,
         is_rare = true, -- Is a rare material, won't show up in the glimmer lab
     },
     {
@@ -180,7 +145,6 @@ glimmer_data = {
         cast_delay = 4,
         spawn_tiers = "5,6,10",
         sort_after = 7.3,
-        mod_prefix = nil,
         is_rare = true, -- Is a rare material, won't show up in the glimmer lab
     },
     {
@@ -191,7 +155,6 @@ glimmer_data = {
         cast_delay = 4,
         spawn_tiers = "5,6,10",
         sort_after = 7.31,
-        mod_prefix = nil,
         is_rare = true, -- Is a rare material, won't show up in the glimmer lab
     },
     {
@@ -199,11 +162,8 @@ glimmer_data = {
         desc = "Gives a projectile a sparkly trail that changes depending on the biome you are in!",
         materials = {"sand","sand_surface","sandstone","sandstone_surface","snow","snow_sticky","slush","water","water_ice","water_salt","water_fading","water_temp","water","water_swamp","grass",},
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_biome.png",
-        cast_delay = nil,
         spawn_tiers = "4,5,6,10",
         sort_after = 7.4,
-        mod_prefix = nil,
-        is_rare = false,
     },
     -- COLOUR_INVIS - sort_after = 8
 }
