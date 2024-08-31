@@ -23,7 +23,7 @@ organizedGlimmerList = {
 ---@param mod_prefix string? '""'
 ---@param is_rare boolean? false
 ---@param custom_action function? function custom_action() end
-function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action)
+function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action, trail_mods)
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil") end
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end
     if materials == nil then error("attempted to call addGlimmer() with 'materials' as nil") end
@@ -35,6 +35,12 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     mod_prefix = mod_prefix:upper():gsub("%W","_").."_" end
     if is_rare == nil then is_rare = false end
     if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
+    if trail_mods == nil then trail_mods = {} end
+    if not trail_mods.count_min then trail_mods.count_min = "1" end
+    if not trail_mods.count_max then trail_mods.count_max = "1" end
+    if not trail_mods.trail_gap then trail_mods.trail_gap = "1" end
+    if not trail_mods.lifetime_min then trail_mods.lifetime_min = "0.8" end
+    if not trail_mods.lifetime_max then trail_mods.lifetime_max = "2.0" end
 
     local id = mod_id..mod_prefix.."COLOUR_"..name:upper():gsub("%W","_")
     local newGlimmer = {
@@ -48,6 +54,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
         sort_after = sort_after,
         is_rare = is_rare,
         custom_action = custom_action,
+        trail_mods = trail_mods,
     }
     -- print("Adding '"..newGlimmer.name.."' with material '"..newGlimmer.materials[1].."' to glimmer_list_revamped")
     glimmer_list_revamped[id] = newGlimmer
@@ -93,5 +100,6 @@ for _,glimmer in ipairs(glimmer_data) do
             glimmer.sort_after,
             glimmer.mod_prefix,
             glimmer.is_rare,
-            glimmer.custom_action)
+            glimmer.custom_action,
+            glimmer.trail_mods)
 end

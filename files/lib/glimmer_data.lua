@@ -20,6 +20,11 @@ glimmer_data = {
         sort_after = 0,
         mod_prefix = nil,
         is_rare = false,
+        trail_mods = {
+            count_max = "3",
+            lifetime_min = "0.25",
+            lifetime_max = "0.75",
+        },
     },
     {
         name = "Weird Fungus",
@@ -43,6 +48,10 @@ glimmer_data = {
         sort_after = 1.1,
         mod_prefix = nil,
         is_rare = false,
+        trail_mods = {
+            count_max = "2",
+            trail_gap = "0.7"
+        },
     },
     -- COLOUR_ORANGE - sort_after = 2
     {
@@ -68,6 +77,9 @@ glimmer_data = {
         sort_after = 4.1,
         mod_prefix = nil,
         is_rare = false,
+        trail_mods = {
+            trail_gap = "0.5",
+        },
     },
     {
         name = "Diminution",
@@ -216,10 +228,17 @@ local my_modded_glimmers = {
 			c.speed_multiplier = c.speed_multiplier * 2.5
 			c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
         end,
+        trail_mods = {
+            count_min = "2",
+            count_max = "5",
+            trail_gap = "4",
+            lifetime_min="8.0",
+            lifetime_max="9.0",
+        },
     },
 }
 
 -- This is what adds all of your new glimmers into glimmer_data
--- for _,entry in ipairs(my_modded_glimmers) do
---     table.insert(glimmer_data, entry)
--- end
+for _,entry in ipairs(my_modded_glimmers) do
+    table.insert(glimmer_data, entry)
+end

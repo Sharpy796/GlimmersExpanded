@@ -179,6 +179,7 @@ local colour,particle]],
 
 local function createGlimmerXML(id, data)
 	-- print("Creating 'mods/GlimmersExpanded/files/entities/misc/"..id:lower()..".xml' with value_string '"..id:lower().."'")
+	local trail_mods = data.trail_mods
 	local xml = [[<Entity>
    
 	<LuaComponent
@@ -214,13 +215,13 @@ local function createGlimmerXML(id, data)
           x_vel_max="2"
           y_vel_min="-2"
           y_vel_max="2"
-          count_min="1"
-          count_max="1"
+          count_min="]]..trail_mods.count_min..[["
+          count_max="]]..trail_mods.count_max..[["
           is_trail="1"
-          trail_gap="1"
+          trail_gap="]]..trail_mods.trail_gap..[["
           fade_based_on_lifetime="1"
-          lifetime_min="0.8"
-          lifetime_max="2.0"
+          lifetime_min="]]..trail_mods.lifetime_min..[["
+          lifetime_max="]]..trail_mods.lifetime_max..[["
           airflow_force="1.5"
           airflow_time="0.401"
           airflow_scale="0.05"
