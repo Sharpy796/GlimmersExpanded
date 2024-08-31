@@ -209,7 +209,7 @@ glimmer_data = {
 }
 
 -- An example entry of a modded glimmer
-local my_modded_glimmers = {
+local glimmer_appends = {
     {
         -- REQUIRED
         name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIIMMERS_EXPANDED_COLOUR_VOMIT")
@@ -239,6 +239,6 @@ local my_modded_glimmers = {
 }
 
 -- This is what adds all of your new glimmers into glimmer_data
-for _,entry in ipairs(my_modded_glimmers) do
-    table.insert(glimmer_data, entry)
-end
+-- for _,entry in ipairs(glimmer_appends) do
+--     table.insert(glimmer_data, entry)
+-- end

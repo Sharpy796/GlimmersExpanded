@@ -13,6 +13,7 @@ glimmer_list_revamped = {}
 ---@param mod_prefix string? '""'
 ---@param is_rare boolean? false
 ---@param custom_action function? function custom_action() end
+---@param trail_mods table? {...}
 function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action, trail_mods)
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil") end
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end

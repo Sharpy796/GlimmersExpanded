@@ -39,8 +39,8 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
 	local mod_id = Mod_Id:lower()
 	local ID = Id:upper()
 	local id = Id:lower()
-	if wait_frames == nil then wait_frames = 8 end
 	if image == nil then image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_unknown.png" end
+	if wait_frames == nil then wait_frames = 8 end
     if spawn_probs == nil then spawn_probs = "0.2,0.2,0.2,0.2,0.2,0.2" end
 	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
     if sort_after == nil then sort_after = 100 end

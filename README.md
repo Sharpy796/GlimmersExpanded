@@ -15,19 +15,47 @@ Here's the link to the [Steam Workshop](https://steamcommunity.com/sharedfiles/f
 For the modders out there, you might be wondering, "How can I create my own glimmers for this mod?" It's fairly easy! There's a few simple steps you have to follow: 
 - Make sure your mod is *above* this one in the mod list.
 - Create a file to contain your new glimmers.
-- For each glimmer you want, fill out an `addGlimmer()` function (explanation below).
+- For each glimmer you want, fill out a glimmer appends table (explanation below).
 - Next, place this bit of code in your `init.lua`:
-```
+```lua
 if ModIsEnabled("GlimmersExpanded") then
-	ModLuaFileAppend("mods/GlimmersExpanded/files/addGlimmers.lua", "mods/your_mod/path/to/your/file.lua")
+	ModLuaFileAppend("mods/GlimmersExpanded/files/lib/glimmer_data.lua", "mods/your_mod/path/to/your/file.lua")
 end
 ```
 
 And that should be it!!
 
-### Modding Functions
-```
-addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number, mod_prefix: string)
+### Modding Methods
+This is an example of a glimmer appends table:
+```lua
+local glimmer_appends = {
+    {
+        -- REQUIRED
+        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIIMMERS_EXPANDED_COLOUR_VOMIT")
+        desc            = "Gives a projectile a sickeningly sparkly trail", -- The glimmer's description
+        materials       = {"vomit"}, -- The material(s) involved. The first one will color the glimmer, and the rest are used in glimmer alchemy.
+        -- OPTIONAL
+        image           = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_vomit.png", -- The filepath to the spell icon
+        cast_delay      = 15, -- The cast delay reduction
+        spawn_tiers     = "1,2", -- The spell tiers this spawns in
+        sort_after      = 4.21, -- Where this is sorted in the progress menu
+        mod_prefix      = "EXAMPLE", -- Will be used in the ID (i.e. "GLIMMERS_EXPANDED_EXAMPLE_COLOUR_VOMIT")
+        is_rare         = false, -- Determines whether the glimmer shows up in the glimmer lab
+        custom_action   = function() -- A custom action, if you'd like to specify one
+            c.fire_rate_wait = c.fire_rate_wait - 45
+			current_reload_time = current_reload_time - 20
+			c.speed_multiplier = c.speed_multiplier * 2.5
+			c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
+        end,
+        trail_mods = {
+            count_min = "2",
+            count_max = "5",
+            trail_gap = "4",
+            lifetime_min="8.0",
+            lifetime_max="9.0",
+        },
+    },
+}
 ```
 - `name` is what you want this spell to be called. For example, `"Custom Material"` would end up naming the glimmer "Custom Material Glimmer". The spell's ID will also use this, and will be `GLIMMERS_EXPANDED_COLOUR_CUSTOM_MATERIAL` (unless you specify a `mod_prefix`).
 - `desc` is the spell's description. This can be any string you want!
@@ -45,5 +73,26 @@ addGlimmer(name: string, desc: string, materials: table, image: string, cast_del
   - `COLOUR_RAINBOW` is 7
   - `COLOUR_INVIS` is 8
 - `mod_prefix` is a string that will be inserted into the ID of your glimmer. This is so I can credit you for glimmers that come from your mod! When specified, the ID of the spell will be `GLIMMERS_EXPANDED_[MOD_PREFIX]_COLOUR_CUSTOM_MATERIAL`. For example, if I wanted to specify the glimmer is from "My Awesome Mod," I might set the mod prefix as `"awesomeMod"`, and it would set the ID to `GLIMMERS_EXPANDED_AWESOMEMOD_COLOUR_CUSTOM_MATERIAL`. This is optional, and will default to `""`.
+- `is_rare` is a boolean that will determine whether you can find this glimmer in the glimmer lab pixel scene I created. It is advised to set this to `true` if your glimmer uses a rare and potentially game-breaking material, like Lively Concoction and Draught of Midas. This is optional, and will default to `false`.
+- `custom_action` is a function that will be called when the glimmer's action is called (when the spell is cast). A spell's action can do all sorts of things. If you know how to create custom spell actions, then feel free to use this. This is optional, and will default to `custom_action = function() end`.
+- `trail_mods` is a table of string values that can modify how the trail of your glimmer looks. The tags below are the only ones that are modifiable at the moment. These values are optional, and will default to the following values:
+  - `count_min = "1"`
+  - `count_max = "1"`
+  - `trail_gap = "1"`
+  - `lifetime_min = "0.8"`
+  - `lifetime_max = "2.0"`
 
-You can check out `mods/GlimmersExpanded/files/addGlimmers.lua` for examples of using `addGlimmer()`.
+After your glimmer appends table, place this below it:
+```lua
+for _,entry in ipairs(glimmer_appends) do
+    table.insert(glimmer_data, entry)
+end
+```
+
+You can check out `mods/GlimmersExpanded/files/lib/glimmer_data.lua` for more examples of creating glimmers.
+
+
+This function has had added functionality from what it used to have in the past, and is not as readable anymore. However, it is still usable, if you so prefer.
+```lua
+addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number, mod_prefix: string, is_rare: boolean, trail_mods: table)
+```
