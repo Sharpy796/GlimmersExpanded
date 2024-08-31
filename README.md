@@ -7,7 +7,7 @@ This mod also adds glimmer alchemy! The process includes a recipe: Australium + 
 
 Please, especially give me feedback on the alchemy part of the mod! Depending on how difficult or tedious the alchemy ends up being, I may change the materials involved.
 
-Also, for those wondering, this is compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). However, make sure this mod goes **below** any mods that add glimmers through this mod. When in doubt, place this mod at the bottom of the mod list.
+Also, for those wondering, this is compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). However, make sure this mod goes *below* any mods that add glimmers through this one. When in doubt, place this mod at the bottom of the mod list.
 
 If you find any bugs, please let me know and I'll look into patching it as soon as I can.
 
@@ -96,8 +96,8 @@ if ModIsEnabled("GlimmersExpanded") then
 	ModLuaFileAppend("mods/GlimmersExpanded/files/lib/glimmer_data.lua", "mods/your_mod/path/to/your/file.lua")
 end
 ```
-### "Deprecared" Functions
-This function has had added functionality from what it used to have in the past, and is not as readable anymore. However, it is still usable, if you so prefer.
+### "Deprecated" Functions
+This function has had functionality added to it, and is not very readable anymore. However, it is still usable, if you so prefer.
 ```lua
 addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number, mod_prefix: string, is_rare: boolean, trail_mods: table)
 ```
