@@ -37,7 +37,8 @@ SYSTEMATIC GLIMMER CREATION:
 [x] Get glimmer alchemy working
 [x] Find a way for modders to easily add new glimmers
 [x] Clean up code
-[ ] Find a way for modders to add custom actions
+[x] Find a way for modders to add custom actions
+[x] Make the ParticleEmitterComponents more customizable
 
 OPTIMIZATION:
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
