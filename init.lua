@@ -270,5 +270,13 @@ function OnMagicNumbersAndWorldSeedInitialized()
 	if (ModSettingGet("GlimmersExpanded.allow_alchemy")) then dofile("mods/GlimmersExpanded/files/alchemy/generate_glimmer_alchemy.lua") end
 end
 
+function OnWorldInitialized()
+	if (ModIsEnabled("kae_waypoint")) then
+    	dofile_once("mods/kae_waypoint/data/kae/poi.lua")
+    	add_poi("Glimmer Lab", -12015, 4990)
+	end
+end
+
+
 -- This code runs when all mods' filesystems are registered
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_materials.xml")
