@@ -26,12 +26,13 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     mod_prefix = mod_prefix:upper():gsub("%W","_").."_" end
     if is_rare == nil then is_rare = false end
     if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
-    if trail_mods == nil then trail_mods = {} end
-    if not trail_mods.count_min then trail_mods.count_min = "1" end
-    if not trail_mods.count_max then trail_mods.count_max = "1" end
-    if not trail_mods.trail_gap then trail_mods.trail_gap = "1" end
-    if not trail_mods.lifetime_min then trail_mods.lifetime_min = "0.8" end
-    if not trail_mods.lifetime_max then trail_mods.lifetime_max = "2.0" end
+    if type(trail_mods) ~= "table" then trail_mods = nil end
+    -- if trail_mods == nil then trail_mods = {} end
+    -- if not trail_mods.count_min then trail_mods.count_min = "1" end
+    -- if not trail_mods.count_max then trail_mods.count_max = "1" end
+    -- if not trail_mods.trail_gap then trail_mods.trail_gap = "1" end
+    -- if not trail_mods.lifetime_min then trail_mods.lifetime_min = "0.8" end
+    -- if not trail_mods.lifetime_max then trail_mods.lifetime_max = "2.0" end
 
     local id = mod_id..mod_prefix.."COLOUR_"..name:upper():gsub("%W","_")
     local newGlimmer = {
