@@ -6,7 +6,6 @@ ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/fil
 local testing = false;
 if testing then ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") end -- For testing purposes
 
-local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
 
 local isPrideGlimmersEnabled = ModIsEnabled("pride_glimmers")
@@ -230,6 +229,7 @@ local function loadGlimmers()
 end
 
 local function updateTranslations()
+	local translations = ModTextFileGetContent("data/translations/common.csv")
 	translations = translations .. new_translations
 	translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
 	ModTextFileSetContent("data/translations/common.csv", translations)
