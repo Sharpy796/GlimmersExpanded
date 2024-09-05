@@ -7,15 +7,14 @@ This mod also adds glimmer alchemy! The process includes a recipe: Australium + 
 
 Please, especially give me feedback on the alchemy part of the mod! Depending on how difficult or tedious the alchemy ends up being, I may change the materials involved.
 
-Also, for those wondering, this is compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). However, make sure this mod goes *below* any mods that add glimmers through this one. When in doubt, place this mod at the bottom of the mod list.
+Also, for those wondering, this is compatible with a multitude of mods, the most notable being Pride Glimmers (which also adds spells and shelves inside of the glimmer bunker). This mod also no longer relies on being below anything else in the mod list.
 
 If you find any bugs, please let me know and I'll look into patching it as soon as I can.
 
 Here's the link to the [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3316355233) version of the mod!
 
 ## Modding!!
-For the modders out there, you might be wondering, "How can I create my own glimmers for this mod?" It's fairly easy! There's a few simple steps you have to follow: 
-- Make sure your mod is *above* this one in the mod list.
+For the modders out there, you might be wondering, "How can I create my own glimmers for this mod?" It's fairly easy! There's a few simple steps you have to follow:
 - Create a file to contain your new glimmers.
 - For each glimmer you want, fill out a glimmer appends table (explanation below).
 - Next, place this bit of code in your `init.lua`:
