@@ -177,6 +177,84 @@ local colour,particle]],
     },
 }
 
+-- local function createGlimmerXML(id, data)
+-- 	-- print("Creating 'mods/GlimmersExpanded/files/entities/misc/"..id:lower()..".xml' with value_string '"..id:lower().."'")
+-- 	local trail_mods = data.trail_mods
+-- 	local xml = [[<Entity>
+   
+-- 	<LuaComponent
+-- 		script_source_file="data/scripts/projectiles/colour_spell.lua"
+-- 		execute_every_n_frame="1"
+-- 		remove_after_executed="1"
+-- 		>
+-- 	</LuaComponent>
+	
+-- 	<LuaComponent
+-- 		script_source_file="data/scripts/projectiles/colour_spell.lua"
+-- 		execute_on_added="1"
+-- 		remove_after_executed="1"
+-- 		>
+-- 	</LuaComponent>
+	
+-- 	<VariableStorageComponent
+-- 		name="colour_name"
+-- 		value_string="]]..id:lower()..[["
+-- 		>
+-- 	</VariableStorageComponent>
+  
+--     <ParticleEmitterComponent 
+--           emitted_material_name="]]..(data.materials[1] or "material_rainbow")..[["
+--           render_ultrabright="]]..(nil or "0")..[["
+--           color_is_based_on_pos="]]..(nil or "0")..[["
+--           offset.x="]]..(nil or "0")..[["
+--           offset.y="]]..(nil or "0")..[["
+--           x_pos_offset_min="]]..(nil or "-1")..[["
+--           x_pos_offset_max="]]..(nil or "1")..[["
+--           y_pos_offset_min="]]..(nil or "-1")..[["
+--           y_pos_offset_max="]]..(nil or "1")..[["
+--           area_circle_sector_degrees="]]..(nil or "360")..[["
+--           gravity.x="]]..(nil or "0")..[["
+--           gravity.y="]]..(nil or "0")..[["
+--           x_vel_min="]]..(nil or "-2")..[["
+--           x_vel_max="]]..(nil or "2")..[["
+--           y_vel_min="]]..(nil or "-2")..[["
+--           y_vel_max="]]..(nil or "2")..[["
+--           direction_random_deg="]]..(nil or "0")..[["
+--           velocity_always_away_from_center="]]..(nil or "0")..[["
+--           count_min="]]..(trail_mods.count_min or "1")..[["
+--           count_max="]]..(trail_mods.count_max or "1")..[["
+--           is_trail="1"
+--           trail_gap="]]..(trail_mods.trail_gap or "1")..[["
+--           fade_based_on_lifetime="]]..(nil or "1")..[["
+--           lifetime_min="]]..(trail_mods.lifetime_min or "0.8")..[["
+--           lifetime_max="]]..(trail_mods.lifetime_max or "2.0")..[["
+--           airflow_force="]]..(nil or "1.5")..[["
+--           airflow_time="]]..(nil or "0.401")..[["
+--           airflow_scale="]]..(nil or "0.05")..[["
+--           friction="]]..(nil or "0")..[["
+--           attractor_force="]]..(nil or "0")..[["
+--           draw_as_long="]]..(nil or "0")..[["
+--           create_real_particles="0"
+--           emit_cosmetic_particles="1"
+--           render_on_grid="1"
+--           emission_interval_min_frames="]]..(nil or "1")..[["
+--           emission_interval_max_frames="]]..(nil or "2")..[["
+--           emission_chance="]]..(nil or "100")..[["
+--           is_emitting="1" >
+--       </ParticleEmitterComponent>
+-- </Entity>]]
+-- 	local filepath = "mods/GlimmersExpanded/files/entities/misc/"..id:lower()..".xml"
+-- 	ModTextFileSetContent(filepath, xml)
+
+--     ---@type nxml
+--     local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+--     local xml = nxml.parse(ModTextFileGetContent(filepath))
+
+-- 	-- for each_
+
+-- 	return xml
+-- end
+
 local function createGlimmerXML(id, data)
 	-- print("Creating 'mods/GlimmersExpanded/files/entities/misc/"..id:lower()..".xml' with value_string '"..id:lower().."'")
 	local trail_mods = data.trail_mods
