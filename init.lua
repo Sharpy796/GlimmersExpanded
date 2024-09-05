@@ -1,9 +1,9 @@
 dofile_once("data/scripts/lib/utilities.lua")
-dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
+-- dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
--- ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
+ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") -- For testing purposes
 
 local translations = ModTextFileGetContent("data/translations/common.csv")
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
@@ -177,6 +177,13 @@ local colour,particle]],
     },
 }
 
+local function createTranslation(id, data)
+	-- print("creating translations for '"..id:lower().."' with name '"..data.name.."'")
+	new_translations = new_translations..[[,
+action_]]..id:lower()..[[,"]]..data.name..[[",,,,,,,,,,,,,
+actiondesc_]]..id:lower()..[[,"]]..data.desc..[[",,,,,,,,,,,,,]]
+end
+
 -- local function createGlimmerXML(id, data)
 -- 	-- print("Creating 'mods/GlimmersExpanded/files/entities/misc/"..id:lower()..".xml' with value_string '"..id:lower().."'")
 -- 	local trail_mods = data.trail_mods
@@ -324,37 +331,44 @@ local function createColourSpellLuaEntry(id, data)
 	end
 end
 
-local function createTranslation(id, data)
-	-- print("creating translations for '"..id:lower().."' with name '"..data.name.."'")
-	new_translations = new_translations..[[,
-action_]]..id:lower()..[[,"]]..data.name..[[",,,,,,,,,,,,,
-actiondesc_]]..id:lower()..[[,"]]..data.desc..[[",,,,,,,,,,,,,]]
-end
-
-for id, data in pairs(glimmer_list_revamped) do
-	createTranslation(id, data)
-	createGlimmerXML(id, data)
-	createColourSpellLuaEntry(id, data)
-end
-
-translations = translations .. new_translations
-translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
-ModTextFileSetContent("data/translations/common.csv", translations)
-
--- Thanks Graham for this bit of code, it looks very useful
-for i=1, #patches do
-    local patch = patches[i]
-    local content = ModTextFileGetContent(patch.path)
-	if content ~= nil then
-		content = content:gsub(patch.from, patch.to, 1)
-		content = content:gsub("\r","")
-		ModTextFileSetContent(patch.path, content)
+local function loadGlimmers()
+	for id, data in pairs(glimmer_list_revamped) do
+		createTranslation(id, data)
+		createGlimmerXML(id, data)
+		createColourSpellLuaEntry(id, data)
 	end
+end
+
+local function updateTranslations()
+	translations = translations .. new_translations
+	translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
+	ModTextFileSetContent("data/translations/common.csv", translations)
+end
+
+local function patchFiles()
+	-- Thanks Graham for this bit of code, it looks very useful
+	for i=1, #patches do
+	    local patch = patches[i]
+	    local content = ModTextFileGetContent(patch.path)
+		if content ~= nil then
+			content = content:gsub(patch.from, patch.to, 1)
+			content = content:gsub("\r","")
+			ModTextFileSetContent(patch.path, content)
+		end
+	end
+end
+
+function OnModPreInit()
+	dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
+	loadGlimmers()
+	updateTranslations()
+	patchFiles()
+	ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
 end
 
 function OnPlayerSpawned(player_id)
     -- local x, y = EntityGetTransform(player_id)
-	-- GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
+	GameAddFlagRun( "fishing_hut_a" ) -- For testing purposes
 	if GameHasFlagRun("glimmers_expanded_spliced_chunks_spawned") == false then  --Rename the flag to something unique, this checks if the game has this flag
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/left/glimmer_lab_left.xml", 512*-24, 512*9)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
@@ -368,4 +382,3 @@ end
 
 -- This code runs when all mods' filesystems are registered
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/alchemy/glimmer_alchemy_materials.xml")
-ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
