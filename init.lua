@@ -207,6 +207,7 @@ local function createGlimmerXML(id, data)
 					pecomp:set(tostring(k_mods),tostring(v_mods))
 				end
 			end
+			pecomp:set("create_real_particles","0")
 		end
 	end
 end
