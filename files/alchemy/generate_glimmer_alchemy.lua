@@ -80,21 +80,17 @@ local function lamas_stats_get_graphics_info(elem)
 end
 
 local function get_modded_material_files()
+    ---@type nxml
     local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
-    local materials = "data/materials.xml"
-    local xml = nxml.parse(ModTextFileGetContent(materials))
-
+    local root = nxml.new_element("none")
     local files = ModMaterialFilesGet()
 
     for _, file in ipairs(files) do
-        -- print("modded material files: "..file)
-        if file ~= materials then
-            for _, comp in ipairs(nxml.parse(ModTextFileGetContent(file)).children) do
-                xml.children[#xml.children+1] = comp
-            end
+        for comp in nxml.parse_file(file):each_child() do
+            root:add_child(comp)
         end
     end
-    return xml
+    return root
 end
 
 local function lamas_stats_gather_material()
