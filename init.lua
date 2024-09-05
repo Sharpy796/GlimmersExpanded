@@ -228,7 +228,8 @@ local function loadGlimmers()
 	end
 end
 
-local function updateTranslations(translations)
+local function updateTranslations()
+	local translations = ModTextFileGetContent("data/translations/common.csv")
 	translations = translations .. new_translations
 	translations = translations:gsub("\r", ""):gsub("\n\n+", "\n")
 	ModTextFileSetContent("data/translations/common.csv", translations)
@@ -250,7 +251,7 @@ end
 function OnModPreInit()
 	dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
 	loadGlimmers()
-	updateTranslations(ModTextFileGetContent("data/translations/common.csv"))
+	updateTranslations()
 	patchFiles()
 	ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
 end
