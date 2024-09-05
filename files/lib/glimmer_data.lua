@@ -188,12 +188,14 @@ local glimmer_appends = {
 			c.speed_multiplier = c.speed_multiplier * 2.5
 			c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
         end,
+        -- Is a table of any value a ParticleEmitterComponent has. Check https://noita.wiki.gg/wiki/Documentation:_ParticleEmitterComponent for more details!
         trail_mods = {
             count_min = "2",
             count_max = "5",
             trail_gap = "4",
             lifetime_min="8.0",
             lifetime_max="9.0",
+            render_ultrabright="1",
         },
     },
 }

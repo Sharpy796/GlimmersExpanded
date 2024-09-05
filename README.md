@@ -49,12 +49,14 @@ local glimmer_appends = {
 			c.speed_multiplier = c.speed_multiplier * 2.5
 			c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
         end,
+        -- Is a table of any value a ParticleEmitterComponent has. Check https://noita.wiki.gg/wiki/Documentation:_ParticleEmitterComponent for more details!
         trail_mods = {
             count_min = "2",
             count_max = "5",
             trail_gap = "4",
             lifetime_min="8.0",
             lifetime_max="9.0",
+            render_ultrabright="1",
         },
     },
 }
@@ -77,12 +79,7 @@ local glimmer_appends = {
 - `mod_prefix` is a string that will be inserted into the ID of your glimmer. This is so I can credit you for glimmers that come from your mod! When specified, the ID of the spell will be `GLIMMERS_EXPANDED_[MOD_PREFIX]_COLOUR_CUSTOM_MATERIAL`. For example, if I wanted to specify the glimmer is from "My Awesome Mod," I might set the mod prefix as `"awesomeMod"`, and it would set the ID to `GLIMMERS_EXPANDED_AWESOMEMOD_COLOUR_CUSTOM_MATERIAL`. This is optional, and will default to `""`.
 - `is_rare` is a boolean that will determine whether you can find this glimmer in the glimmer lab pixel scene I created. It is advised to set this to `true` if your glimmer uses a rare and potentially game-breaking material, like Lively Concoction and Draught of Midas. This is optional, and will default to `false`.
 - `custom_action` is a function that will be called when the glimmer's action is called (when the spell is cast). A spell's action can do all sorts of things. If you know how to create custom spell actions, then feel free to use this. This is optional, and will default to `custom_action = function() end`.
-- `trail_mods` is a table of string values that can modify how the trail of your glimmer looks. The tags below are the only ones that are modifiable at the moment. These values are optional, and will default to the following values:
-  - `count_min = "1"`
-  - `count_max = "1"`
-  - `trail_gap = "1"`
-  - `lifetime_min = "0.8"`
-  - `lifetime_max = "2.0"`
+- `trail_mods` is a table of string values that can modify how the trail of your glimmer looks. The tags can be anything that is in a ParticleEmitterComponent (more info on these on the [wiki.gg page](https://noita.wiki.gg/wiki/Documentation:_ParticleEmitterComponent)). These values are optional, and will default to the values in `mods/GlimmersExpanded/files/entities/misc/colour_template.xml`, while `trail_mods` itself will default to `nil`.
 
 After your glimmer appends table, place this below it:
 ```lua
