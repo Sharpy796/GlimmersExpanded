@@ -42,6 +42,17 @@ glimmer_data = {
         },
     },
     -- COLOUR_ORANGE - sort_after = 2
+    { -- Do I want to add this?
+        name = "Fire",
+        desc = "Gives a projectile a fiery sparkly trail",
+        materials = {"fire","flame","liquid_fire","liquid_fire_weak"},
+        image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_fire.png",
+        spawn_tiers = "1,2,3",
+        sort_after = 2.01,
+        trail_mods = {
+            custom_style = "FIRE"
+        },
+    },
     {
         name = "Lava",
         desc = "Gives a projectile a molten sparkly trail",
