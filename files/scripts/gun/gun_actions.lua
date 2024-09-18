@@ -45,12 +45,12 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
 	if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
     if sort_after == nil then sort_after = 100 end
 	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
-    if type(custom_action) ~= "function" then custom_action = function(c) --[[Do nothing]] end end
+    if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
 
 
     local action = function()
         c.extra_entities    = c.extra_entities .. "mods/GlimmersExpanded/files/entities/misc/"..id..".xml,"
-        custom_action(c)
+        custom_action()
         c.fire_rate_wait    = c.fire_rate_wait - wait_frames
         c.screenshake       = math.max(0, c.screenshake - 2.5)
         draw_actions( 1, true )
@@ -76,10 +76,10 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
 end
 
 local function sortProgress(myTable)
-	table.sort(myTable, sortGlimmers)
+	table.sort(myTable, compareGlimmers)
 end
 
-function sortGlimmers(entry1, entry2)
+function compareGlimmers(entry1, entry2)
 	return entry1.sort_after < entry2.sort_after
 end
 
@@ -148,23 +148,43 @@ end
 -- Sort myFancyNewColors
 sortProgress(myFancyNewColors)
 
+-- -- Put myFancyNewColors into actions (Old code, saving it just in case)
+-- if ModSettingGet("GlimmersExpanded.inject_spells") then
+--     for index, action in ipairs(actions) do
+--         if action.id == "IF_ELSE" then
+--             for _, color in ipairs(myFancyNewColors) do
+--                 index = index + 1
+--                 table.insert(actions, index, color)
+--             end
+--             break
+--         elseif index >= #actions then
+--             for _, color in ipairs(myFancyNewColors) do
+--                 table.insert(actions, color)
+--             end
+--             break
+--         end
+--     end
+-- else
+--     for _, color in ipairs(myFancyNewColors) do
+--         table.insert(actions, color)
+--     end
+-- end
+
 -- Put myFancyNewColors into actions
-if ModSettingGet("GlimmersExpanded.inject_spells") then
-    for index, action in ipairs(actions) do
-        if index > #actions then
-            for _, color in ipairs(myFancyNewColors) do
-                table.insert(actions, color)
+do
+    if ModSettingGet("GlimmersExpanded.inject_spells") then
+        for index, action in ipairs(actions) do
+            if action.id == "IF_ELSE" then
+                for _, color in ipairs(myFancyNewColors) do
+                    index = index + 1
+                    table.insert(actions, index, color)
+                end
+                goto continue
             end
-        elseif action.id == "IF_ELSE" then
-            for _, color in ipairs(myFancyNewColors) do
-                index = index + 1
-                table.insert(actions, index, color)
-            end
-            break
         end
     end
-else
     for _, color in ipairs(myFancyNewColors) do
         table.insert(actions, color)
     end
+    ::continue::
 end
