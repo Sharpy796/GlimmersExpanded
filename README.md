@@ -32,7 +32,7 @@ This is an example of a glimmer appends table:
 local glimmer_appends = {
     {
         -- REQUIRED
-        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIIMMERS_EXPANDED_COLOUR_VOMIT")
+        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIMMERS_EXPANDED_COLOUR_VOMIT")
         desc            = "Gives a projectile a sickeningly sparkly trail", -- The glimmer's description
         materials       = {"vomit"}, -- The material(s) involved. The first one will color the glimmer, and the rest are used in glimmer alchemy.
         -- OPTIONAL
@@ -44,9 +44,9 @@ local glimmer_appends = {
         is_rare         = false, -- Determines whether the glimmer shows up in the glimmer lab
         custom_action   = function() -- A custom action, if you'd like to specify one
             c.fire_rate_wait = c.fire_rate_wait - 45
-			current_reload_time = current_reload_time - 20
-			c.speed_multiplier = c.speed_multiplier * 2.5
-			c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
+            current_reload_time = current_reload_time - 20
+            c.speed_multiplier = c.speed_multiplier * 2.5
+            c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
         end,
         -- Is a table of any value a ParticleEmitterComponent has. Check https://noita.wiki.gg/wiki/Documentation:_ParticleEmitterComponent for more details!
         trail_mods = {

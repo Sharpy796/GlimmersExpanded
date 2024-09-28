@@ -183,7 +183,7 @@ glimmer_data = {
 local glimmer_appends = {
     {
         -- REQUIRED
-        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIIMMERS_EXPANDED_COLOUR_VOMIT")
+        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIMMERS_EXPANDED_COLOUR_VOMIT")
         desc            = "Gives a projectile a sickeningly sparkly trail", -- The glimmer's description
         materials       = {"vomit"}, -- The material(s) involved. The first one will color the glimmer, and the rest are used in glimmer alchemy.
         -- OPTIONAL
