@@ -72,10 +72,11 @@ end
 local function lamas_stats_get_graphics_info(elem)
     local graphics = elem:first_of("Graphics")
     if graphics == nil then
-        return elem:get("wang_color")
+        return get_elem_data(elem, "wang_color")
     else
-        if graphics:get("color") == nil then return elem:get("wang_color")
-        else return graphics:get("color") end
+        local graphicsColor = graphics:get("color")
+        if graphicsColor == nil then return get_elem_data(elem, "wang_color")
+        else return graphicsColor end
     end
 end
 
