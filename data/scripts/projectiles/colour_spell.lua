@@ -185,8 +185,10 @@ if ( colour ~= nil ) then
 					break
 				end
 			end
-			-- print("Adding LaserEmitterComponent from entity '"..entity_id.."'")
+			
+			print("Adding LaserEmitterComponent from entity '"..entity_id.."'")
 			print("Adding LaserEmitterComponent from component '"..comp_id.."'")
+			print("Entity that owns this component: '"..ComponentGetEntity(comp_id).."'")
 			local lec = EntityAddComponent2( entity_id, "LaserEmitterComponent")
 			comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
 
