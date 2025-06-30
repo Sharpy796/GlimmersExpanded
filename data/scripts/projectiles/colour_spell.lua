@@ -1,6 +1,7 @@
 dofile_once("data/scripts/lib/utilities.lua")
 
 local entity_id = GetUpdatedEntityID()
+local comp_id = GetUpdatedComponentID()
 local mixing = ModSettingGet("GlimmersExpanded.glimmer_mixing")
 local player_id = EntityGetWithTag("player_unit")[1]
 local colour,particle
@@ -173,14 +174,45 @@ if ( colour ~= nil ) then
 	
 	comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
 	if ( comps ~= nil ) then
-		for i,v in ipairs( comps ) do
-            if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-				if ( particle ~= nil ) then
-					ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
-					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90)
-				else
-					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
+		if mixing and colour ~= "invis" then
+			-- local beam_particle_chance = ComponentObjectGetValue2(comps[1], "laser", "beam_particle_chance")
+			local beam_particle_chance = 90
+			local bpc = 0
+			for i,v in ipairs(comps) do
+				local bpc = ComponentObjectGetValue2(v, "laser", "beam_particle_chance")
+				if bpc > 0 then
+					beam_particle_chance = bpc
+					break
 				end
+			end
+			-- print("Adding LaserEmitterComponent from entity '"..entity_id.."'")
+			print("Adding LaserEmitterComponent from component '"..comp_id.."'")
+			local lec = EntityAddComponent2( entity_id, "LaserEmitterComponent")
+			comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
+
+			ComponentSetValue2( lec, "laser_angle_add_rad", ComponentGetValue2(comps[1], "laser_angle_add_rad"))
+			ComponentObjectSetValue2( lec, "laser", "beam_particle_type", CellFactory_GetType(particle))
+			ComponentObjectSetValue2( lec, "laser", "max_cell_durability_to_destroy", 0)
+			ComponentObjectSetValue2( lec, "laser", "damage_to_cells", 0)
+			ComponentObjectSetValue2( lec, "laser", "damage_to_entities", 0)
+			ComponentObjectSetValue2( lec, "laser", "hit_particle_chance", 0)
+			ComponentObjectSetValue2( lec, "laser", "audio_enabled", false)
+			ComponentObjectSetValue2( lec, "laser", "max_length", ComponentObjectGetValue2(comps[1], "laser", "max_length"))
+			ComponentObjectSetValue2( lec, "laser", "beam_radius", ComponentObjectGetValue2(comps[1], "laser", "beam_radius"))
+			
+			for i,v in ipairs( comps ) do
+				ComponentObjectSetValue2( v, "laser", "beam_particle_chance", beam_particle_chance-(2*(i-1)))
+			end		
+		else
+			for i,v in ipairs( comps ) do
+        	    -- if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
+					if ( particle ~= nil ) then
+						ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
+						-- ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90) -- we might need this?
+					else
+						ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
+					end
+				-- end
 			end
 		end
 	end
