@@ -14,7 +14,7 @@ mod_settings =
     {
         id = "glimmer_mixing",
         ui_name = "Allow Glimmers to Mix",
-        ui_description = "Lets glimmers mix with each other, instad of making the rightmost glimmer brighter.",
+        ui_description = "Lets glimmer colors mix with each other, instad of making the rightmost glimmer brighter.\nThis also causes glimmers to mix with the projectile's original color.",
         value_default = false,
         scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
     },
