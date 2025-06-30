@@ -175,20 +175,15 @@ if ( colour ~= nil ) then
 	comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
 	if ( comps ~= nil ) then
 		if mixing and colour ~= "invis" then
-			-- local beam_particle_chance = ComponentObjectGetValue2(comps[1], "laser", "beam_particle_chance")
 			local beam_particle_chance = 90
 			local bpc = 0
 			for i,v in ipairs(comps) do
-				local bpc = ComponentObjectGetValue2(v, "laser", "beam_particle_chance")
+				bpc = ComponentObjectGetValue2(v, "laser", "beam_particle_chance")
 				if bpc > 0 then
 					beam_particle_chance = bpc
 					break
 				end
 			end
-			
-			-- print("Adding LaserEmitterComponent from entity '"..entity_id.."'")
-			print("Adding LaserEmitterComponent from component '"..comp_id.."'")
-			-- print("Entity that owns this component: '"..ComponentGetEntity(comp_id).."'")
 			local lec = EntityAddComponent2( entity_id, "LaserEmitterComponent")
 			comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
 
@@ -206,17 +201,14 @@ if ( colour ~= nil ) then
 				if ComponentObjectGetValue2( v, "laser", "beam_particle_chance") > 0 then
 					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", beam_particle_chance-(2*(i-1)))
 				end
-			end		
+			end
 		else
 			for i,v in ipairs( comps ) do
-        	    -- if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-					if ( particle ~= nil ) then
-						ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
-						-- ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90) -- we might need this?
-					else
-						ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
-					end
-				-- end
+				if ( particle ~= nil ) then
+					ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
+				else
+					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
+				end
 			end
 		end
 	end
