@@ -186,9 +186,9 @@ if ( colour ~= nil ) then
 				end
 			end
 			
-			print("Adding LaserEmitterComponent from entity '"..entity_id.."'")
+			-- print("Adding LaserEmitterComponent from entity '"..entity_id.."'")
 			print("Adding LaserEmitterComponent from component '"..comp_id.."'")
-			print("Entity that owns this component: '"..ComponentGetEntity(comp_id).."'")
+			-- print("Entity that owns this component: '"..ComponentGetEntity(comp_id).."'")
 			local lec = EntityAddComponent2( entity_id, "LaserEmitterComponent")
 			comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
 
@@ -203,7 +203,9 @@ if ( colour ~= nil ) then
 			ComponentObjectSetValue2( lec, "laser", "beam_radius", ComponentObjectGetValue2(comps[1], "laser", "beam_radius"))
 			
 			for i,v in ipairs( comps ) do
-				ComponentObjectSetValue2( v, "laser", "beam_particle_chance", beam_particle_chance-(2*(i-1)))
+				if ComponentObjectGetValue2( v, "laser", "beam_particle_chance") > 0 then
+					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", beam_particle_chance-(2*(i-1)))
+				end
 			end		
 		else
 			for i,v in ipairs( comps ) do
