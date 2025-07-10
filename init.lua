@@ -14,28 +14,28 @@ local isPrideGlimmersEnabled = ModIsEnabled("pride_glimmers")
 local patches = {
 	-- { -- Dummy line
     --     path    = "data/scripts/buildings/bunker_check.lua",
-    --     from    = "EntityKill%( entity_id %)",
+    --     from    = "EntityKill( entity_id )",
     --     to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550]]..((isPrideGlimmersEnabled and [[+60,]]) or [[,]])..[[ 396]]..((isPrideGlimmersEnabled and [[-5)]]) or [[)]])..[[
-	-- 	EntityKill%( entity_id %)]],
+	-- 	EntityKill( entity_id )]],
     -- },
 	{ -- This can break if someone else modifies this file. TODO: Find a way to append this, rather than gsubbing
         path    = "data/scripts/buildings/bunker_check.lua",
-        from    = [[CreateItemActionEntity%( "COLOUR_RED"]],
-        to      = [[CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_WHITE", x %+ 14, y %- 7%)
-	CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_PINK", x %+ 26, y %- 8%)
-	CreateItemActionEntity%( "COLOUR_RED"]]
+        from    = [[CreateItemActionEntity( "COLOUR_RED"]],
+        to      = [[CreateItemActionEntity( "GLIMMERS_EXPANDED_COLOUR_WHITE", x + 14, y - 7)
+	CreateItemActionEntity( "GLIMMERS_EXPANDED_COLOUR_PINK", x + 26, y - 8)
+	CreateItemActionEntity( "COLOUR_RED"]]
     },
 	{
 		path	= "data/scripts/buildings/bunker_check.lua",
-		from	= [[CreateItemActionEntity%( "COLOUR_BLUE"]],
-		to		= [[CreateItemActionEntity%( "GLIMMERS_EXPANDED_COLOUR_TEAL", x %+ 74, y %- 11%)
-	CreateItemActionEntity%( "COLOUR_BLUE"]],
+		from	= [[CreateItemActionEntity( "COLOUR_BLUE"]],
+		to		= [[CreateItemActionEntity( "GLIMMERS_EXPANDED_COLOUR_TEAL", x + 74, y - 11)
+	CreateItemActionEntity( "COLOUR_BLUE"]],
 	},
 	{
         path    = "data/scripts/buildings/bunker_check.lua",
-        from    = "EntityKill%( entity_id %)",
+        from    = "EntityKill( entity_id )",
         to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550]]..((isPrideGlimmersEnabled and [[+60,]]) or [[,]])..[[ 396]]..((isPrideGlimmersEnabled and [[-5)]]) or [[)]])..[[
-		EntityKill%( entity_id %)]],
+		EntityKill( entity_id )]],
     },
 	{
 		path	= "data/scripts/projectiles/colour_spell.lua",
@@ -119,116 +119,146 @@ local patches = {
 	
 	rainbow]],
 	},
-	{
-		path	= "data/scripts/projectiles/colour_spell.lua",
-		from	= [[local data]],
-		to		= [[if ( colour == "glimmers_expanded_colour_biome" ) then
-    if ( player_id ~= nil ) then
-        local x, y = EntityGetTransform(player_id)
-        colour = BiomeMapGetName(x,y)
-        if colour == "$biome_boss_victoryroom" then
-            local endroom = EntityGetWithTag("ending_sampo_spot_underground")[1]
-            if endroom == nil then
-                if y < 0 then 
-                    colour = "$biome_the_sky"
-                else
-                    colour = "$biome_the_end"
-                end
-            end
-        end
+-- 	{
+-- 		path	= "data/scripts/projectiles/colour_spell.lua",
+-- 		from	= [[local data]],
+-- 		to		= [[if ( colour == "glimmers_expanded_colour_biome" ) then
+--     if ( player_id ~= nil ) then
+--         local x, y = EntityGetTransform(player_id)
+--         colour = BiomeMapGetName(x,y)
+--         if colour == "$biome_boss_victoryroom" then
+--             local endroom = EntityGetWithTag("ending_sampo_spot_underground")[1]
+--             if endroom == nil then
+--                 if y < 0 then 
+--                     colour = "$biome_the_sky"
+--                 else
+--                     colour = "$biome_the_end"
+--                 end
+--             end
+--         end
+--     end
+-- end
+
+-- local data]],
+-- 	},
+-- 	{
+-- 		path	= "data/scripts/projectiles/colour_spell.lua",
+-- 		from	= [[comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )]],
+-- 		to		= [[if ( particle == "" ) then
+-- 		particle = "material_rainbow"
+-- 	end
+	
+-- 	comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )]],
+-- 	},
+-- 	{
+-- 		path	= "data/scripts/projectiles/colour_spell.lua",
+-- 		from	= [[local colour,particle]],
+-- 		to		= [[local mixing = ModSettingGet("GlimmersExpanded.glimmer_mixing")
+-- local player_id = EntityGetWithTag("player_unit")[1]
+-- local colour,particle]],
+-- 	},
+-- 	{ -- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
+-- 	  -- yo i actually modified this a TON
+--         path    = "data/scripts/projectiles/colour_spell.lua",
+--         from    = "comps = EntityGetComponent( entity_id, \"ParticleEmitterComponent\" )",
+-- 		to      = [[comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
+-- 	if ( comps ~= nil ) then
+-- 		if mixing and colour ~= "invis" then
+-- 			local beam_particle_chance = 90
+-- 			local bpc = 0
+-- 			for i,v in ipairs(comps) do
+-- 				bpc = ComponentObjectGetValue2(v, "laser", "beam_particle_chance")
+-- 				if bpc > 0 then
+-- 					beam_particle_chance = bpc
+-- 					break
+-- 				end
+-- 			end
+-- 			local lec = EntityAddComponent2( entity_id, "LaserEmitterComponent")
+-- 			comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
+
+-- 			ComponentSetValue2( lec, "laser_angle_add_rad", ComponentGetValue2(comps[1], "laser_angle_add_rad"))
+-- 			ComponentObjectSetValue2( lec, "laser", "beam_particle_type", CellFactory_GetType(particle))
+-- 			ComponentObjectSetValue2( lec, "laser", "max_cell_durability_to_destroy", 0)
+-- 			ComponentObjectSetValue2( lec, "laser", "damage_to_cells", 0)
+-- 			ComponentObjectSetValue2( lec, "laser", "damage_to_entities", 0)
+-- 			ComponentObjectSetValue2( lec, "laser", "hit_particle_chance", 0)
+-- 			ComponentObjectSetValue2( lec, "laser", "audio_enabled", false)
+-- 			ComponentObjectSetValue2( lec, "laser", "max_length", ComponentObjectGetValue2(comps[1], "laser", "max_length"))
+-- 			ComponentObjectSetValue2( lec, "laser", "beam_radius", ComponentObjectGetValue2(comps[1], "laser", "beam_radius"))
+			
+-- 			for i,v in ipairs( comps ) do
+-- 				if ComponentObjectGetValue2( v, "laser", "beam_particle_chance") > 0 then
+-- 					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", beam_particle_chance-(2*(i-1)))
+-- 				end
+-- 			end
+-- 		else
+-- 			for i,v in ipairs( comps ) do
+-- 				if ( particle ~= nil ) then
+-- 					ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
+-- 				else
+-- 					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+	
+-- 	comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )]], -- this used to be EntityGetComponentIncludingDisabled, not sure why it was
+--     },
+-- 	{ -- Allow for mixing glimmers
+-- 		path    = "data/scripts/projectiles/colour_spell.lua",
+-- 		from    = "local cosmetic = ComponentGetValue2( v, \"emit_cosmetic_particles\" )",
+-- 		to      = [[if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
+-- 		    	local cosmetic = ComponentGetValue2( v, "emit_cosmetic_particles" )]],
+-- 	},
+-- 	{
+-- 		path    = "data/scripts/projectiles/colour_spell.lua",
+-- 		from    = "ComponentSetValue2( v, \"is_emitting\", false )",
+-- 		to      = [[ComponentSetValue2( v, "is_emitting", false )
+-- 		    		end]],
+-- 	},
+-- 	{
+-- 		path    = "data/scripts/projectiles/colour_spell.lua",
+-- 		from    = "ComponentObjectSetValue2( v, \"config_explosion\", \"explosion_sprite\", \"\" )",
+-- 		to      = [[if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
+-- 			    ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )]],
+-- 	},
+-- 	{
+-- 		path    = "data/scripts/projectiles/colour_spell.lua",
+-- 		from    = "ComponentObjectSetValue2( v, \"config_explosion\", \"sparks_enabled\", false )",
+-- 		to      = [[ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", false )
+-- 			    end]],
+-- 	},
+-- 	{
+-- 		path    = "data/scripts/projectiles/colour_spell.lua",
+-- 		from    = "ComponentSetValue2( v, \"visible\", false )",
+-- 		to      = [[ComponentSetValue2( v, "visible", true )
+-- 			end
+-- 			comps = EntityGetComponent( entity_id, "PotionComponent" )
+-- 			if ( comps ~= nil ) then
+-- 				for i,v in ipairs( comps ) do
+-- 					ComponentSetValue2( v, "custom_color_material", CellFactory_GetType(particle) )
+-- 				end
+-- 			else
+-- 				EntityAddComponent2( entity_id, "PotionComponent", {
+-- 					custom_color_material = CellFactory_GetType(particle)
+-- 				})
+-- 			end
+-- 		else
+-- 			for i,v in ipairs( comps ) do
+-- 				ComponentSetValue2( v, "visible", false )
+-- 			end]],
+-- 	},
+}
+
+local function recursive_translation(string)
+    local pattern = "%$%w[%w_]+"
+    string = string:gsub(pattern, GameTextGetTranslatedOrNot, 1)
+    if string:find(pattern) then
+        return recursive_translation(string)
+    else
+        return string
     end
 end
-
-local data]],
-	},
-	{
-		path	= "data/scripts/projectiles/colour_spell.lua",
-		from	= [[comps = EntityGetComponent%( entity_id, "ParticleEmitterComponent" %)]],
-		to		= [[if ( particle == "" ) then
-		particle = "material_rainbow"
-	end
-	
-	comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )]],
-	},
-	{
-		path	= "data/scripts/projectiles/colour_spell.lua",
-		from	= [[local colour,particle]],
-		to		= [[local mixing = ModSettingGet("GlimmersExpanded.glimmer_mixing")
-local player_id = EntityGetWithTag("player_unit")[1]
-local colour,particle]],
-	},
-	{ -- Make glimmer spells work with plasma emitters. Thank you Conga Lyne!!!
-	  -- yo i actually modified this a TON
-        path    = "data/scripts/projectiles/colour_spell.lua",
-        from    = "comps %= EntityGetComponent%( entity_id, \"ParticleEmitterComponent\" %)",
-		to      = [[comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
-	if ( comps ~= nil ) then
-		if mixing and colour ~= "invis" then
-			local beam_particle_chance = 90
-			local bpc = 0
-			for i,v in ipairs(comps) do
-				bpc = ComponentObjectGetValue2(v, "laser", "beam_particle_chance")
-				if bpc > 0 then
-					beam_particle_chance = bpc
-					break
-				end
-			end
-			local lec = EntityAddComponent2( entity_id, "LaserEmitterComponent")
-			comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
-
-			ComponentSetValue2( lec, "laser_angle_add_rad", ComponentGetValue2(comps[1], "laser_angle_add_rad"))
-			ComponentObjectSetValue2( lec, "laser", "beam_particle_type", CellFactory_GetType(particle))
-			ComponentObjectSetValue2( lec, "laser", "max_cell_durability_to_destroy", 0)
-			ComponentObjectSetValue2( lec, "laser", "damage_to_cells", 0)
-			ComponentObjectSetValue2( lec, "laser", "damage_to_entities", 0)
-			ComponentObjectSetValue2( lec, "laser", "hit_particle_chance", 0)
-			ComponentObjectSetValue2( lec, "laser", "audio_enabled", false)
-			ComponentObjectSetValue2( lec, "laser", "max_length", ComponentObjectGetValue2(comps[1], "laser", "max_length"))
-			ComponentObjectSetValue2( lec, "laser", "beam_radius", ComponentObjectGetValue2(comps[1], "laser", "beam_radius"))
-			
-			for i,v in ipairs( comps ) do
-				if ComponentObjectGetValue2( v, "laser", "beam_particle_chance") > 0 then
-					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", beam_particle_chance-(2*(i-1)))
-				end
-			end
-		else
-			for i,v in ipairs( comps ) do
-				if ( particle ~= nil ) then
-					ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
-				else
-					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
-				end
-			end
-		end
-	end
-	
-	comps = EntityGetComponent( entity_id, "ParticleEmitterComponent" )]], -- this used to be EntityGetComponentIncludingDisabled, not sure why it was
-    },
-	{ -- Allow for mixing glimmers
-		path    = "data/scripts/projectiles/colour_spell.lua",
-		from    = "local cosmetic %= ComponentGetValue2%( v, \"emit_cosmetic_particles\" %)",
-		to      = [[if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-		    	local cosmetic = ComponentGetValue2( v, "emit_cosmetic_particles" )]],
-	},
-	{
-		path    = "data/scripts/projectiles/colour_spell.lua",
-		from    = "ComponentSetValue2%( v, \"is_emitting\", false %)",
-		to      = [[ComponentSetValue2( v, "is_emitting", false )
-		    		end]],
-	},
-	{
-		path    = "data/scripts/projectiles/colour_spell.lua",
-		from    = "ComponentObjectSetValue2%( v, \"config_explosion\", \"explosion_sprite\", \"\" %)",
-		to      = [[if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-			    ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )]],
-	},
-	{
-		path    = "data/scripts/projectiles/colour_spell.lua",
-		from    = "ComponentObjectSetValue2%( v, \"config_explosion\", \"sparks_enabled\", false %)",
-		to      = [[ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", false )
-			    end]],
-	},
-}
 
 local function createTranslation(id, data)
 	-- print("creating translations for '"..id:lower().."' with name '"..data.name.."'")
@@ -288,13 +318,18 @@ local function updateTranslations()
 	ModTextFileSetContent("data/translations/common.csv", translations)
 end
 
+-- Thanks Evasia for this bit of code, it is incredibly useful
+local function escape(str) 
+	return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1")
+end
+
 local function patchFiles()
 	-- Thanks Graham for this bit of code, it looks very useful
 	for i=1, #patches do
 	    local patch = patches[i]
 	    local content = ModTextFileGetContent(patch.path)
 		if content ~= nil then
-			content = content:gsub(patch.from, patch.to, 1)
+			content = content:gsub(escape(patch.from), escape(patch.to), 1)
 			content = content:gsub("\r","")
 			ModTextFileSetContent(patch.path, content)
 		end
