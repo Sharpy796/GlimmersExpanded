@@ -4,6 +4,10 @@ local entity_id = GetUpdatedEntityID()
 local mixing = ModSettingGet("GlimmersExpanded.glimmer_mixing")
 local player_id = EntityGetWithTag("player_unit")[1]
 local colour,particle
+local colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
+---@type nxml
+local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_materials.lua")
 
 local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
 if ( comps ~= nil ) then
@@ -32,6 +36,7 @@ if ( colour == "glimmers_expanded_colour_biome" ) then
         end
     end
 end
+
 
 local data =
 {
@@ -150,19 +155,46 @@ if ( colour ~= nil ) then
 	comps = EntityGetComponent( entity_id, "SpriteComponent" )
 	if ( comps ~= nil ) then
 		if (particle ~= nil) then
+			local spritefilepath, dummyfilepath, sprite, hex
+			local r,g,b,a = 1,1,1,1
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
-			end
-			comps = EntityGetComponent( entity_id, "PotionComponent" )
-			if ( comps ~= nil ) then
-				for i,v in ipairs( comps ) do
-					ComponentSetValue2( v, "custom_color_material", CellFactory_GetType(particle) )
+				spritefilepath = ComponentGetValue2( v, "image_file" )
+				dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
+				ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+				-- print("DUMMY PATH SET")
+				ComponentSetValue2( v, "image_file", dummyfilepath )
+
+				for mat in materials:each_child() do
+					if get_elem_data(mat,"name") == particle then
+						hex = lamas_stats_get_graphics_info(mat)
+						if hex ~= nil then
+							r,g,b,a = hex_to_rgba(hex)
+						end
+						break
+					end
 				end
-			else
-				EntityAddComponent2( entity_id, "PotionComponent", {
-					custom_color_material = CellFactory_GetType(particle)
-				})
+
+				for xml in nxml.edit_file(dummyfilepath) do
+					if xml ~= nil then
+						xml:set("color_r",r)
+						xml:set("color_g",g)
+						xml:set("color_b",b)
+						xml:set("color_a",a)
+					end
+				end
+				EntityRefreshSprite( entity_id, v )
 			end
+			-- comps = EntityGetComponent( entity_id, "PotionComponent" )
+			-- if ( comps ~= nil ) then
+			-- 	for i,v in ipairs( comps ) do
+			-- 		ComponentSetValue2( v, "custom_color_material", CellFactory_GetType(particle) )
+			-- 	end
+			-- else
+			-- 	EntityAddComponent2( entity_id, "PotionComponent", {
+			-- 		custom_color_material = CellFactory_GetType(particle)
+			-- 	})
+			-- end
 		else
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", false )

@@ -1,0 +1,4 @@
+<Sprite filename="data/enemies_gfx/worm_head.png" offset_y="7" default_animation="stand" offset_x="5" color_a="0.5" color_b="0.5">
+		<RectAnimation frame_count="7" frame_width="17" pos_y="1" frame_height="13" frame_wait="0.082" frames_per_row="7" name="eat" pos_x="0" shrink_by_one_pixel="1" />
+		<RectAnimation frame_count="7" frame_width="17" pos_y="1" frame_height="13" frame_wait="0.082" frames_per_row="7" name="stand" pos_x="0" shrink_by_one_pixel="1" />
+</Sprite>

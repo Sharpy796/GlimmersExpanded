@@ -3,7 +3,7 @@ dofile_once("data/scripts/lib/utilities.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
-local testing = false;
+local testing = true;
 if testing then ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") end -- For testing purposes
 
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
