@@ -51,4 +51,6 @@ OPTIMIZATION:
 [-] Allow for other mod's translations to be used as glimmer translations
 
 EXTRA FEATURES:
-[x] Make projectile sprites change color with the glimmer's color
+[-] Make projectile sprites change color with the glimmer's color
+ - [x] Do the bare-bones change
+ - [ ] Make it work with multisprite entities (i.e. worm launcher)
