@@ -58,7 +58,7 @@ local data =
 	purple =
 	{
 		particle = "spark_purple_bright",
-	},	
+	},
 	rainbow =
 	{
 		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "spark_purple_bright"},

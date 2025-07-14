@@ -42,8 +42,13 @@ SYSTEMATIC GLIMMER CREATION:
 
 OPTIMIZATION:
 [ ] Possibly make biome glimmer not do glimmer things in _EMPTY_ biome?
-[ ] Find a way to append the new glimmer changes into colour_spell.lua instead of gsubbing?
+[x] Find a way to append the new glimmer changes into colour_spell.lua instead of gsubbing?
+ - I ended up just overwriting colour_spell.lua due to feature creep.
 [x] Reorder all glimmers inside of progress menu into color order
  - [x] Optimize this code
 [x] Find a way to systematically create glimmer .xml scripts
  - [ ] Possibly allow for the creation of unique glimmers for every color material? I could use chem curiosities' color finder function
+[-] Allow for other mod's translations to be used as glimmer translations
+
+EXTRA FEATURES:
+[-] Make projectile sprites change color with the glimmer's color
