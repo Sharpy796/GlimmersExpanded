@@ -51,4 +51,4 @@ OPTIMIZATION:
 [-] Allow for other mod's translations to be used as glimmer translations
 
 EXTRA FEATURES:
-[-] Make projectile sprites change color with the glimmer's color
+[x] Make projectile sprites change color with the glimmer's color
