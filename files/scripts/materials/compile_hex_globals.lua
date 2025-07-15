@@ -61,10 +61,10 @@ function hex_projectiles(set_text_func)
 	            	xml:set("color_a",a)
 	            end
             -- else
-                -- print("DUMMY FILE DOESN'T EXIST")
+            --     print("DUMMY FILE DOESN'T EXIST")
             end
-        else
-            -- print("--- SOME VALUES ARE NIL ---")
+        -- else
+        --     print("--- SOME VALUES ARE NIL ---")
         end
     end
 end

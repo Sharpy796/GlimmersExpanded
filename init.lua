@@ -374,8 +374,8 @@ function OnWorldInitialized()
 	end
 	-- This only works inconsistently :/
 	-- if not GameHasFlagRun("glimmers_expanded_clear_hex") then
- 	-- 	ModSettingRemove("GlimmersExpanded.hexglobals")
-	-- 	GameAddFlagRun( "glimmers_expanded_clear_hex" )
+ 		-- ModSettingRemove("GlimmersExpanded.hexglobals")
+		-- GameAddFlagRun( "glimmers_expanded_clear_hex" )
 	-- end
 end
 

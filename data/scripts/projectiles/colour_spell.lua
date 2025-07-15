@@ -156,13 +156,29 @@ if ( colour ~= nil ) then
 	comps = EntityGetComponent( entity_id, "SpriteComponent" )
 	if ( comps ~= nil ) then
 		if (particle ~= nil) then
-			local spritefilepath, dummyfilepath, sprite
+			local spritefilepath, dummyfilepath, spriteoriginal
 			local hex = "FFFFFFFF"
 			local r,g,b,a = 1,1,1,1
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
+				
+				
 
 				spritefilepath = ComponentGetValue2( v, "image_file" )
+				if spriteoriginal == nil then
+					spriteoriginal = spritefilepath
+				end
+				
+				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
+				if vsc == nil then
+					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
+						name="spriteoriginal"..i,
+						value_string=spriteoriginal
+					})
+					ComponentAddTag(vsc, "spriteoriginal"..i)
+				end
+
+				spritefilepath = ComponentGetValue(vsc, "value_string")
 				dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
 
 				for mat in materials:each_child() do
@@ -176,6 +192,7 @@ if ( colour ~= nil ) then
 				end
 				
 				if not ModDoesFileExist(dummyfilepath) then
+					-- GamePrint("HEY!! This file doesn't exist! '"..dummyfilepath.."'")
 					ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
 					add_hex(spritefilepath, dummyfilepath, hex)
 				end
