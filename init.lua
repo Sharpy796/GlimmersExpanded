@@ -3,7 +3,7 @@ dofile_once("data/scripts/lib/utilities.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
-local testing = true;
+local testing = false;
 if testing then ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") end -- For testing purposes
 
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
@@ -364,6 +364,8 @@ function OnWorldInitialized()
     	dofile_once("mods/kae_waypoint/data/kae/poi.lua")
     	add_poi("Glimmer Lab", -12015, 4990)
 	end
+	dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
+	hex_projectiles()
 end
 
 

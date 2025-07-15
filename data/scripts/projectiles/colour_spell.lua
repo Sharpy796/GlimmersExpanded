@@ -8,6 +8,7 @@ local colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
 ---@type nxml
 local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_materials.lua")
+dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
 
 local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
 if ( comps ~= nil ) then
@@ -155,10 +156,12 @@ if ( colour ~= nil ) then
 	comps = EntityGetComponent( entity_id, "SpriteComponent" )
 	if ( comps ~= nil ) then
 		if (particle ~= nil) then
-			local spritefilepath, dummyfilepath, sprite, hex
+			local spritefilepath, dummyfilepath, sprite
+			local hex = "FFFFFFFF"
 			local r,g,b,a = 1,1,1,1
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
+
 				spritefilepath = ComponentGetValue2( v, "image_file" )
 				dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
 				ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
@@ -181,6 +184,7 @@ if ( colour ~= nil ) then
 						xml:set("color_g",g)
 						xml:set("color_b",b)
 						xml:set("color_a",a)
+						add_hex(entity_id, v, spritefilepath, dummyfilepath, hex)
 					end
 				end
 				EntityRefreshSprite( entity_id, v )
