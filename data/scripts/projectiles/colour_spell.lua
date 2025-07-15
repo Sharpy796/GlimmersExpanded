@@ -164,9 +164,6 @@ if ( colour ~= nil ) then
 
 				spritefilepath = ComponentGetValue2( v, "image_file" )
 				dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
-				ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
-				-- print("DUMMY PATH SET")
-				ComponentSetValue2( v, "image_file", dummyfilepath )
 
 				for mat in materials:each_child() do
 					if get_elem_data(mat,"name") == particle then
@@ -177,14 +174,20 @@ if ( colour ~= nil ) then
 						break
 					end
 				end
-
+				
+				if not ModDoesFileExist(dummyfilepath) then
+					ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+					add_hex(spritefilepath, dummyfilepath, hex)
+				end
+				ComponentSetValue2( v, "image_file", dummyfilepath )
+				-- print("DUMMY PATH SET")
+					
 				for xml in nxml.edit_file(dummyfilepath) do
 					if xml ~= nil then
 						xml:set("color_r",r)
 						xml:set("color_g",g)
 						xml:set("color_b",b)
 						xml:set("color_a",a)
-						add_hex(entity_id, v, spritefilepath, dummyfilepath, hex)
 					end
 				end
 				EntityRefreshSprite( entity_id, v )

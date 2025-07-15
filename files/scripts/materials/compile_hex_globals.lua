@@ -1,89 +1,70 @@
 ---@type nxml
 local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+local hexglobals
+
+function update_local_hexglobals()
+    -- print("UPDATING LOCAL HEXGLOBALS:")
+    hexglobals = ModSettingGet("GlimmersExpanded.hexglobals") or ""
+    -- print(hexglobals)
+end
+
+update_local_hexglobals()
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_materials.lua")
 
-local sprite_hex_list_global = GlobalsGetValue( "sprite_hex_list" )
-print("BEFORE NIL CHECK")
-print("'"..GlobalsGetValue( "sprite_hex_list" ).."'")
-if sprite_hex_list_global == nil or sprite_hex_list_global == "" then
-    sprite_hex_list_global = ModTextFileGetContent("mods/GlimmersExpanded/files/entities/misc/sprite_hex_list.xml")
-    GlobalsSetValue("sprite_hex_list", sprite_hex_list_global)
-end
-print("AFTER NIL CHECK")
-print("'"..GlobalsGetValue( "sprite_hex_list" ).."'")
-local sprite_hex_list_parsed = nxml.parse(sprite_hex_list_global)
-
-function get_list_count()
-    return tonumber(sprite_hex_list_parsed:get("listcount"))
-end
-function increment_list_count()
-    sprite_hex_list_parsed:set("listcount", get_list_count()+1)
+function set_global()
+    -- print("SETTING NEW GLOBAL:")
+    ModSettingSet("GlimmersExpanded.hexglobals",  hexglobals)
 end
 
-function add_hex( entity_id, comp_id, filepath, dummyfilepath, hex_value )
-    local element = nxml.new_element("Projectile", {
-        entity_id=entity_id,
-        comp_id=comp_id,
-        filepath=filepath,
-        dummyfilepath=dummyfilepath,
-        hex_value=hex_value
-    })
-    debug_hex(entity_id, comp_id, filepath, dummyfilepath, hex_value)
-    print("element:")
-    print(tostring(element))
-    sprite_hex_list_parsed:add_child(element)
-    -- increment_list_count()
+function add_hex(filepath, dummyfilepath, hex_value)
+    hexglobals = hexglobals..[[,0
+]]..filepath..[[,]]..dummyfilepath..[[,]]..hex_value
+    -- print("ADDING NEW HEX:\t'"..filepath..[[,]]..dummyfilepath..[[,]]..hex_value.."'")
     set_global()
 end
 
--- Thanks Evasia for this bit of code, it is incredibly useful
-local function escape(str) 
-	return str:gsub("[%(%)%.%%%+%-%*%?%[%^%$%]]", "%%%1")
-end
-
-function set_global()
-    sprite_hex_list_global = escape(tostring(sprite_hex_list_parsed)):gsub("\n"," ")
-    GlobalsSetValue( "sprite_hex_list",  sprite_hex_list_global)
-    print("SETTING NEW GLOBAL:")
-    print(GlobalsGetValue( "sprite_hex_list" ))
-end
-
-function debug_hex(entity_id, comp_id, spritefilepath, dummyfilepath, hex)
-    print("-------------")
-    print("entity_id:\t"..(entity_id or "nil"))
-    print("comp_id:\t"..(comp_id or "nil"))
+function debug_hex(spritefilepath, dummyfilepath, hex)
     print("spritefilepath:\t"..(spritefilepath or "nil"))
     print("dummyfilepath:\t"..(dummyfilepath or "nil"))
-    print("hex:\t"..(hex or "nil"))
+    print("hex:\t\t"..(hex or "nil"))
 end
 
-function print_parsed()
-    print(tostring(sprite_hex_list_parsed or "------ PARSED IS NIL ------"))
+local function split_with_comma(str)
+  local fields = {}
+  for field in str:gmatch('([^,]+)') do
+    fields[#fields+1] = field
+  end
+  return fields
 end
 
-function hex_projectiles()
-    print_parsed()
-    local entity_id, comp_id, spritefilepath, dummyfilepath, hex
-    local r,g,b,a = 1,1,1,1
-    for elem in sprite_hex_list_parsed:each_child() do
-        entity_id = elem:get("entity_id")
-        comp_id = elem:get("comp_id")
-        spritefilepath = elem:get("filepath")
-        dummyfilepath = elem:get("dummyfilepath")
-        hex = elem:get("hex_value")
-        debug_hex(entity_id, comp_id, spritefilepath, dummyfilepath, hex)
-        if entity_id ~= nil and comp_id ~= nil and spritefilepath ~= nil and dummyfilepath ~= nil and hex ~= nil then
-            ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+function hex_projectiles(set_text_func)
+    if set_text_func == nil then set_text_func = ModTextFileGetContent end
+    update_local_hexglobals()
+    local spritefilepath, dummyfilepath, hex, words
+    for line in hexglobals:gmatch("([^\n]*)\n?") do
+        -- print("-------------")
+        -- print("HEXING PROJECTILE:\t"..line)
+        local r,g,b,a = 1,1,1,1
+        words = split_with_comma(line)
+        spritefilepath = words[1]
+        dummyfilepath = words[2]
+        hex = words[3]
+        -- debug_hex(spritefilepath, dummyfilepath, hex)
+        if spritefilepath ~= nil and dummyfilepath ~= nil and hex ~= nil then
+			set_text_func( dummyfilepath, ModTextFileGetContent(spritefilepath) )
             r,g,b,a = hex_to_rgba(hex)
-            for xml in nxml.edit_file(dummyfilepath) do
-	        	xml:set("color_r",r)
-	        	xml:set("color_g",g)
-	        	xml:set("color_b",b)
-	        	xml:set("color_a",a)
-	        end
-            EntityRefreshSprite( tonumber(entity_id), tonumber(comp_id) )
+            if ModDoesFileExist(dummyfilepath) then
+                for xml in nxml.edit_file(dummyfilepath, ModTextFileGetContent, set_text_func) do
+	            	xml:set("color_r",r)
+	            	xml:set("color_g",g)
+	            	xml:set("color_b",b)
+	            	xml:set("color_a",a)
+	            end
+            -- else
+                -- print("DUMMY FILE DOESN'T EXIST")
+            end
         else
-            print("--- SOME VALUES ARE NIL ---")
+            -- print("--- SOME VALUES ARE NIL ---")
         end
     end
 end

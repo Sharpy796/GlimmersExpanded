@@ -3,6 +3,7 @@ dofile_once("data/scripts/lib/utilities.lua")
 ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
+local set_text = ModTextFileSetContent
 local testing = false;
 if testing then ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") end -- For testing purposes
 
@@ -345,6 +346,13 @@ function OnModPreInit()
 	ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
 end
 
+function OnModPostInit()
+	-- print("HEX PROJECTILES TIMEEEEEEEEEEEEEEE")
+	dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
+	hex_projectiles(set_text)
+	print("Hexed projectiles.")
+end
+
 function OnPlayerSpawned(player_id)
     -- local x, y = EntityGetTransform(player_id)
 	if testing then GameAddFlagRun( "fishing_hut_a" ) end -- For testing purposes
@@ -364,8 +372,11 @@ function OnWorldInitialized()
     	dofile_once("mods/kae_waypoint/data/kae/poi.lua")
     	add_poi("Glimmer Lab", -12015, 4990)
 	end
-	dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
-	hex_projectiles()
+	-- This only works inconsistently :/
+	-- if not GameHasFlagRun("glimmers_expanded_clear_hex") then
+ 	-- 	ModSettingRemove("GlimmersExpanded.hexglobals")
+	-- 	GameAddFlagRun( "glimmers_expanded_clear_hex" )
+	-- end
 end
 
 
