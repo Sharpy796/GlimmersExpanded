@@ -159,66 +159,68 @@ if ( colour ~= nil ) then
 			local spritefilepath, dummyfilepath, spriteoriginal
 			local hex = "FFFFFFFF"
 			local r,g,b,a = 1,1,1,1
-			for i,v in ipairs( comps ) do
-				ComponentSetValue2( v, "visible", true )
-				
-				
+			if #comps > 1 then
+				for i,v in ipairs( comps ) do
+					ComponentSetValue2( v, "visible", true )
 
-				spritefilepath = ComponentGetValue2( v, "image_file" )
-				if spriteoriginal == nil then
-					spriteoriginal = spritefilepath
-				end
-				
-				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
-				if vsc == nil then
-					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
-						name="spriteoriginal"..i,
-						value_string=spriteoriginal
-					})
-					ComponentAddTag(vsc, "spriteoriginal"..i)
-				end
 
-				spritefilepath = ComponentGetValue(vsc, "value_string")
-				dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
 
-				for mat in materials:each_child() do
-					if get_elem_data(mat,"name") == particle then
-						hex = lamas_stats_get_graphics_info(mat)
-						if hex ~= nil then
-							r,g,b,a = hex_to_rgba(hex)
+					spritefilepath = ComponentGetValue2( v, "image_file" )
+					-- if spriteoriginal == nil then
+						spriteoriginal = spritefilepath
+					-- end
+
+					local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
+					if vsc == nil then
+						vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
+							name="spriteoriginal"..i,
+							value_string=spriteoriginal
+						})
+						ComponentAddTag(vsc, "spriteoriginal"..i)
+					end
+
+					spritefilepath = ComponentGetValue(vsc, "value_string")
+					dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
+
+					for mat in materials:each_child() do
+						if get_elem_data(mat,"name") == particle then
+							hex = lamas_stats_get_graphics_info(mat)
+							if hex ~= nil then
+								r,g,b,a = hex_to_rgba(hex)
+							end
+							break
 						end
-						break
 					end
-				end
-				
-				if not ModDoesFileExist(dummyfilepath) then
-					-- GamePrint("HEY!! This file doesn't exist! '"..dummyfilepath.."'")
-					ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
-					add_hex(spritefilepath, dummyfilepath, hex)
-				end
-				ComponentSetValue2( v, "image_file", dummyfilepath )
-				-- print("DUMMY PATH SET")
-					
-				for xml in nxml.edit_file(dummyfilepath) do
-					if xml ~= nil then
-						xml:set("color_r",r)
-						xml:set("color_g",g)
-						xml:set("color_b",b)
-						xml:set("color_a",a)
+
+					if not ModDoesFileExist(dummyfilepath) then
+						-- GamePrint("HEY!! This file doesn't exist! '"..dummyfilepath.."'")
+						ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+						add_hex(spritefilepath, dummyfilepath, hex)
 					end
+					ComponentSetValue2( v, "image_file", dummyfilepath )
+					-- print("DUMMY PATH SET")
+
+					for xml in nxml.edit_file(dummyfilepath) do
+						if xml ~= nil then
+							xml:set("color_r",r)
+							xml:set("color_g",g)
+							xml:set("color_b",b)
+							xml:set("color_a",a)
+						end
+					end
+					EntityRefreshSprite( entity_id, v )
 				end
-				EntityRefreshSprite( entity_id, v )
 			end
-			-- comps = EntityGetComponent( entity_id, "PotionComponent" )
-			-- if ( comps ~= nil ) then
-			-- 	for i,v in ipairs( comps ) do
-			-- 		ComponentSetValue2( v, "custom_color_material", CellFactory_GetType(particle) )
-			-- 	end
-			-- else
-			-- 	EntityAddComponent2( entity_id, "PotionComponent", {
-			-- 		custom_color_material = CellFactory_GetType(particle)
-			-- 	})
-			-- end
+			comps = EntityGetComponent( entity_id, "PotionComponent" )
+			if ( comps ~= nil ) then
+				for i,v in ipairs( comps ) do
+					ComponentSetValue2( v, "custom_color_material", CellFactory_GetType(particle) )
+				end
+			else
+				EntityAddComponent2( entity_id, "PotionComponent", {
+					custom_color_material = CellFactory_GetType(particle)
+				})
+			end
 		else
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", false )
