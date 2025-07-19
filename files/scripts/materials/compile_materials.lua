@@ -23,6 +23,17 @@ function hex_to_rgba(hex)
     return r, g, b, a
 end
 
+function rgb_to_hex(r,g,b)
+    r = r*255
+    g = g*255
+    b = b*255
+    local rgb = (r * 0x10000) + (g * 0x100) + b
+    return string.format("%x", rgb)
+    -- local hex
+    -- if a == nil then a = 1 end
+    -- a = 
+end
+
 function uint_to_rgb(uint)
     if uint ~= 0 then
         local b = bit.rshift(bit.band(uint, 0xFF0000), 16) / 0xFF
