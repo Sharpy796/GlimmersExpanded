@@ -322,7 +322,7 @@ if ( colour ~= nil ) then
 				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
 				if vsc ~= nil then
 					additive = ComponentGetValue2(vsc, "value_bool")
-					print("ADDITIVE:\t"..tostring(additive or "nil"))
+					-- print("ADDITIVE:\t"..tostring(additive or "nil"))
 				end
 
 				-- Additive check
@@ -360,16 +360,6 @@ if ( colour ~= nil ) then
 
 				spritefilepath = ComponentGetValue(vsc, "value_string")
 				dummyfilepath = create_dummy_entry(spritefilepath, particle, pcolor, hex)
-				-- dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
-
-				-- if not ModDoesFileExist(dummyfilepath) then
-				-- 	ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
-				-- 	if pcolor ~= nil then
-				-- 		add_hex(spritefilepath, dummyfilepath, pcolor)
-				-- 	else
-				-- 		add_hex(spritefilepath, dummyfilepath, hex)
-				-- 	end
-				-- end
 				ComponentSetValue2( v, "image_file", dummyfilepath )
 
 				edit_dummy_sprite(dummyfilepath, r, g, b, a)
@@ -387,43 +377,87 @@ if ( colour ~= nil ) then
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-				if ( particle ~= nil ) then
-					local additive = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite_additive") -- Only used the first time
-					-- Creates vsc to hold information between glimmers
-					local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "explosionspriteoriginal"..i)
-					if vsc ~= nil then -- else we will create one later
-						additive = ComponentGetValue2(vsc, "value_bool")
-					end
-
-					local hex,r,g,b,a = material_to_rgba(particle)
+				local spriteoriginal = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite")
+				-- print("SPRITEORIGINAL:\t"..tostring(spriteoriginal))
+				local additive = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite_additive") -- Only used the first time
+				-- Creates vsc to hold information between glimmers
+				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "explosionspriteoriginal"..i)
+				if vsc ~= nil then -- else we will create one later
+					additive = ComponentGetValue2(vsc, "value_bool")
+				end
+				local hex,r,g,b,a
+				if particle ~= nil then
+					hex,r,g,b,a = material_to_rgba(particle)
 					-- Additive check
 					if r <= 0.1 and g <= 0.1 and b <= 0.1 then
 						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", false)
 					else
 						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", additive)
 					end
+				end
+				if vsc == nil then
+					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
+						name="explosionspriteoriginal"..i,
+						value_string=spriteoriginal,
+						value_bool=additive,
+					})
+					ComponentAddTag(vsc, "explosionspriteoriginal"..i)
+				end
 
-					local spriteoriginal = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite")
-					
-					print("SPRITEORIGINAL:\t"..tostring(spriteoriginal))
-					
-					
-					if vsc == nil then
-						vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
-							name="explosionspriteoriginal"..i,
-							value_string=spriteoriginal,
-							value_bool=additive,
-						})
-						ComponentAddTag(vsc, "explosionspriteoriginal"..i)
+
+				if ( particle ~= nil ) then
+					local spritefilepath = ComponentGetValue2(vsc, "value_string")
+					local spritefilepaths = {}
+					local post = false
+					local prefix, postfix = "", ""
+					local found, num = false, "0"
+					local min, max = 1, 1
+					for c in spritefilepath:gmatch"." do
+						if c == "$" then
+							found = true
+						elseif post then
+							postfix = postfix..c
+						elseif found then
+							if c == "]" then
+								if tonumber(num) ~= nil then
+									max = tonumber(num)
+									print("MAX:\t"..tostring(max))
+								end
+								post = true
+							elseif c == "-" then
+								if tonumber(num) ~= nil then
+									min = tonumber(num)
+									print("MIN:\t"..tostring(max))
+								end
+								num = "0"
+							else
+								num = num..c
+							end
+						else
+							prefix = prefix..c
+						end
 					end
 
-					local spritefilepath = ComponentGetValue2(vsc, "value_string")
-					
-					local dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
-					edit_dummy_sprite(dummyfilepath, r,g,b,a)
+					print("PREFIX:\t"..prefix)
+					print("POSTFIX:\t"..postfix)
 
-					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
+					if found then
+						local dummyfilepath
+						for x=tonumber(min), tonumber(max) do
+							dummyfilepath = create_dummy_entry(prefix..x..postfix, particle, nil, hex)
+							edit_dummy_sprite(dummyfilepath, r,g,b,a)
+						end
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath )
+					else
+						local dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
+						edit_dummy_sprite(dummyfilepath, r,g,b,a)
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
+					end
+
+
 					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
+					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
+					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )
 				else
 					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )
 					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", false )
