@@ -10,6 +10,49 @@ local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_materials.lua")
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
 
+local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
+	local dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
+
+	if not ModDoesFileExist(dummyfilepath) then
+		ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+		if pcolor ~= nil then
+			add_hex(spritefilepath, dummyfilepath, pcolor)
+		else
+			add_hex(spritefilepath, dummyfilepath, hex)
+		end
+	end
+	return dummyfilepath
+end
+
+local function edit_dummy_sprite(dummyfilepath, r, g, b, a)
+	for xml in nxml.edit_file(dummyfilepath) do
+		if xml ~= nil then
+			-- print("XML IS BEING EDITED")
+			-- print("R:\t"..(r or "nil"))
+			-- print("G:\t"..(g or "nil"))
+			-- print("B:\t"..(b or "nil"))
+			-- print("A:\t"..(a or "nil"))
+			xml:set("color_r",r)
+			xml:set("color_g",g)
+			xml:set("color_b",b)
+			xml:set("color_a",a)
+		end
+	end
+end
+
+local function material_to_rgba(material)
+	local hex
+	for mat in materials:each_child() do
+		if get_elem_data(mat,"name") == material then
+			hex = lamas_stats_get_graphics_info(mat)
+			if hex ~= nil then
+				-- print("-- HEX RAN")
+				return hex, hex_to_rgba(hex)
+			end
+		end
+	end
+end
+
 local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
 if ( comps ~= nil ) then
 	for i,v in ipairs( comps ) do
@@ -160,6 +203,7 @@ if ( colour ~= nil ) then
 			local hex = "FFFFFFFF"
 			local r,g,b,a = 1,1,1,1
 
+			-- Adding PotionComponent for the very first sprite 
 			potioncomp = EntityGetFirstComponentIncludingDisabled( entity_id, "PotionComponent" )
 			if ( potioncomp ~= nil ) then
 				ComponentSetValue2( potioncomp, "custom_color_material", CellFactory_GetType(particle) )
@@ -169,54 +213,36 @@ if ( colour ~= nil ) then
 				})
 			end
 
+			-- Checking the color for later & for additive check
 			pcolor = GameGetPotionColorUint( entity_id )
 			if pcolor ~= nil then
-				-- print("MATERIAL:\t\t"..particle)
-				-- print("PARSING UINT:\t"..(pcolor or "nil"))
-				-- hex = rgb_to_hex(uint_to_rgb(pcolor))
-				-- print("HEX:\t"..(hex or "nil"))
-				-- r,g,b = hex_to_rgba(hex)
 				r,g,b = uint_to_rgb(pcolor)
-				-- print("R:\t"..(r or "nil"))
-				-- print("G:\t"..(g or "nil"))
-				-- print("B:\t"..(b or "nil"))
 			end
 
+			-- If no potion stuff, then use hex instead
 			if potioncomp == nil or pcolor == nil or r == nil or g == nil or b == nil then
-				-- print("SOMETHING WAS NIL!!!!!")
-				for mat in materials:each_child() do
-					if get_elem_data(mat,"name") == particle then
-						hex = lamas_stats_get_graphics_info(mat)
-						if hex ~= nil then
-							r,g,b,a = hex_to_rgba(hex)
-							-- print("-- HEX RAN")
-						end
-						break
-					end
-				end
+				hex,r,g,b,a = material_to_rgba(particle)
 			end
 
+			-- Loop through SpriteComponents
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
 
-				local additive = ComponentGetValue2(v, "additive")
+				local additive = ComponentGetValue2(v, "additive") -- Only used the first time
+				-- Creates vsc to hold information between glimmers
 				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
 				if vsc ~= nil then
 					additive = ComponentGetValue2(vsc, "value_bool")
-					print("ADDITIVE:\t"..tostring(additive or "nil"))
+					-- print("ADDITIVE:\t"..tostring(additive or "nil"))
 				end
-				
 
-
-				
+				-- Additive check
 				if r <= 0.1 and g <= 0.1 and b <= 0.1 then
 					ComponentSetValue2( v, "additive", false)
 				else
-					print("SETTING PRESET ADDITIVE")
 					ComponentSetValue2( v, "additive", additive)
 				end
 
-				
 				if #comps <= 1 then
 					if vsc == nil then
 						vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
@@ -228,13 +254,10 @@ if ( colour ~= nil ) then
 					EntityRefreshSprite( entity_id, v )
 					break
 				end
-			
-			
-			
+
 				spritefilepath = ComponentGetValue2( v, "image_file" )
 				spriteoriginal = spritefilepath
-			
-				
+
 				if vsc == nil then
 					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
 						name="spriteoriginal"..i,
@@ -243,38 +266,15 @@ if ( colour ~= nil ) then
 					})
 					ComponentAddTag(vsc, "spriteoriginal"..i)
 				end
-			
+
+				
+
 				spritefilepath = ComponentGetValue(vsc, "value_string")
-				dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
-				
-			
-				if not ModDoesFileExist(dummyfilepath) then
-					-- GamePrint("HEY!! This file doesn't exist! '"..dummyfilepath.."'")
-					ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
-				
-					-- print("Adding global here")
-					if pcolor ~= nil then
-						add_hex(spritefilepath, dummyfilepath, pcolor)
-					else
-						add_hex(spritefilepath, dummyfilepath, hex)
-					end
-				end
+				dummyfilepath = create_dummy_entry(spritefilepath, particle, pcolor, hex)
 				ComponentSetValue2( v, "image_file", dummyfilepath )
-				-- print("DUMMY PATH SET")
-			
-				for xml in nxml.edit_file(dummyfilepath) do
-					if xml ~= nil then
-						-- print("XML IS BEING EDITED")
-						-- print("R:\t"..(r or "nil"))
-						-- print("G:\t"..(g or "nil"))
-						-- print("B:\t"..(b or "nil"))
-						-- print("A:\t"..(a or "nil"))
-						xml:set("color_r",r)
-						xml:set("color_g",g)
-						xml:set("color_b",b)
-						xml:set("color_a",a)
-					end
-				end
+
+				edit_dummy_sprite(dummyfilepath, r, g, b, a)
+
 				EntityRefreshSprite( entity_id, v )
 			end
 		else
@@ -288,11 +288,44 @@ if ( colour ~= nil ) then
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-			    ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )
-			
+				local spriteoriginal = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite")
+				-- print("SPRITEORIGINAL:\t"..tostring(spriteoriginal))
+				local additive = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite_additive") -- Only used the first time
+				-- Creates vsc to hold information between glimmers
+				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "explosionspriteoriginal"..i)
+				if vsc ~= nil then -- else we will create one later
+					additive = ComponentGetValue2(vsc, "value_bool")
+				end
+				local hex,r,g,b,a
+				if particle ~= nil then
+					hex,r,g,b,a = material_to_rgba(particle)
+					-- Additive check
+					if r <= 0.1 and g <= 0.1 and b <= 0.1 then
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", false)
+					else
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", additive)
+					end
+				end
+				if vsc == nil then
+					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
+						name="explosionspriteoriginal"..i,
+						value_string=spriteoriginal,
+						value_bool=additive,
+					})
+					ComponentAddTag(vsc, "explosionspriteoriginal"..i)
+				end
+
+
 				if ( particle ~= nil ) then
+					local spritefilepath = ComponentGetValue2(vsc, "value_string")
+					local dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
+					edit_dummy_sprite(dummyfilepath, r,g,b,a)
+					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
+					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
+					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )
 				else
+					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )
 					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", false )
 					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", false )
 			    end
