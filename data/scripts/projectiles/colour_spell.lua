@@ -156,96 +156,126 @@ if ( colour ~= nil ) then
 	comps = EntityGetComponent( entity_id, "SpriteComponent" )
 	if ( comps ~= nil ) then
 		if (particle ~= nil) then
-			local spritefilepath, dummyfilepath, spriteoriginal
+			local spritefilepath, dummyfilepath, spriteoriginal, pcolor, potioncomp
 			local hex = "FFFFFFFF"
 			local r,g,b,a = 1,1,1,1
-			if #comps > 1 then
-				for i,v in ipairs( comps ) do
-					ComponentSetValue2( v, "visible", true )
+
+			potioncomp = EntityGetFirstComponentIncludingDisabled( entity_id, "PotionComponent" )
+			if ( potioncomp ~= nil ) then
+				ComponentSetValue2( potioncomp, "custom_color_material", CellFactory_GetType(particle) )
+			else
+				potioncomp = EntityAddComponent2( entity_id, "PotionComponent", {
+					custom_color_material = CellFactory_GetType(particle)
+				})
+			end
+
+			pcolor = GameGetPotionColorUint( entity_id )
+			if pcolor ~= nil then
+				-- print("MATERIAL:\t\t"..particle)
+				-- print("PARSING UINT:\t"..(pcolor or "nil"))
+				-- hex = rgb_to_hex(uint_to_rgb(pcolor))
+				-- print("HEX:\t"..(hex or "nil"))
+				-- r,g,b = hex_to_rgba(hex)
+				r,g,b = uint_to_rgb(pcolor)
+				-- print("R:\t"..(r or "nil"))
+				-- print("G:\t"..(g or "nil"))
+				-- print("B:\t"..(b or "nil"))
+			end
+
+			if potioncomp == nil or pcolor == nil or r == nil or g == nil or b == nil then
+				-- print("SOMETHING WAS NIL!!!!!")
+				for mat in materials:each_child() do
+					if get_elem_data(mat,"name") == particle then
+						hex = lamas_stats_get_graphics_info(mat)
+						if hex ~= nil then
+							r,g,b,a = hex_to_rgba(hex)
+							-- print("-- HEX RAN")
+						end
+						break
+					end
+				end
+			end
+
+			for i,v in ipairs( comps ) do
+				ComponentSetValue2( v, "visible", true )
+
+				local additive = ComponentGetValue2(v, "additive")
+				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
+				if vsc ~= nil then
+					additive = ComponentGetValue2(vsc, "value_bool")
+					print("ADDITIVE:\t"..tostring(additive or "nil"))
+				end
+				
 
 
+				
+				if r <= 0.1 and g <= 0.1 and b <= 0.1 then
+					ComponentSetValue2( v, "additive", false)
+				else
+					print("SETTING PRESET ADDITIVE")
+					ComponentSetValue2( v, "additive", additive)
+				end
 
-					spritefilepath = ComponentGetValue2( v, "image_file" )
-					-- if spriteoriginal == nil then
-						spriteoriginal = spritefilepath
-					-- end
-
-					local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
+				
+				if #comps <= 1 then
 					if vsc == nil then
 						vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
 							name="spriteoriginal"..i,
-							value_string=spriteoriginal
+							value_bool=additive,
 						})
 						ComponentAddTag(vsc, "spriteoriginal"..i)
 					end
-
-					spritefilepath = ComponentGetValue(vsc, "value_string")
-					dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
-
-					local pcolor = GameGetPotionColorUint( entity_id )
-					-- local pcolor = 2768938357
+					EntityRefreshSprite( entity_id, v )
+					break
+				end
+			
+			
+			
+				spritefilepath = ComponentGetValue2( v, "image_file" )
+				spriteoriginal = spritefilepath
+			
+				
+				if vsc == nil then
+					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
+						name="spriteoriginal"..i,
+						value_string=spriteoriginal,
+						value_bool=additive,
+					})
+					ComponentAddTag(vsc, "spriteoriginal"..i)
+				end
+			
+				spritefilepath = ComponentGetValue(vsc, "value_string")
+				dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
+				
+			
+				if not ModDoesFileExist(dummyfilepath) then
+					-- GamePrint("HEY!! This file doesn't exist! '"..dummyfilepath.."'")
+					ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+				
+					-- print("Adding global here")
 					if pcolor ~= nil then
-						hex = rgb_to_hex(uint_to_rgb(pcolor))
-						r,g,b = hex_to_rgba(hex)
-						print("PARSING UINT:\t"..(pcolor or "nil"))
-						print("HEX:\t"..(hex or "nil"))
-						print("R:\t"..(r or "nil"))
-						print("G:\t"..(g or "nil"))
-						print("B:\t"..(b or "nil"))
-					end
-					if r == nil or g == nil or b == nil then
-						for mat in materials:each_child() do
-							if get_elem_data(mat,"name") == particle then
-								hex = lamas_stats_get_graphics_info(mat)
-								if hex ~= nil then
-									r,g,b,a = hex_to_rgba(hex)
-									print("HEX RAN")
-								end
-								break
-							end
-						end
-					end
-					
-
-					if not ModDoesFileExist(dummyfilepath) then
-						-- GamePrint("HEY!! This file doesn't exist! '"..dummyfilepath.."'")
-						ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
-
-						print("Adding global here")
+						add_hex(spritefilepath, dummyfilepath, pcolor)
+					else
 						add_hex(spritefilepath, dummyfilepath, hex)
 					end
-					ComponentSetValue2( v, "image_file", dummyfilepath )
-					-- print("DUMMY PATH SET")
-
-					for xml in nxml.edit_file(dummyfilepath) do
-						if xml ~= nil then
-							print("XML IS BEING EDITED")
-							print("R:\t"..(r or "nil"))
-							print("G:\t"..(g or "nil"))
-							print("B:\t"..(b or "nil"))
-							print("A:\t"..(a or "nil"))
-							xml:set("color_r",r)
-							xml:set("color_g",g)
-							xml:set("color_b",b)
-							xml:set("color_a",a)
-						end
+				end
+				ComponentSetValue2( v, "image_file", dummyfilepath )
+				-- print("DUMMY PATH SET")
+			
+				for xml in nxml.edit_file(dummyfilepath) do
+					if xml ~= nil then
+						-- print("XML IS BEING EDITED")
+						-- print("R:\t"..(r or "nil"))
+						-- print("G:\t"..(g or "nil"))
+						-- print("B:\t"..(b or "nil"))
+						-- print("A:\t"..(a or "nil"))
+						xml:set("color_r",r)
+						xml:set("color_g",g)
+						xml:set("color_b",b)
+						xml:set("color_a",a)
 					end
-					EntityRefreshSprite( entity_id, v )
 				end
-			end
-			comps = EntityGetComponent( entity_id, "PotionComponent" )
-			if ( comps ~= nil ) then
-				for i,v in ipairs( comps ) do
-					-- ComponentSetValue2( v, "custom_color_material", CellFactory_GetType(particle) )
-				end
-			else
-				EntityAddComponent2( entity_id, "PotionComponent", {
-					custom_color_material = CellFactory_GetType("brick")
-				})
-				-- EntityAddComponent(entity_id, "MaterialInventoryComponent")
-				-- AddMaterialInventoryMaterial(entity_id, "brick", 1)
-				print("MATERIAL UINT:\t"..GameGetPotionColorUint(entity_id))
-				-- TODO: move materialcomp and potioncomp to later
+				EntityRefreshSprite( entity_id, v )
 			end
 		else
 			for i,v in ipairs( comps ) do
@@ -260,11 +290,11 @@ if ( colour ~= nil ) then
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
 			    ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )
 			
-			if ( particle ~= nil ) then
-				ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
-			else
-				ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", false )
-				ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", false )
+				if ( particle ~= nil ) then
+					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
+				else
+					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", false )
+					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", false )
 			    end
 			end
 		end
