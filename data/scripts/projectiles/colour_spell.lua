@@ -24,6 +24,20 @@ local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
 	return dummyfilepath
 end
 
+local function get_variations(path)
+  local variations = {}
+  local min, max = path:match("$%[(%d)%-(%d)%]")
+  if min then
+    for i=min, max do
+      local subbed = path:gsub("$%[%d%-%d%]", i)
+      table.insert(variations, subbed)
+    end
+    return variations
+  else
+    return { path }
+  end
+end
+
 local function edit_dummy_sprite(dummyfilepath, r, g, b, a)
 	for xml in nxml.edit_file(dummyfilepath) do
 		if xml ~= nil then
@@ -403,53 +417,22 @@ if ( colour ~= nil ) then
 					})
 					ComponentAddTag(vsc, "explosionspriteoriginal"..i)
 				end
-
-
+				
 				if ( particle ~= nil ) then
 					local spritefilepath = ComponentGetValue2(vsc, "value_string")
-					
+					local dummyfilepath
 					if string.find(spritefilepath, "$") ~= nil then
-						local spritefilepaths = {}
-						local post = false
-						local prefix, postfix = "", ""
-						local found, num = false, "0"
-						local min, max = 1, 1
-						for c in spritefilepath:gmatch"." do
-							if c == "$" then
-								found = true
-							elseif post then
-								postfix = postfix..c
-							elseif found then
-								if c == "]" then
-									if tonumber(num) ~= nil then
-										max = tonumber(num)
-									end
-									post = true
-								elseif c == "-" then
-									if tonumber(num) ~= nil then
-										min = tonumber(num)
-									end
-									num = "0"
-								else
-									num = num..c
-								end
-							else
-								prefix = prefix..c
-							end
-						end
-						local dummyfilepath
-						for x=tonumber(min), tonumber(max) do
-							dummyfilepath = create_dummy_entry(prefix..x..postfix, particle, nil, hex)
+
+						local spritefilepaths = get_variations(spritefilepath)
+						for _,spritefile in ipairs(spritefilepaths) do
+							dummyfilepath = create_dummy_entry(spritefile, particle, nil, hex)
 							edit_dummy_sprite(dummyfilepath, r,g,b,a)
 						end
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath )
 					else
-						local dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
+						dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
 						edit_dummy_sprite(dummyfilepath, r,g,b,a)
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					end
-
-
+					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
 					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
 					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )
