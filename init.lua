@@ -347,7 +347,6 @@ function OnModPreInit()
 end
 
 function OnModPostInit()
-	-- print("HEX PROJECTILES TIMEEEEEEEEEEEEEEE")
 	dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
 	hex_projectiles(set_text)
 	print("Hexed projectiles.")
@@ -361,11 +360,6 @@ function OnPlayerSpawned(player_id)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
 	end
-	-- if not GameHasFlagRun("glimmers_expanded_clear_hex") then
- 		-- ModSettingRemove("GlimmersExpanded.hexglobals")
-	-- 	GameAddFlagRun( "glimmers_expanded_clear_hex" )
-	-- end
-	
 end
 
 function OnMagicNumbersAndWorldSeedInitialized()

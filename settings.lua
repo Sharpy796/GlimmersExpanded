@@ -30,7 +30,7 @@ mod_settings =
 
 function ModSettingsUpdate( init_scope )
     if init_scope == 0 then -- On new game
-        print("-------------------------- REMOVING MOD SETTINGS")
+        print("Removed glimmer hexglobals.")
  		ModSettingRemove("GlimmersExpanded.hexglobals")
     end -- If you want to print out this mod setting, use this: print(tostring(ModSettingGet("GlimmersExpanded.hexglobals")))
     local old_version = mod_settings_get_version( mod_id )
