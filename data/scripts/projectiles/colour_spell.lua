@@ -25,17 +25,59 @@ local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
 end
 
 local function get_variations(path)
-  local variations = {}
-  local min, max = path:match("$%[(%d)%-(%d)%]")
-  if min then
-    for i=min, max do
-      local subbed = path:gsub("$%[%d%-%d%]", i)
-      table.insert(variations, subbed)
-    end
-    return variations
-  else
-    return { path }
-  end
+  	local variations = {}
+  	local min, max = path:match("$%[(%d)%-(%d)%]")
+  	if min then
+  	  	for i=min, max do
+  	  	  	local subbed = path:gsub("$%[%d%-%d%]", i)
+  	  	  	table.insert(variations, subbed)
+  	  	end
+  	  	return variations
+  	else
+  	  	return { path }
+  	end
+end
+
+local function create_vsc(entity_id, comp_id, i, sprite_name, additive_name, tag, object_name)
+	local spriteoriginal, additive, vsc
+	if object_name ~= nil then
+		spriteoriginal = ComponentObjectGetValue2(comp_id, object_name, sprite_name)
+	else
+		spriteoriginal = ComponentGetValue2(comp_id, sprite_name)
+	end
+	vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", tag..i)
+	if vsc ~= nil then
+		additive = ComponentGetValue2(vsc, "value_bool")
+	else
+		if object_name ~= nil then
+			additive = ComponentObjectGetValue2(comp_id, object_name, additive_name)
+		else
+			additive = ComponentGetValue2(comp_id, additive_name)
+		end
+		vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
+			name=tag..i,
+			value_string=spriteoriginal,
+			value_bool=additive,
+		})
+		ComponentAddTag(vsc, tag..i)
+	end
+	return spriteoriginal, additive, vsc
+end
+
+local function set_additive(r,g,b, comp_id, additive_name, additive_value, object_name)
+	if r <= 0.1 and g <= 0.1 and b <= 0.1 then
+		if object_name ~= nil then
+			ComponentObjectSetValue2( comp_id, object_name, additive_name, false)
+		else
+			ComponentSetValue2( comp_id, additive_name, false)
+		end
+	else
+		if object_name ~= nil then
+			ComponentObjectSetValue2( comp_id, object_name, additive_name, additive_value)
+		else
+			ComponentSetValue2( comp_id, additive_name, additive_value)
+		end
+	end
 end
 
 local function edit_dummy_sprite(dummyfilepath, r, g, b, a)
@@ -302,7 +344,7 @@ if ( colour ~= nil ) then
 	comps = EntityGetComponent( entity_id, "SpriteComponent" )
 	if ( comps ~= nil ) then
 		if (particle ~= nil) then
-			local spritefilepath, dummyfilepath, spriteoriginal, pcolor, potioncomp
+			local dummyfilepath, pcolor, potioncomp
 			local hex = "FFFFFFFF"
 			local r,g,b,a = 1,1,1,1
 
@@ -331,51 +373,16 @@ if ( colour ~= nil ) then
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
 
-				local additive = ComponentGetValue2(v, "additive") -- Only used the first time
-				-- Creates vsc to hold information between glimmers
-				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "spriteoriginal"..i)
-				if vsc ~= nil then
-					additive = ComponentGetValue2(vsc, "value_bool")
-					-- print("ADDITIVE:\t"..tostring(additive or "nil"))
-				end
-
-				-- Additive check
-				if r <= 0.1 and g <= 0.1 and b <= 0.1 then
-					ComponentSetValue2( v, "additive", false)
-				else
-					ComponentSetValue2( v, "additive", additive)
-				end
+				local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
+				set_additive(r,g,b,v,"additive",additive)
 
 				if #comps <= 1 then
-					if vsc == nil then
-						vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
-							name="spriteoriginal"..i,
-							value_bool=additive,
-						})
-						ComponentAddTag(vsc, "spriteoriginal"..i)
-					end
 					EntityRefreshSprite( entity_id, v )
 					break
 				end
-
-				spritefilepath = ComponentGetValue2( v, "image_file" )
-				spriteoriginal = spritefilepath
-
-				if vsc == nil then
-					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
-						name="spriteoriginal"..i,
-						value_string=spriteoriginal,
-						value_bool=additive,
-					})
-					ComponentAddTag(vsc, "spriteoriginal"..i)
-				end
-
 				
-
-				spritefilepath = ComponentGetValue(vsc, "value_string")
 				dummyfilepath = create_dummy_entry(spritefilepath, particle, pcolor, hex)
 				ComponentSetValue2( v, "image_file", dummyfilepath )
-
 				edit_dummy_sprite(dummyfilepath, r, g, b, a)
 
 				EntityRefreshSprite( entity_id, v )
@@ -391,48 +398,27 @@ if ( colour ~= nil ) then
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-				local spriteoriginal = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite")
-				-- print("SPRITEORIGINAL:\t"..tostring(spriteoriginal))
-				local additive = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite_additive") -- Only used the first time
-				-- Creates vsc to hold information between glimmers
-				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "explosionspriteoriginal"..i)
-				if vsc ~= nil then -- else we will create one later
-					additive = ComponentGetValue2(vsc, "value_bool")
-				end
-				local hex,r,g,b,a
-				if particle ~= nil then
-					hex,r,g,b,a = material_to_rgba(particle)
-					-- Additive check
-					if r <= 0.1 and g <= 0.1 and b <= 0.1 then
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", false)
-					else
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", additive)
-					end
-				end
-				if vsc == nil then
-					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
-						name="explosionspriteoriginal"..i,
-						value_string=spriteoriginal,
-						value_bool=additive,
-					})
-					ComponentAddTag(vsc, "explosionspriteoriginal"..i)
-				end
+
+				local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
 				
 				if ( particle ~= nil ) then
-					local spritefilepath = ComponentGetValue2(vsc, "value_string")
-					local dummyfilepath
-					if string.find(spritefilepath, "$") ~= nil then
+					local hex,r,g,b,a = material_to_rgba(particle)
+					set_additive(r,g,b, v, "explosion_sprite_additive", additive, "config_explosion")
 
-						local spritefilepaths = get_variations(spritefilepath)
-						for _,spritefile in ipairs(spritefilepaths) do
-							dummyfilepath = create_dummy_entry(spritefile, particle, nil, hex)
+					if spritefilepath ~= nil and spritefilepath ~= "" then
+						local dummyfilepath
+						if string.find(spritefilepath, "$") ~= nil then
+							local spritefilepaths = get_variations(spritefilepath)
+							for _,spritefile in ipairs(spritefilepaths) do
+								dummyfilepath = create_dummy_entry(spritefile, particle, nil, hex)
+								edit_dummy_sprite(dummyfilepath, r,g,b,a)
+							end
+						else
+							dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
 							edit_dummy_sprite(dummyfilepath, r,g,b,a)
 						end
-					else
-						dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
-						edit_dummy_sprite(dummyfilepath, r,g,b,a)
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					end
-					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
 					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
 					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )

@@ -24,6 +24,46 @@ local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
 	return dummyfilepath
 end
 
+local function get_variations(path)
+  	local variations = {}
+  	local min, max = path:match("$%[(%d)%-(%d)%]")
+  	if min then
+  	  	for i=min, max do
+  	  	  	local subbed = path:gsub("$%[%d%-%d%]", i)
+  	  	  	table.insert(variations, subbed)
+  	  	end
+  	  	return variations
+  	else
+  	  	return { path }
+  	end
+end
+
+local function create_vsc(entity_id, comp_id, i, sprite_name, additive_name, tag, object_name)
+	local spriteoriginal, additive, vsc
+	if object_name ~= nil then
+		spriteoriginal = ComponentObjectGetValue2(comp_id, object_name, sprite_name)
+	else
+		spriteoriginal = ComponentGetValue2(comp_id, sprite_name)
+	end
+	vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", tag..i)
+	if vsc ~= nil then
+		additive = ComponentGetValue2(vsc, "value_bool")
+	else
+		if object_name ~= nil then
+			additive = ComponentObjectGetValue2(comp_id, object_name, additive_name)
+		else
+			additive = ComponentGetValue2(comp_id, additive_name)
+		end
+		vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
+			name=tag..i,
+			value_string=spriteoriginal,
+			value_bool=additive,
+		})
+		ComponentAddTag(vsc, tag..i)
+	end
+	return spriteoriginal, additive, vsc
+end
+
 local function edit_dummy_sprite(dummyfilepath, r, g, b, a)
 	for xml in nxml.edit_file(dummyfilepath) do
 		if xml ~= nil then
@@ -116,7 +156,96 @@ local data =
 	glimmers_expanded_colour_weird_fungus = {particle = "fungi",},
 	glimmers_expanded_colour_diminution = {particle = "magic_liquid_weakness",},
 	glimmers_expanded_colour_pink = {particle = "plasma_fading_pink",},
+	glimmers_expanded_colour_true_glimmers_expanded_colour_freezing_liquid = {particle = "blood_cold",},
+	glimmers_expanded_colour_white = {particle = "spark_white",},
+	glimmers_expanded_colour_teal = {particle = "spark_teal",},
+	glimmers_expanded_colour_fire = {particle = "fire",},
+	glimmers_expanded_colour_midas = {particle = "midas",},
+	glimmers_expanded_colour_weird_fungus = {particle = "fungi",},
+	glimmers_expanded_colour_diminution = {particle = "magic_liquid_weakness",},
+	glimmers_expanded_colour_pink = {particle = "plasma_fading_pink",},
 	glimmers_expanded_colour_true_rainbow = {particle = "material_rainbow",},
+	glimmers_expanded_colour_mimicium = {particle = "mimic_liquid",},
+	glimmers_expanded_colour_lively_concoction = {particle = "magic_liquid_hp_regeneration_unstable",},
+	glimmers_expanded_colour_divine_ground = {particle = "grass_holy",},
+	glimmers_expanded_colour_void = {particle = "void_liquid",},
+	glimmers_expanded_colour_blood = {particle = "blood",},
+	glimmers_expanded_colour_lava = {particle = "lava",},
+	glimmers_expanded_colour_ominous = {particle = "material_darkness",},
+	glimmers_expanded_colour_acid = {particle = "acid",},
+	-- BIOMES
+	-- Main Path
+	["$biome_hills"]			= {particle  = "grass",}, -- Forest (radioactive_liquid?)
+	["$biome_coalmine"]			= {particle  = "liquid_fire",}, -- Mines
+	["$biome_excavationsite"]	= {particle  = "slime",}, -- Coal Pits
+	["$biome_snowcave"]			= {particle  = "blood_cold",}, -- Snowy Depths
+	["$biome_snowcastle"]		= {particle  = "blood_cold",}, -- Hiisi Base (or steel_static?)
+	["$biome_rainforest"]		= {particle  = "liquid_fire",}, -- Underground Jungle (poison maybe?)
+	["$biome_vault"]			= {particle  = "acid",}, -- The Vault
+	["$biome_crypt"]			= {particle  = "magic_liquid_polymorph",}, -- Temple of the Art
+	["$biome_boss_arena"]		= {particle  = "spark_red",}, -- The Laboratory
+	["$biome_boss_victoryroom"]	= {particle  = "gold",}, -- The Work (End)
+
+	["$biome_holymountain"]		= {particle  = "glowstone_altar",}, -- Holy Mountain
+
+	-- Side Biomes
+	["$biome_greed_room"]		= {particle  = "gold",}, -- Hall of Wealth
+	["$biome_coalmine_alt"]		= {particle  = "liquid_fire",}, -- Collapsed Mines
+	["$biome_fungicave"]		= {particle  = "fungi",}, -- Fungal Caverns
+	["$biome_wandcave"]			= {particle  = "radioactive_liquid",}, -- Magical Temple
+	["$biome_shop_room"]		= {particle  = "gold",}, -- Secret Shop (in Hiisi Base)
+	["$biome_rainforest_dark"]	= {particle  = "material_darkness",}, -- Lukki Lair
+
+	-- West
+	["$biome_winter"]			= {particle  = "blood_cold",}, -- Snowy Wasteland
+	["$biome_winter_caves"]		= {particle  = "blood_cold",}, -- Snowy Chasm
+	["$biome_liquidcave"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Ancient Laboratory
+	["$biome_vault_frozen"]		= {particle  = "ice_radioactive_static",}, -- Frozen Vault
+	["$biome_lake"]				= {particle  = "spark_blue_dark",}, -- Lake
+
+	-- East
+	["$biome_desert"]			= {particle  = "sand",}, -- Desert
+	["$biome_pyramid"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	["$biome_sandcave"]			= {particle  = "fire",}, -- Sandcave
+	["$biome_watchtower"]		= {particle  = "lava",}, -- Watchtower
+	["$biome_fun"]				= {particle  = "fungi",}, -- Overgrown Cavern
+	["$biome_fungiforest"]		= {particle  = "fungi",}, -- Overgrown Cavern
+	["$biome_robobase"]			= {particle  = "spark_electric",}, -- Power Plant
+	["$biome_meat"]				= {particle  = "pus",}, -- Meat Realm
+	["$biome_wizardcave"]		= {particles   ={"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Wizards' Den
+
+	-- North
+	["$biome_barren"]			= {particle  = "grass_holy",}, -- Barren Temple
+	["$biome_potion_mimics"]	= {particle  = "mimic_liquid",}, -- Henkevä Temple
+	["$biome_darkness"]			= {particle  = "material_darkness",}, -- Ominous Temple
+	["$biome_clouds"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- Cloudscape
+	["$biome_the_sky"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- The Work (Sky)
+
+	-- South
+	["$biome_lava"]				= {particle  = "lava",}, -- Volcanic Lake
+	["$biome_the_end"]			= {particle  = "lava",}, -- The Work (Hell)
+
+	-- Boss Arenas
+	["$biome_secret_lab"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Abandoned Alchemy Lab (High Alchemist)
+	["$biome_dragoncave"]		= {particle  = "spark_red",}, -- Dragoncave (Dragon)
+	["$biome_mestari_secret"]	= {particles = {"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Throne Room (Master of Masters)
+	["$biome_ghost_secret"]		= {particle  = "smoke",}, -- Forgotten Cave (The Forgotten)
+	["$biome_boss_sky2"]		= {particle  = "spark_red",}, -- Kivi Temple
+
+	-- Secret Locations
+	["$biome_orbroom"]			= {particle  = "material_confusion",}, -- Orb Room
+	["$biome_gold"]				= {particle  = "gold",}, -- The Gold
+	["$biome_water"]			= {particle  = "water",}, -- Water
+	["$biome_tower"]			= {particle  = "spark_red",}, -- Tower
+	["$biome_null_room"]		= {particle  = "silver",}, -- Nullifying Altar"
+
+	["???"]						= {particle  = "material_confusion",},
+
+	["_EMPTY_"]					= {},
+
+	[""]						= {particle  = "vomit",},
+	
+	rainbow = {particle = "material_rainbow",},
 	glimmers_expanded_colour_mimicium = {particle = "mimic_liquid",},
 	glimmers_expanded_colour_lively_concoction = {particle = "magic_liquid_hp_regeneration_unstable",},
 	glimmers_expanded_colour_divine_ground = {particle = "grass_holy",},
@@ -199,7 +328,7 @@ local data =
 	
 	rainbow =
 	{
-		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "spark_white", "spark_teal", "fire", "midas", "fungi", "magic_liquid_weakness", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "magic_liquid_hp_regeneration_unstable", "grass_holy", "void_liquid", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
+		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "spark_white", "spark_teal", "fire", "midas", "fungi", "magic_liquid_weakness", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "magic_liquid_hp_regeneration_unstable", "grass_holy", "void_liquid", "blood", "lava", "material_darkness", "acid", "blood_cold", "spark_white", "spark_teal", "fire", "midas", "fungi", "magic_liquid_weakness", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "magic_liquid_hp_regeneration_unstable", "grass_holy", "void_liquid", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
 	},
 	invis =
 	{
@@ -377,25 +506,18 @@ if ( colour ~= nil ) then
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
+
+				
+
 				local spriteoriginal = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite")
-				-- print("SPRITEORIGINAL:\t"..tostring(spriteoriginal))
-				local additive = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite_additive") -- Only used the first time
-				-- Creates vsc to hold information between glimmers
+				-- Only used during the first glimmer
+				local additive
+				-- Check for if a previous glimmer made a vsc to hold additive and sprite info
 				local vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", "explosionspriteoriginal"..i)
-				if vsc ~= nil then -- else we will create one later
+				if vsc ~= nil then -- If a previous glimmer made a vsc, we refer to the stored original additive value
 					additive = ComponentGetValue2(vsc, "value_bool")
-				end
-				local hex,r,g,b,a
-				if particle ~= nil then
-					hex,r,g,b,a = material_to_rgba(particle)
-					-- Additive check
-					if r <= 0.1 and g <= 0.1 and b <= 0.1 then
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", false)
-					else
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", additive)
-					end
-				end
-				if vsc == nil then
+				else -- Else, we grab the original additive value and store everything
+					additive = ComponentObjectGetValue2(v, "config_explosion", "explosion_sprite_additive")
 					vsc = EntityAddComponent(entity_id, "VariableStorageComponent", {
 						name="explosionspriteoriginal"..i,
 						value_string=spriteoriginal,
@@ -404,57 +526,31 @@ if ( colour ~= nil ) then
 					ComponentAddTag(vsc, "explosionspriteoriginal"..i)
 				end
 
-
+				-- local spriteoriginal, additive, vsc = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
+				
 				if ( particle ~= nil ) then
-					local spritefilepath = ComponentGetValue2(vsc, "value_string")
-					local spritefilepaths = {}
-					local post = false
-					local prefix, postfix = "", ""
-					local found, num = false, "0"
-					local min, max = 1, 1
-					for c in spritefilepath:gmatch"." do
-						if c == "$" then
-							found = true
-						elseif post then
-							postfix = postfix..c
-						elseif found then
-							if c == "]" then
-								if tonumber(num) ~= nil then
-									max = tonumber(num)
-									print("MAX:\t"..tostring(max))
-								end
-								post = true
-							elseif c == "-" then
-								if tonumber(num) ~= nil then
-									min = tonumber(num)
-									print("MIN:\t"..tostring(max))
-								end
-								num = "0"
-							else
-								num = num..c
-							end
-						else
-							prefix = prefix..c
-						end
+					local hex,r,g,b,a = material_to_rgba(particle)
+					-- Additive check
+					if r <= 0.1 and g <= 0.1 and b <= 0.1 then -- If the color is dark, we force non-additive
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", false)
+					else -- Else, we force the original additive value
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite_additive", additive)
 					end
 
-					print("PREFIX:\t"..prefix)
-					print("POSTFIX:\t"..postfix)
+					local spritefilepath = ComponentGetValue2(vsc, "value_string")
+					local dummyfilepath
+					if string.find(spritefilepath, "$") ~= nil then
 
-					if found then
-						local dummyfilepath
-						for x=tonumber(min), tonumber(max) do
-							dummyfilepath = create_dummy_entry(prefix..x..postfix, particle, nil, hex)
+						local spritefilepaths = get_variations(spritefilepath)
+						for _,spritefile in ipairs(spritefilepaths) do
+							dummyfilepath = create_dummy_entry(spritefile, particle, nil, hex)
 							edit_dummy_sprite(dummyfilepath, r,g,b,a)
 						end
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath )
 					else
-						local dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
+						dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
 						edit_dummy_sprite(dummyfilepath, r,g,b,a)
-						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					end
-
-
+					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
 					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
 					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )
