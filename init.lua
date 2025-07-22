@@ -361,6 +361,11 @@ function OnPlayerSpawned(player_id)
 		EntityLoad("mods/GlimmersExpanded/files/pixel_scenes/glimmer_lab/right/glimmer_lab_right.xml", 512*-24, 512*9)
 		GameAddFlagRun("glimmers_expanded_spliced_chunks_spawned")  --this tells the game to add this flag, the previous "if" statement won't spawn it every time you load the save now
 	end
+	-- if not GameHasFlagRun("glimmers_expanded_clear_hex") then
+ 		-- ModSettingRemove("GlimmersExpanded.hexglobals")
+	-- 	GameAddFlagRun( "glimmers_expanded_clear_hex" )
+	-- end
+	
 end
 
 function OnMagicNumbersAndWorldSeedInitialized()
@@ -372,12 +377,6 @@ function OnWorldInitialized()
     	dofile_once("mods/kae_waypoint/data/kae/poi.lua")
     	add_poi("Glimmer Lab", -12015, 4990)
 	end
-	-- This only works inconsistently :/
-	-- if not GameHasFlagRun("glimmers_expanded_clear_hex") then
- 		ModSettingRemove("GlimmersExpanded.hexglobals")
-		GameAddFlagRun( "glimmers_expanded_clear_hex" )
-	-- end
-	-- If you want to print out this mod setting, use this: print(ModSettingGet("GlimmersExpanded.hexglobals") or "nil")
 end
 
 

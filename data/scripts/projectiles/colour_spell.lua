@@ -4,14 +4,17 @@ local entity_id = GetUpdatedEntityID()
 local mixing = ModSettingGet("GlimmersExpanded.glimmer_mixing")
 local player_id = EntityGetWithTag("player_unit")[1]
 local colour,particle
-local colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
 ---@type nxml
 local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_materials.lua")
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
 
+local function dummyfile_file(filepath, particle)
+	return "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..filepath
+end
+
 local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
-	local dummyfilepath = "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..spritefilepath
+	local dummyfilepath = dummyfile_file(spritefilepath, particle)
 
 	if not ModDoesFileExist(dummyfilepath) then
 		ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
@@ -36,6 +39,26 @@ local function get_variations(path)
   	else
   	  	return { path }
   	end
+end
+
+local function edit_dummy_sprite(dummyfilepath, r, g, b, a)
+	for xml in nxml.edit_file(dummyfilepath) do
+		if xml ~= nil then
+			xml:set("color_r",r)
+			xml:set("color_g",g)
+			xml:set("color_b",b)
+			xml:set("color_a",a)
+		end
+	end
+end
+
+local function create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
+	local spritefilepaths = get_variations(spritefilepath)
+	for _,spritefile in ipairs(spritefilepaths) do
+		local dummyfilepath = create_dummy_entry(spritefile, particle, pcolor, hex)
+		edit_dummy_sprite(dummyfilepath, r,g,b,a)
+	end
+	return dummyfile_file(spritefilepath, particle)
 end
 
 local function create_vsc(entity_id, comp_id, i, sprite_name, additive_name, tag, object_name)
@@ -80,29 +103,12 @@ local function set_additive(r,g,b, comp_id, additive_name, additive_value, objec
 	end
 end
 
-local function edit_dummy_sprite(dummyfilepath, r, g, b, a)
-	for xml in nxml.edit_file(dummyfilepath) do
-		if xml ~= nil then
-			-- print("XML IS BEING EDITED")
-			-- print("R:\t"..(r or "nil"))
-			-- print("G:\t"..(g or "nil"))
-			-- print("B:\t"..(b or "nil"))
-			-- print("A:\t"..(a or "nil"))
-			xml:set("color_r",r)
-			xml:set("color_g",g)
-			xml:set("color_b",b)
-			xml:set("color_a",a)
-		end
-	end
-end
-
 local function material_to_rgba(material)
 	local hex
 	for mat in materials:each_child() do
 		if get_elem_data(mat,"name") == material then
 			hex = lamas_stats_get_graphics_info(mat)
 			if hex ~= nil then
-				-- print("-- HEX RAN")
 				return hex, hex_to_rgba(hex)
 			end
 		end
@@ -113,7 +119,6 @@ local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
 if ( comps ~= nil ) then
 	for i,v in ipairs( comps ) do
 		local name = ComponentGetValue2( v, "name" )
-		
 		if ( name == "colour_name" ) then
 			colour = ComponentGetValue2( v, "value_string" )
 		end
@@ -252,7 +257,7 @@ local data =
 	["_EMPTY_"]					= {},
 
 	[""]						= {particle  = "vomit",},
-	
+
 	rainbow =
 	{
 		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "spark_white", "spark_teal", "fire", "midas", "fungi", "magic_liquid_weakness", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "magic_liquid_hp_regeneration_unstable", "grass_holy", "void_liquid", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
@@ -265,17 +270,17 @@ local data =
 if ( colour ~= nil ) then
 	local d = data[colour] or {}
 	particle = d.particle
-	
+
 	if ( d.particles ~= nil ) then
 		SetRandomSeed( entity_id, entity_id )
 		local rnd = Random( 1, #d.particles )
 		particle = d.particles[rnd]
 	end
-	
+
 	if ( particle == "" ) then
 		particle = "material_rainbow"
 	end
-	
+
 	comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
 	if ( comps ~= nil ) then
 		if mixing and colour ~= "invis" then
@@ -300,7 +305,7 @@ if ( colour ~= nil ) then
 			ComponentObjectSetValue2( lec, "laser", "audio_enabled", false)
 			ComponentObjectSetValue2( lec, "laser", "max_length", ComponentObjectGetValue2(comps[1], "laser", "max_length"))
 			ComponentObjectSetValue2( lec, "laser", "beam_radius", ComponentObjectGetValue2(comps[1], "laser", "beam_radius"))
-			
+
 			for i,v in ipairs( comps ) do
 				if ComponentObjectGetValue2( v, "laser", "beam_particle_chance") > 0 then
 					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", beam_particle_chance-(2*(i-1)))
@@ -322,22 +327,31 @@ if ( colour ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
 		    	local cosmetic = ComponentGetValue2( v, "emit_cosmetic_particles" )
-			
-			if cosmetic then
-				if ( particle ~= nil ) then
-					ComponentSetValue2( v, "emitted_material_name", particle )
-				else
-					ComponentSetValue2( v, "is_emitting", false )
+
+				if cosmetic then
+					if ( particle ~= nil ) then
+						ComponentSetValue2( v, "emitted_material_name", particle )
+						ComponentSetValue2( v, "is_emitting", true )
+					else
+						ComponentSetValue2( v, "is_emitting", false )
 		    		end
 				end
 			end
 		end
 	end
-	
+
 	comps = EntityGetComponent( entity_id, "SpriteParticleEmitterComponent" )
 	if ( comps ~= nil ) then
-		for i,v in ipairs( comps ) do
-			ComponentSetValue2( v, "is_emitting", false )
+		if particle ~= nil then
+			for i,v in ipairs( comps ) do
+				local hex,r,g,b,a = material_to_rgba(particle)
+				ComponentSetValue2(v, "color", r,g,b,a)
+				ComponentSetValue2( v, "is_emitting", true )
+			end
+		else
+			for i,v in ipairs( comps ) do
+				ComponentSetValue2( v, "is_emitting", false )
+			end
 		end
 	end
 
@@ -345,8 +359,7 @@ if ( colour ~= nil ) then
 	if ( comps ~= nil ) then
 		if (particle ~= nil) then
 			local dummyfilepath, pcolor, potioncomp
-			local hex = "FFFFFFFF"
-			local r,g,b,a = 1,1,1,1
+			local hex,r,g,b,a = "FFFFFFFF",1,1,1,1
 
 			-- Adding PotionComponent for the very first sprite 
 			potioncomp = EntityGetFirstComponentIncludingDisabled( entity_id, "PotionComponent" )
@@ -358,18 +371,15 @@ if ( colour ~= nil ) then
 				})
 			end
 
-			-- Checking the color for later & for additive check
-			pcolor = GameGetPotionColorUint( entity_id )
+			pcolor = GameGetPotionColorUint( entity_id ) -- Checking the color for later & for additive check
 			if pcolor ~= nil then
 				r,g,b = uint_to_rgb(pcolor)
 			end
 
-			-- If no potion stuff, then use hex instead
 			if potioncomp == nil or pcolor == nil or r == nil or g == nil or b == nil then
-				hex,r,g,b,a = material_to_rgba(particle)
+				hex,r,g,b,a = material_to_rgba(particle) -- If no potion stuff, then use hex instead
 			end
 
-			-- Loop through SpriteComponents
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
 
@@ -380,10 +390,9 @@ if ( colour ~= nil ) then
 					EntityRefreshSprite( entity_id, v )
 					break
 				end
-				
-				dummyfilepath = create_dummy_entry(spritefilepath, particle, pcolor, hex)
+
+				dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
 				ComponentSetValue2( v, "image_file", dummyfilepath )
-				edit_dummy_sprite(dummyfilepath, r, g, b, a)
 
 				EntityRefreshSprite( entity_id, v )
 			end
@@ -393,32 +402,21 @@ if ( colour ~= nil ) then
 			end
 		end
 	end
-	
+
 	comps = EntityGetComponent( entity_id, "ProjectileComponent" )
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
-
-				local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
-				
 				if ( particle ~= nil ) then
+					local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
 					local hex,r,g,b,a = material_to_rgba(particle)
 					set_additive(r,g,b, v, "explosion_sprite_additive", additive, "config_explosion")
 
 					if spritefilepath ~= nil and spritefilepath ~= "" then
-						local dummyfilepath
-						if string.find(spritefilepath, "$") ~= nil then
-							local spritefilepaths = get_variations(spritefilepath)
-							for _,spritefile in ipairs(spritefilepaths) do
-								dummyfilepath = create_dummy_entry(spritefile, particle, nil, hex)
-								edit_dummy_sprite(dummyfilepath, r,g,b,a)
-							end
-						else
-							dummyfilepath = create_dummy_entry(spritefilepath, particle, nil, hex)
-							edit_dummy_sprite(dummyfilepath, r,g,b,a)
-						end
+						local dummyfilepath = create_all_dummy_variations(spritefilepath, particle, nil, hex,r,g,b,a)
 						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					end
+
 					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
 					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
 					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )
