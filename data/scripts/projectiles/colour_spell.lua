@@ -19,9 +19,9 @@ local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
 	if not ModDoesFileExist(dummyfilepath) then
 		ModTextFileSetContent( dummyfilepath, ModTextFileGetContent(spritefilepath) )
 		if pcolor ~= nil then
-			add_hex(spritefilepath, dummyfilepath, pcolor, "uint")
+			add_hexglobal(spritefilepath, dummyfilepath, pcolor, "uint")
 		else
-			add_hex(spritefilepath, dummyfilepath, hex, "hex")
+			add_hexglobal(spritefilepath, dummyfilepath, hex, "hex")
 		end
 	end
 	return dummyfilepath
