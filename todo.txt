@@ -53,4 +53,6 @@ OPTIMIZATION:
 EXTRA FEATURES:
 [-] Make projectile sprites change color with the glimmer's color
  - [x] Do the bare-bones change
- - [ ] Make it work with multisprite entities (i.e. worm launcher)
+ - [x] Make it work with multisprite entities (i.e. worm launcher)
+ - [x] Make projectile sprites change color with fungal shifts
+ - [ ] Allow for tentacles to change color (somehow)
