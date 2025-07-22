@@ -16,9 +16,9 @@ function set_global()
     ModSettingSet("GlimmersExpanded.hexglobals",  hexglobals)
 end
 
-function add_hex(filepath, dummyfilepath, hex_value)
+function add_hex(filepath, dummyfilepath, hex_value, datatype)
     hexglobals = hexglobals..[[,0
-]]..filepath..[[,]]..dummyfilepath..[[,]]..hex_value
+]]..filepath..[[,]]..dummyfilepath..[[,]]..hex_value..[[,]]..datatype
     -- print("ADDING NEW HEX:\t'"..filepath..[[,]]..dummyfilepath..[[,]]..hex_value.."'")
     set_global()
 end
@@ -40,7 +40,7 @@ end
 function hex_projectiles(set_text_func)
     if set_text_func == nil then set_text_func = ModTextFileGetContent end
     update_local_hexglobals()
-    local spritefilepath, dummyfilepath, hex, words
+    local spritefilepath, dummyfilepath, hex, datatype, words
     for line in hexglobals:gmatch("([^\n]*)\n?") do
         -- print("-------------")
         -- print("HEXING PROJECTILE:\t"..line)
@@ -49,10 +49,17 @@ function hex_projectiles(set_text_func)
         spritefilepath = words[1]
         dummyfilepath = words[2]
         hex = words[3]
+        datatype = words[4]
         -- debug_hex(spritefilepath, dummyfilepath, hex)
         if spritefilepath ~= nil and dummyfilepath ~= nil and hex ~= nil then
 			set_text_func( dummyfilepath, ModTextFileGetContent(spritefilepath) )
-            r,g,b,a = hex_to_rgba(hex)
+            if datatype == "hex" then
+                r,g,b,a = hex_to_rgba(hex)
+            elseif datatype == "uint" then
+                r,g,b = uint_to_rgb(hex)
+            else
+                print("What datatype is this hexglobal's color????")
+            end
             if ModDoesFileExist(dummyfilepath) then
                 for xml in nxml.edit_file(dummyfilepath, ModTextFileGetContent, set_text_func) do
 	            	xml:set("color_r",r)
