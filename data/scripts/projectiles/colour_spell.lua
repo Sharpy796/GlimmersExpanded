@@ -408,6 +408,35 @@ if ( colour ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
 				if ( particle ~= nil ) then
+					-- ComponentGetValue2(v, "muzzle_flash_file") in "data\entities\projectiles\lightning.xml"
+					-- TODO: Add support for this.
+
+					local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
+					local hex,r,g,b,a = material_to_rgba(particle)
+					set_additive(r,g,b, v, "explosion_sprite_additive", additive, "config_explosion")
+
+					if spritefilepath ~= nil and spritefilepath ~= "" then
+						local dummyfilepath = create_all_dummy_variations(spritefilepath, particle, nil, hex,r,g,b,a)
+						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
+					end
+
+					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
+					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
+					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )
+				else
+					ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", "" )
+					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", false )
+					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", false )
+			    end
+			end
+		end
+	end
+
+	comps = EntityGetComponent( entity_id, "LightningComponent" )
+	if ( comps ~= nil ) then
+		for i,v in ipairs( comps ) do
+			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
+				if ( particle ~= nil ) then
 					local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
 					local hex,r,g,b,a = material_to_rgba(particle)
 					set_additive(r,g,b, v, "explosion_sprite_additive", additive, "config_explosion")

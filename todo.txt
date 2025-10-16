@@ -56,5 +56,5 @@ EXTRA FEATURES:
  - [x] Make it work with multisprite entities (i.e. worm launcher)
  - [x] Make projectile sprites change color with fungal shifts
  - [ ] Allow for tentacles to change color (somehow)
- - [ ] Fix lightning spell not being colored
+ - [-] Fix lightning spell not being colored
  - [x] Add gokith compat to spells (author name)
