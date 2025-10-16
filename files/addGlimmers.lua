@@ -14,7 +14,8 @@ glimmer_list_revamped = {}
 ---@param is_rare boolean? false
 ---@param custom_action function? function custom_action() end
 ---@param trail_mods table? nil
-function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action, trail_mods)
+---@param author string? "Community-Created"
+function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action, trail_mods, author)
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil") end
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end
     if materials == nil then error("attempted to call addGlimmer() with 'materials' as nil") end
@@ -27,6 +28,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     if is_rare == nil then is_rare = false end
     if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
     if type(trail_mods) ~= "table" then trail_mods = nil end
+    if author == nil then author = "Community-Created" end
 
     local id = mod_id..mod_prefix.."COLOUR_"..name:upper():gsub("%W","_")
     local newGlimmer = {
@@ -41,6 +43,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
         is_rare = is_rare,
         custom_action = custom_action,
         trail_mods = trail_mods,
+        author = author,
     }
     glimmer_list_revamped[id] = newGlimmer
 end
@@ -56,5 +59,6 @@ for _,glimmer in ipairs(glimmer_data) do
             glimmer.mod_prefix,
             glimmer.is_rare,
             glimmer.custom_action,
-            glimmer.trail_mods)
+            glimmer.trail_mods,
+            glimmer.author)
 end

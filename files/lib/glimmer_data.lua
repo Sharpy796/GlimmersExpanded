@@ -6,6 +6,7 @@ glimmer_data = {
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_white.png",
         spawn_tiers = "2,3,4",
         sort_after = -100,
+        author = "Sharpy796",
     },
     {
         name = "Pink",
@@ -19,6 +20,7 @@ glimmer_data = {
             lifetime_min = "0.25",
             lifetime_max = "0.75",
         },
+        author = "Sharpy796",
     },
     {
         name = "Weird Fungus",
@@ -27,6 +29,7 @@ glimmer_data = {
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_weird_fungus.png",
         spawn_tiers = "2,3,4,5",
         sort_after = 0.1,
+        author = "Sharpy796",
     },
     -- COLOUR_RED - sort_after = 1
     {
@@ -40,6 +43,7 @@ glimmer_data = {
             count_max = "2",
             trail_gap = "0.7"
         },
+        author = "Sharpy796",
     },
     -- COLOUR_ORANGE - sort_after = 2
     { -- Do I want to add this?
@@ -52,6 +56,7 @@ glimmer_data = {
         trail_mods = {
             custom_style = "FIRE"
         },
+        author = "Sharpy796",
     },
     {
         name = "Lava",
@@ -61,6 +66,7 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "2,3,4,5,6",
         sort_after = 2.1,
+        author = "Sharpy796",
     },
     -- COLOUR_YELLOW - sort_after = 3
     -- COLOUR_GREEN - sort_after = 4
@@ -75,6 +81,7 @@ glimmer_data = {
         trail_mods = {
             trail_gap = "0.5",
         },
+        author = "Sharpy796",
     },
     {
         name = "Diminution",
@@ -84,6 +91,7 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "2,3,4,5,6",
         sort_after = 4.2,
+        author = "Sharpy796",
     },
     {
         name = "Teal",
@@ -92,6 +100,7 @@ glimmer_data = {
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_teal.png",
         spawn_tiers = "1,2,3,4",
         sort_after = 4.3,
+        author = "Sharpy796",
     },
     -- COLOUR_BLUE - sort_after = 5
     {
@@ -102,6 +111,7 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "2,3,4,5",
         sort_after = 5.1,
+        author = "Sharpy796",
     },
     -- COLOUR_PURPLE - sort_after = 6
     {
@@ -112,6 +122,7 @@ glimmer_data = {
         cast_delay = 15,
         spawn_tiers = "3,4,5",
         sort_after = 6.1,
+        author = "Sharpy796",
     },
     {
         name = "Void",
@@ -120,6 +131,7 @@ glimmer_data = {
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_void.png",
         spawn_tiers = "3,4,5,6",
         sort_after = 6.2,
+        author = "Sharpy796",
     },
     {
         name = "Mimicium",
@@ -128,6 +140,7 @@ glimmer_data = {
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_mimicium.png",
         spawn_tiers = "4,5,6,10",
         sort_after = 6.3,
+        author = "Sharpy796",
     },
     -- COLOUR_RAINBOW - sort_after = 7
     {
@@ -137,6 +150,7 @@ glimmer_data = {
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_true_rainbow.png",
         spawn_tiers = "4,5,6,10",
         sort_after = 7.1,
+        author = "Sharpy796",
     },
     {
         name = "Midas",
@@ -147,6 +161,7 @@ glimmer_data = {
         spawn_tiers = "5,6,10",
         sort_after = 7.2,
         is_rare = true, -- Is a rare material, won't show up in the glimmer lab
+        author = "Sharpy796",
     },
     {
         name = "Lively Concoction",
@@ -157,6 +172,7 @@ glimmer_data = {
         spawn_tiers = "5,6,10",
         sort_after = 7.3,
         is_rare = true, -- Is a rare material, won't show up in the glimmer lab
+        author = "Sharpy796",
     },
     {
         name = "Divine Ground",
@@ -167,6 +183,7 @@ glimmer_data = {
         spawn_tiers = "5,6,10",
         sort_after = 7.31,
         is_rare = true, -- Is a rare material, won't show up in the glimmer lab
+        author = "Sharpy796",
     },
     {
         name = "Biome",
@@ -175,6 +192,7 @@ glimmer_data = {
         image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_biome.png",
         spawn_tiers = "4,5,6,10",
         sort_after = 7.4,
+        author = "Sharpy796",
     },
     -- COLOUR_INVIS - sort_after = 8
 }
@@ -208,6 +226,7 @@ local glimmer_appends = {
             lifetime_max="9.0",
             render_ultrabright="1",
         },
+        author = "Sharpy796", -- Whoever created the glimmer
     },
 }
 

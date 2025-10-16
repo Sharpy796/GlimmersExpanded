@@ -34,7 +34,7 @@ local total_spawns = {
 
 local myFancyNewColors = {}
 
-local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_tiers, sort_after, unlock_flag, custom_action)
+local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_tiers, sort_after, unlock_flag, custom_action, author)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
 	local ID = Id:upper()
@@ -46,6 +46,7 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
     if sort_after == nil then sort_after = 100 end
 	if unlock_flag == nil then unlock_flag = "card_unlocked_paint" end
     if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
+    if author == nil then author = "Community-Created" end -- I'd default it to "Sharpy796" but I don't want to take credit for glimmers others create and forget to add this to.
 
 
     local action = function()
@@ -70,6 +71,8 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
         mana                    = 0,
         action 					= action,
         sort_after              = sort_after,
+        author                  = author,
+        origin                  = "Glimmers Expanded",
     }
     table.insert(myFancyNewColors, newGlimmer)
 	return newGlimmer
@@ -84,7 +87,7 @@ function compareGlimmers(entry1, entry2)
 end
 
 for id, data in pairs(glimmer_list_revamped) do
-	createGlimmerAction(id, data.image, data.cast_delay, nil, data.spawn_tiers, data.sort_after, nil, data.custom_action)
+	createGlimmerAction(id, data.image, data.cast_delay, nil, data.spawn_tiers, data.sort_after, nil, data.custom_action, data.author)
 end
 
 

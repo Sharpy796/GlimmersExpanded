@@ -57,4 +57,4 @@ EXTRA FEATURES:
  - [x] Make projectile sprites change color with fungal shifts
  - [ ] Allow for tentacles to change color (somehow)
  - [ ] Fix lightning spell not being colored
- - [ ] Add gokith compat to spells (author name) (add a "glimmers expanded x modname" for collab ones?)
+ - [x] Add gokith compat to spells (author name)

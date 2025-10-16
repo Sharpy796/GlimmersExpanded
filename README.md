@@ -59,6 +59,7 @@ local glimmer_appends = {
             lifetime_max="9.0",
             render_ultrabright="1",
         },
+        author = "Sharpy796", -- Whoever created the glimmer
     },
 }
 ```
@@ -81,6 +82,7 @@ local glimmer_appends = {
 - `is_rare` is a boolean that will determine whether you can find this glimmer in the glimmer lab pixel scene I created. It is advised to set this to `true` if your glimmer uses a rare and potentially game-breaking material, like Lively Concoction and Draught of Midas. This is optional, and will default to `false`.
 - `custom_action` is a function that will be called when the glimmer's action is called (when the spell is cast). A spell's action can do all sorts of things. If you know how to create custom spell actions, then feel free to use this. This is optional, and will default to `custom_action = function() end`.
 - `trail_mods` is a table of string values that can modify how the trail of your glimmer looks. The tags can be anything that is in a ParticleEmitterComponent (more info on these on the [wiki.gg page](https://noita.wiki.gg/wiki/Documentation:_ParticleEmitterComponent)). These values are optional, and will default to the values in `mods/GlimmersExpanded/files/entities/misc/colour_template.xml`, while `trail_mods` itself will default to `nil`.
+- `author` is a string containing your name. This is for Goki's Things compatibility, allowing you to differentiate your glimmers from mine in that mod's menus. This is optional, and will default to `"Community-Created"`.
 
 After your glimmer appends table, place this below it:
 ```lua
