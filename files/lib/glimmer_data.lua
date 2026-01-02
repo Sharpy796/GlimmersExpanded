@@ -201,7 +201,7 @@ glimmer_data = {
 local glimmer_appends = {
     {
         -- REQUIRED
-        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIMMERS_EXPANDED_COLOUR_VOMIT")
+        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID if `spellid_suffix` is not specified (i.e. "GLIMMERS_EXPANDED_COLOUR_VOMIT")
         desc            = "Gives a projectile a sickeningly sparkly trail", -- The glimmer's description
         materials       = {"vomit"}, -- The material(s) involved. The first one will color the glimmer, and the rest are used in glimmer alchemy.
         -- OPTIONAL
@@ -210,6 +210,7 @@ local glimmer_appends = {
         spawn_tiers     = "1,2", -- The spell tiers this spawns in
         sort_after      = 4.21, -- Where this is sorted in the progress menu
         mod_prefix      = "EXAMPLE", -- Will be used in the ID (i.e. "GLIMMERS_EXPANDED_EXAMPLE_COLOUR_VOMIT")
+        spellid_suffix = "The vomit testing thingy", -- Will be used in the ID in place of `name` (i.e. "GLIMMERS_EXPANDED_EXAMPLE_COLOUR_THE_VOMIT_TESTING_THINGY")
         is_rare         = false, -- Determines whether the glimmer shows up in the glimmer lab
         custom_action   = function() -- A custom action, if you'd like to specify one
             c.fire_rate_wait = c.fire_rate_wait - 45
@@ -227,7 +228,6 @@ local glimmer_appends = {
             render_ultrabright="1",
         },
         author = "Sharpy796", -- Whoever created the glimmer
-        spellid_suffix = "The vomit testing thingy" -- For if you want this spell's id to end with something other than `VOMIT`
     },
 }
 

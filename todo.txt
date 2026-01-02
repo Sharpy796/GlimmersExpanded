@@ -48,7 +48,7 @@ OPTIMIZATION:
  - [x] Optimize this code
 [x] Find a way to systematically create glimmer .xml scripts
  - [ ] Possibly allow for the creation of unique glimmers for every color material? I could use chem curiosities' color finder function
-[-] Allow for other mod's translations to be used as glimmer translations
+[x] Allow for other mod's translations to be used as glimmer translations
 
 EXTRA FEATURES:
 [-] Make projectile sprites change color with the glimmer's color

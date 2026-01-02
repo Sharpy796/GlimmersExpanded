@@ -34,7 +34,7 @@ This is an example of a glimmer appends table:
 local glimmer_appends = {
     {
         -- REQUIRED
-        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID (i.e. "GLIMMERS_EXPANDED_COLOUR_VOMIT")
+        name            = "Vomit", -- The glimmer's name (i.e. "Vomit Glimmer"). Will also be used in the ID if `spellid_suffix` is not specified (i.e. "GLIMMERS_EXPANDED_COLOUR_VOMIT")
         desc            = "Gives a projectile a sickeningly sparkly trail", -- The glimmer's description
         materials       = {"vomit"}, -- The material(s) involved. The first one will color the glimmer, and the rest are used in glimmer alchemy.
         -- OPTIONAL
@@ -43,12 +43,13 @@ local glimmer_appends = {
         spawn_tiers     = "1,2", -- The spell tiers this spawns in
         sort_after      = 4.21, -- Where this is sorted in the progress menu
         mod_prefix      = "EXAMPLE", -- Will be used in the ID (i.e. "GLIMMERS_EXPANDED_EXAMPLE_COLOUR_VOMIT")
+        spellid_suffix = "The vomit testing thingy", -- Will be used in the ID in place of `name` (i.e. "GLIMMERS_EXPANDED_EXAMPLE_COLOUR_THE_VOMIT_TESTING_THINGY")
         is_rare         = false, -- Determines whether the glimmer shows up in the glimmer lab
         custom_action   = function() -- A custom action, if you'd like to specify one
             c.fire_rate_wait = c.fire_rate_wait - 45
-            current_reload_time = current_reload_time - 20
-            c.speed_multiplier = c.speed_multiplier * 2.5
-            c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
+			current_reload_time = current_reload_time - 20
+			c.speed_multiplier = c.speed_multiplier * 2.5
+			c.extra_entities = c.extra_entities .. "data/entities/misc/clusterbomb.xml,"
         end,
         -- Is a table of any value a ParticleEmitterComponent has. Check https://noita.wiki.gg/wiki/Documentation:_ParticleEmitterComponent for more details!
         trail_mods = {
@@ -63,9 +64,8 @@ local glimmer_appends = {
     },
 }
 ```
-# TODO: Update this thingy
-- `name` is what you want this spell to be called. For example, `"Custom Material"` would end up naming the glimmer "Custom Material Glimmer". The spell's ID will also use this, and will be `GLIMMERS_EXPANDED_COLOUR_CUSTOM_MATERIAL` (unless you specify a `mod_prefix`).
-- `desc` is the spell's description. This can be any string you want!
+- `name` is what you want this spell to be called. This has translation support! If you do not provide a translation, as an example, `"Custom Material"` would end up naming the glimmer "Custom Material Glimmer". The spell's ID will also use this, and will be `GLIMMERS_EXPANDED_COLOUR_CUSTOM_MATERIAL` (unless you specify a `mod_prefix` or a `spellid_suffix`).
+- `desc` is the spell's description. This has translation support! If you do not provide a translation, it can be any string you want!
 - `materials` is a table of material IDs. The first material inside the table will be used as the glimmer's color, but all of the materials will be used in the glimmer's alchemy. For example, `{"custom_mat1", "custom_mat2"}` would use `"custom_mat1"` as the glimmer's color, but both materials would be used for glimmer alchemy.
 - `image` is the filepath to the image you want to use for your glimmer. This is optional, but will default to `"mods/GlimmersExpanded/files/gfx/ui_gfx/colour_unknown.png"` if you don't specify one.
 - `cast_delay` is the number of frames of cast delay reduction you want the spell to have. This is optional, and will default to `8` frames (or 12.5 seconds).
@@ -80,6 +80,7 @@ local glimmer_appends = {
   - `COLOUR_RAINBOW` is 7
   - `COLOUR_INVIS` is 8
 - `mod_prefix` is a string that will be inserted into the ID of your glimmer. This is so I can credit you for glimmers that come from your mod! When specified, the ID of the spell will be `GLIMMERS_EXPANDED_[MOD_PREFIX]_COLOUR_CUSTOM_MATERIAL`. For example, if I wanted to specify the glimmer is from "My Awesome Mod," I might set the mod prefix as `"awesomeMod"`, and it would set the ID to `GLIMMERS_EXPANDED_AWESOMEMOD_COLOUR_CUSTOM_MATERIAL`. This is optional, and will default to `""`.
+- `spellid_suffix` is a string that will be used in the ID of your glimmer instead of the `name` you provide. This is mainly used for spells whose names are translations. When specified, the ID of the spell will be `GLIMMERS_EXPANDED_COLOUR_[SPELLID_SUFFIX]`. **If you do not specify this and you pass a translation as `name`, your spell's ID will be long and unintuitive.**
 - `is_rare` is a boolean that will determine whether you can find this glimmer in the glimmer lab pixel scene I created. It is advised to set this to `true` if your glimmer uses a rare and potentially game-breaking material, like Lively Concoction and Draught of Midas. This is optional, and will default to `false`.
 - `custom_action` is a function that will be called when the glimmer's action is called (when the spell is cast). A spell's action can do all sorts of things. If you know how to create custom spell actions, then feel free to use this. This is optional, and will default to `custom_action = function() end`.
 - `trail_mods` is a table of string values that can modify how the trail of your glimmer looks. The tags can be anything that is in a ParticleEmitterComponent (more info on these on the [wiki.gg page](https://noita.wiki.gg/wiki/Documentation:_ParticleEmitterComponent)). These values are optional, and will default to the values in `mods/GlimmersExpanded/files/entities/misc/colour_template.xml`, while `trail_mods` itself will default to `nil`.
@@ -103,5 +104,5 @@ You can check out `mods/GlimmersExpanded/files/lib/glimmer_data.lua` for more ex
 ### "Deprecated" Methods
 This method has had functionality added to it, and is not very readable anymore. However, it is still usable, if you so prefer.
 ```lua
-addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number, mod_prefix: string, is_rare: boolean, custom_action: function, trail_mods: table)
+addGlimmer(name: string, desc: string, materials: table, image: string, cast_delay: number, spawn_tiers: string, sort_after: number, mod_prefix: string, is_rare: boolean, custom_action: function, trail_mods: table, author: string, spellid_suffix: string)
 ```

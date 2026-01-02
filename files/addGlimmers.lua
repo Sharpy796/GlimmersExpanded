@@ -29,8 +29,8 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     if cast_delay == nil then cast_delay = 8 end
     if spawn_tiers == nil then spawn_tiers = "1,2,3,4,5,6" end
     if sort_after == nil then sort_after = 100 end
-    if not mod_prefix then mod_prefix = "" else
-    mod_prefix = mod_prefix:upper():gsub("%W","_").."_" end
+    if not mod_prefix then mod_prefix = ""
+    else mod_prefix = mod_prefix:upper():gsub("%W","_").."_" end
     if is_rare == nil then is_rare = false end
     if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
     if type(trail_mods) ~= "table" then trail_mods = nil end
