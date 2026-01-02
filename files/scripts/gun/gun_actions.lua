@@ -73,7 +73,7 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
         sort_after              = sort_after,
         author                  = author,
         origin                  = "Glimmers Expanded",
-        glimmer                 = true, -- This lets other mods tell whether a spell is a glimmer or not.
+        is_glimmer              = true, -- This lets other mods tell whether a spell is a glimmer or not.
     }
     table.insert(myFancyNewColors, newGlimmer)
 	return newGlimmer
