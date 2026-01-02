@@ -4,7 +4,7 @@ ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 local set_text = ModTextFileSetContent
-local testing = true;
+local testing = false;
 if testing then ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") end -- For testing purposes
 
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
