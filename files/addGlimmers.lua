@@ -21,8 +21,6 @@ end
 ---@param custom_action function? function custom_action() end
 ---@param trail_mods table? nil
 ---@param author string? "Community-Created"
----@param name_trans string? nil
----@param desc_trans string? nil
 function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action, trail_mods, author)
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end
     if materials == nil then error("attempted to call addGlimmer() with 'materials' as nil") end
