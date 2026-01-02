@@ -437,6 +437,20 @@ if ( colour ~= nil ) then
 		for i,v in ipairs( comps ) do
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
 				if ( particle ~= nil ) then
+					-- TODO: Fix this, not sure if it works
+					local spritefilepathlightning = ComponentGetValue2(v, "sprite_lightning_file");
+					-- GuiGetImageDimensions(null, spritefilepathlightning)
+					-- ModImageDoesExist("data/particles/lightning_ray.png")
+					if ModImageDoesExist(spritefilepathlightning) then
+						local id,w,h = ModImageIdFromFilename(spritefilepathlightning);
+						for row=1,h+1 do
+							for col=1,w+1 do
+								ModImageSetPixel(id, col, row, 0x1101)
+							end
+						end
+					end
+
+					
 					local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
 					local hex,r,g,b,a = material_to_rgba(particle)
 					set_additive(r,g,b, v, "explosion_sprite_additive", additive, "config_explosion")
