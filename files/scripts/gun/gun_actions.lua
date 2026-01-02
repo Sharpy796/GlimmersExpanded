@@ -34,11 +34,13 @@ local total_spawns = {
 
 local myFancyNewColors = {}
 
-local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_tiers, sort_after, unlock_flag, custom_action, author)
+local function createGlimmerAction(Id, name, desc, image, wait_frames, spawn_probs, spawn_tiers, sort_after, unlock_flag, custom_action, author)
 	local MOD_ID = Mod_Id:upper()
 	local mod_id = Mod_Id:lower()
 	local ID = Id:upper()
 	local id = Id:lower()
+    if not geIsTranslation(name) then name = "$action_"..id end
+    if not geIsTranslation(desc) then desc = "$actiondesc_"..id end
 	if image == nil then image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_unknown.png" end
 	if wait_frames == nil then wait_frames = 8 end
     if spawn_probs == nil then spawn_probs = "0.2,0.2,0.2,0.2,0.2,0.2" end
@@ -59,8 +61,8 @@ local function createGlimmerAction(Id, image, wait_frames, spawn_probs, spawn_ti
 
     local newGlimmer = {
         id                      = ID,
-        name                    = "$action_"..id,
-        description             = "$actiondesc_"..id,
+        name                    = name,
+        description             = desc,
         sprite                  = image,
         related_extra_entities  = { "mods/GlimmersExpanded/files/entities/misc/"..id..".xml" },
         type                    = ACTION_TYPE_MODIFIER,
@@ -88,7 +90,7 @@ function compareGlimmers(entry1, entry2)
 end
 
 for id, data in pairs(glimmer_list_revamped) do
-	createGlimmerAction(id, data.image, data.cast_delay, nil, data.spawn_tiers, data.sort_after, nil, data.custom_action, data.author)
+	createGlimmerAction(id, data.name, data.desc, data.image, data.cast_delay, nil, data.spawn_tiers, data.sort_after, nil, data.custom_action, data.author)
 end
 
 

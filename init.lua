@@ -4,7 +4,7 @@ ModMaterialsFileAdd("mods/GlimmersExpanded/files/material_override.xml")
 ModLuaFileAppend("data/scripts/biomes/hills.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 ModLuaFileAppend("data/scripts/biomes/lake_deep.lua", "mods/GlimmersExpanded/files/scripts/glimmer_lab_scene.lua")
 local set_text = ModTextFileSetContent
-local testing = false;
+local testing = true;
 if testing then ModMagicNumbersFileAdd("mods/GlimmersExpanded/files/magic_numbers.xml") end -- For testing purposes
 
 local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translations.csv")
@@ -263,9 +263,15 @@ end
 
 local function createTranslation(id, data)
 	-- print("creating translations for '"..id:lower().."' with name '"..data.name.."'")
-	new_translations = new_translations..[[,
-action_]]..id:lower()..[[,"]]..data.name..[[",,,,,,,,,,,,,
+	-- print("is "..data.name.." a translation? "..tostring(geIsTranslation(data.name)))
+	if not geIsTranslation(data.name) then
+		new_translations = new_translations..[[,
+action_]]..id:lower()..[[,"]]..data.name..[[",,,,,,,,,,,,,]]
+	end
+	if not geIsTranslation(data.desc) then
+		new_translations = new_translations..[[,
 actiondesc_]]..id:lower()..[[,"]]..data.desc..[[",,,,,,,,,,,,,]]
+	end
 end
 
 local function createGlimmerXML(id, data)
