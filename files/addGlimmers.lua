@@ -21,7 +21,8 @@ end
 ---@param custom_action function? function custom_action() end
 ---@param trail_mods table? nil
 ---@param author string? "Community-Created"
-function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action, trail_mods, author)
+---@param id string? the same as `name`
+function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_after, mod_prefix, is_rare, custom_action, trail_mods, author, id)
     if desc == nil then error("attempted to call addGlimmer() with 'desc' as nil") end
     if materials == nil then error("attempted to call addGlimmer() with 'materials' as nil") end
     if image == nil then image = "mods/GlimmersExpanded/files/gfx/ui_gfx/colour_unknown.png" end
@@ -34,8 +35,7 @@ function addGlimmer(name, desc, materials, image, cast_delay, spawn_tiers, sort_
     if type(custom_action) ~= "function" then custom_action = function() --[[Do nothing]] end end
     if type(trail_mods) ~= "table" then trail_mods = nil end
     if author == nil then author = "Community-Created" end
-    -- TODO: Fix how translation names have their id's made
-    local id = mod_id..mod_prefix.."COLOUR_"..name:upper():gsub("%W","_")
+    id = mod_id..mod_prefix.."COLOUR_"..(id == nil and name or id):upper():gsub("%W","_")
     if name == nil then error("attempted to call addGlimmer() with 'name' as nil")
     elseif not geIsTranslation(name) then name = name.." Glimmer" end
 
