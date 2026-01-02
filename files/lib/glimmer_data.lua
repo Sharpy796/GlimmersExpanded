@@ -227,6 +227,7 @@ local glimmer_appends = {
             render_ultrabright="1",
         },
         author = "Sharpy796", -- Whoever created the glimmer
+        spellid_suffix = "The vomit testing thingy" -- For if you want this spell's id to end with something other than `VOMIT`
     },
 }
 
