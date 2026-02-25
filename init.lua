@@ -146,7 +146,6 @@ function OnModPreInit()
 	dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
 	loadGlimmers()
 	updateTranslations()
-	print("CATCH YOUR HAMIS")
 	patchFiles()
 	dofile_once("mods/GlimmersExpanded/files/scripts/gun/fix_glimmers.lua")
 	ModLuaFileAppend( "data/scripts/gun/gun_actions.lua", "mods/GlimmersExpanded/files/scripts/gun/gun_actions.lua" ) -- Basically dofile("mods/example/files/actions.lua") will appear at the end of gun_actions.lua
