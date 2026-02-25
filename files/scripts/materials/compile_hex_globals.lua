@@ -53,7 +53,7 @@ function hex_projectiles(set_text_func)
             if datatype == "hex" then
                 r,g,b,a = hex_to_rgba(color)
             elseif datatype == "uint" then
-                r,g,b = uint_to_rgb(color)
+                r,g,b,a = uint_to_rgb(color)
             else
                 print("What datatype is this hexglobal's color????")
             end

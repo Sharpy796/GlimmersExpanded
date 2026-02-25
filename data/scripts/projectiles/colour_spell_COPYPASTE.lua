@@ -265,7 +265,7 @@ local data =
 	glimmers_expanded_colour_acid = {particle = "acid",},
 	rainbow =
 	{
-		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "spark_purple_bright"},
+		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "cc_dormant_crystal", "aa_static_charge", "aa_chaotic_pandorium", "aa_condensed_gravity", "aa_dark_matter", "fire", "spark_teal", "cc_hydroxide", "midas", "fungi", "cc_slicing_liquid", "magic_liquid_weakness", "cc_glittering_liquid", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "cc_explode_player", "spark_white", "magic_liquid_hp_regeneration_unstable", "cc_uranium", "grass_holy", "void_liquid", "cc_antimatter_liquid", "cc_nullium", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
 	},
 	invis =
 	{
@@ -285,6 +285,12 @@ if ( colour ~= nil ) then
 	if ( particle == "" ) then
 		particle = "material_rainbow"
 	end
+
+	local hex,r,g,b,a
+	if ( particle ~= nil ) then
+		hex,r,g,b,a = material_to_rgba(particle)
+	end
+
 
 	comps = EntityGetComponent( entity_id, "LaserEmitterComponent" )
 	if ( comps ~= nil ) then
@@ -349,7 +355,7 @@ if ( colour ~= nil ) then
 	if ( comps ~= nil ) then
 		if particle ~= nil then
 			for i,v in ipairs( comps ) do
-				local hex,r,g,b,a = material_to_rgba(particle)
+				-- local hex,r,g,b,a = material_to_rgba(particle)
 				ComponentSetValue2(v, "color", r,g,b,a)
 				ComponentSetValue2( v, "is_emitting", true )
 			end
@@ -378,7 +384,7 @@ if ( colour ~= nil ) then
 
 			pcolor = GameGetPotionColorUint( entity_id ) -- Checking the color for later & for additive check
 			if pcolor ~= nil then
-				r,g,b = uint_to_rgb(pcolor)
+				r,g,b,a = uint_to_rgb(pcolor)
 			end
 
 			if potioncomp == nil or pcolor == nil or r == nil or g == nil or b == nil then
@@ -414,7 +420,7 @@ if ( colour ~= nil ) then
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
 				if ( particle ~= nil ) then
 					local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
-					local hex,r,g,b,a = material_to_rgba(particle)
+					-- local hex,r,g,b,a = material_to_rgba(particle)
 					set_additive(r,g,b, v, "explosion_sprite_additive", additive, "config_explosion")
 
 					if spritefilepath ~= nil and spritefilepath ~= "" then
@@ -433,4 +439,26 @@ if ( colour ~= nil ) then
 			end
 		end
 	end
+
+	-- comps = EntityGetComponent( entity_id, "LightComponent" )
+	-- if ( comps ~= nil ) then
+	-- 	for i,v in ipairs( comps ) do
+	-- 		if colour == "invis" then
+	-- 			-- TODO: How do I make lights turn off??
+	-- 		else
+	-- 			if ( particle ~= nil ) then
+	-- 				ComponentSetValue2(v, "update_properties", true)
+	-- 				if mixing then
+	-- 					ComponentSetValue2(v,"r",(r+ComponentGetValue2(v,"r"))/2)
+	-- 					ComponentSetValue2(v,"g",(g+ComponentGetValue2(v,"g"))/2)
+	-- 					ComponentSetValue2(v,"b",(b+ComponentGetValue2(v,"b"))/2)
+	-- 				else
+	-- 					ComponentSetValue2(v,"r",r)
+	-- 					ComponentSetValue2(v,"g",g)
+	-- 					ComponentSetValue2(v,"b",b)
+	-- 				end
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
 end

@@ -36,13 +36,14 @@ function rgb_to_hex(r,g,b)
     -- a = 
 end
 
+-- Returns r, g, b, and a = 1
 function uint_to_rgb(uint)
     if uint ~= 0 then
         local b = bit.rshift(bit.band(uint, 0xFF0000), 16) / 0xFF
         local g = bit.rshift(bit.band(uint, 0xFF00), 8) / 0xFF
         local r = bit.band(uint, 0xFF) / 0xFF
-        return r, g, b
-    else return nil, nil, nil end
+        return r, g, b, 1
+    else return nil, nil, nil, nil end
 end
 
 function find_closest_color_name_rgb(r, g, b)
@@ -64,8 +65,8 @@ function find_closest_color_name_hex(hex)
 end
 
 function find_closest_color_name_uint(uint)
-    local r, g, b = uint_to_rgb(uint)
-    return find_closest_color_name_rgb(r, g, b)
+    local r,g,b = uint_to_rgb(uint)
+    return find_closest_color_name_rgb(r,g,b)
 end
 
 function get_elem_data(elem, data)
