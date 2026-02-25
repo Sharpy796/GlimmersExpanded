@@ -104,15 +104,8 @@ local function set_additive(r,g,b, comp_id, additive_name, additive_value, objec
 end
 
 local function material_to_rgba(material)
-	local hex
-	for mat in materials:each_child() do
-		if get_elem_data(mat,"name") == material then
-			hex = lamas_stats_get_graphics_info(mat)
-			if hex ~= nil then
-				return hex, hex_to_rgba(hex)
-			end
-		end
-	end
+	local hex = liquids[material]
+	return hex, hex_to_rgba(hex)
 end
 
 local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
