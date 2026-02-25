@@ -104,15 +104,8 @@ local function set_additive(r,g,b, comp_id, additive_name, additive_value, objec
 end
 
 local function material_to_rgba(material)
-	local hex
-	for mat in materials:each_child() do
-		if get_elem_data(mat,"name") == material then
-			hex = lamas_stats_get_graphics_info(mat)
-			if hex ~= nil then
-				return hex, hex_to_rgba(hex)
-			end
-		end
-	end
+	local hex = liquids[material]
+	return hex, hex_to_rgba(hex)
 end
 
 local comps = EntityGetComponent( entity_id, "VariableStorageComponent" )
@@ -143,7 +136,7 @@ if ( colour == "glimmers_expanded_colour_biome" ) then
 end
 
 
-local data = -- FIXME: Duplicate entries somehow
+local data =
 {
 	red =
 	{
@@ -169,15 +162,79 @@ local data = -- FIXME: Duplicate entries somehow
 	{
 		particle = "spark_purple_bright",
 	},
+	-- BIOMES
+	-- Main Path
+	["$biome_hills"]			= {particle  = "grass",}, -- Forest (radioactive_liquid?)
+	["$biome_coalmine"]			= {particle  = "liquid_fire",}, -- Mines
+	["$biome_excavationsite"]	= {particle  = "slime",}, -- Coal Pits
+	["$biome_snowcave"]			= {particle  = "blood_cold",}, -- Snowy Depths
+	["$biome_snowcastle"]		= {particle  = "blood_cold",}, -- Hiisi Base (or steel_static?)
+	["$biome_rainforest"]		= {particle  = "liquid_fire",}, -- Underground Jungle (poison maybe?)
+	["$biome_vault"]			= {particle  = "acid",}, -- The Vault
+	["$biome_crypt"]			= {particle  = "magic_liquid_polymorph",}, -- Temple of the Art
+	["$biome_boss_arena"]		= {particle  = "spark_red",}, -- The Laboratory
+	["$biome_boss_victoryroom"]	= {particle  = "gold",}, -- The Work (End)
+
+	["$biome_holymountain"]		= {particle  = "glowstone_altar",}, -- Holy Mountain
+
+	-- Side Biomes
+	["$biome_greed_room"]		= {particle  = "gold",}, -- Hall of Wealth
+	["$biome_coalmine_alt"]		= {particle  = "liquid_fire",}, -- Collapsed Mines
+	["$biome_fungicave"]		= {particle  = "fungi",}, -- Fungal Caverns
+	["$biome_wandcave"]			= {particle  = "radioactive_liquid",}, -- Magical Temple
+	["$biome_shop_room"]		= {particle  = "gold",}, -- Secret Shop (in Hiisi Base)
+	["$biome_rainforest_dark"]	= {particle  = "material_darkness",}, -- Lukki Lair
+
+	-- West
+	["$biome_winter"]			= {particle  = "blood_cold",}, -- Snowy Wasteland
+	["$biome_winter_caves"]		= {particle  = "blood_cold",}, -- Snowy Chasm
+	["$biome_liquidcave"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Ancient Laboratory
+	["$biome_vault_frozen"]		= {particle  = "ice_radioactive_static",}, -- Frozen Vault
+	["$biome_lake"]				= {particle  = "spark_blue_dark",}, -- Lake
+
+	-- East
+	["$biome_desert"]			= {particle  = "sand",}, -- Desert
+	["$biome_pyramid"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	["$biome_sandcave"]			= {particle  = "fire",}, -- Sandcave
+	["$biome_watchtower"]		= {particle  = "lava",}, -- Watchtower
+	["$biome_fun"]				= {particle  = "fungi",}, -- Overgrown Cavern
+	["$biome_fungiforest"]		= {particle  = "fungi",}, -- Overgrown Cavern
+	["$biome_robobase"]			= {particle  = "spark_electric",}, -- Power Plant
+	["$biome_meat"]				= {particle  = "pus",}, -- Meat Realm
+	["$biome_wizardcave"]		= {particles   ={"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Wizards' Den
+
+	-- North
+	["$biome_barren"]			= {particle  = "grass_holy",}, -- Barren Temple
+	["$biome_potion_mimics"]	= {particle  = "mimic_liquid",}, -- Henkevä Temple
+	["$biome_darkness"]			= {particle  = "material_darkness",}, -- Ominous Temple
+	["$biome_clouds"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- Cloudscape
+	["$biome_the_sky"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- The Work (Sky)
+
+	-- South
+	["$biome_lava"]				= {particle  = "lava",}, -- Volcanic Lake
+	["$biome_the_end"]			= {particle  = "lava",}, -- The Work (Hell)
+
+	-- Boss Arenas
+	["$biome_secret_lab"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Abandoned Alchemy Lab (High Alchemist)
+	["$biome_dragoncave"]		= {particle  = "spark_red",}, -- Dragoncave (Dragon)
+	["$biome_mestari_secret"]	= {particles = {"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Throne Room (Master of Masters)
+	["$biome_ghost_secret"]		= {particle  = "smoke",}, -- Forgotten Cave (The Forgotten)
+	["$biome_boss_sky2"]		= {particle  = "spark_red",}, -- Kivi Temple
+
+	-- Secret Locations
+	["$biome_orbroom"]			= {particle  = "material_confusion",}, -- Orb Room
+	["$biome_gold"]				= {particle  = "gold",}, -- The Gold
+	["$biome_water"]			= {particle  = "water",}, -- Water
+	["$biome_tower"]			= {particle  = "spark_red",}, -- Tower
+	["$biome_null_room"]		= {particle  = "silver",}, -- Nullifying Altar"
+
+	["???"]						= {particle  = "material_confusion",},
+
+	["_EMPTY_"]					= {},
+
+	[""]						= {particle  = "vomit",},
+
 	glimmers_expanded_colour_freezing_liquid = {particle = "blood_cold",},
-	glimmers_expanded_colour_white = {particle = "spark_white",},
-	glimmers_expanded_colour_teal = {particle = "spark_teal",},
-	glimmers_expanded_colour_fire = {particle = "fire",},
-	glimmers_expanded_colour_midas = {particle = "midas",},
-	glimmers_expanded_colour_weird_fungus = {particle = "fungi",},
-	glimmers_expanded_colour_diminution = {particle = "magic_liquid_weakness",},
-	glimmers_expanded_colour_pink = {particle = "plasma_fading_pink",},
-	glimmers_expanded_colour_true_glimmers_expanded_colour_freezing_liquid = {particle = "blood_cold",},
 	glimmers_expanded_cc_colour_dormant_crystal = {particle = "cc_dormant_crystal",},
 	glimmers_expanded_aa_colour_static_charge = {particle = "aa_static_charge",},
 	glimmers_expanded_aa_colour_chaotic_pandorium = {particle = "aa_chaotic_pandorium",},
@@ -206,162 +263,9 @@ local data = -- FIXME: Duplicate entries somehow
 	glimmers_expanded_colour_lava = {particle = "lava",},
 	glimmers_expanded_colour_ominous = {particle = "material_darkness",},
 	glimmers_expanded_colour_acid = {particle = "acid",},
-	-- BIOMES
-	-- Main Path
-	["$biome_hills"]			= {particle  = "grass",}, -- Forest (radioactive_liquid?)
-	["$biome_coalmine"]			= {particle  = "liquid_fire",}, -- Mines
-	["$biome_excavationsite"]	= {particle  = "slime",}, -- Coal Pits
-	["$biome_snowcave"]			= {particle  = "blood_cold",}, -- Snowy Depths
-	["$biome_snowcastle"]		= {particle  = "blood_cold",}, -- Hiisi Base (or steel_static?)
-	["$biome_rainforest"]		= {particle  = "liquid_fire",}, -- Underground Jungle (poison maybe?)
-	["$biome_vault"]			= {particle  = "acid",}, -- The Vault
-	["$biome_crypt"]			= {particle  = "magic_liquid_polymorph",}, -- Temple of the Art
-	["$biome_boss_arena"]		= {particle  = "spark_red",}, -- The Laboratory
-	["$biome_boss_victoryroom"]	= {particle  = "gold",}, -- The Work (End)
-
-	["$biome_holymountain"]		= {particle  = "glowstone_altar",}, -- Holy Mountain
-
-	-- Side Biomes
-	["$biome_greed_room"]		= {particle  = "gold",}, -- Hall of Wealth
-	["$biome_coalmine_alt"]		= {particle  = "liquid_fire",}, -- Collapsed Mines
-	["$biome_fungicave"]		= {particle  = "fungi",}, -- Fungal Caverns
-	["$biome_wandcave"]			= {particle  = "radioactive_liquid",}, -- Magical Temple
-	["$biome_shop_room"]		= {particle  = "gold",}, -- Secret Shop (in Hiisi Base)
-	["$biome_rainforest_dark"]	= {particle  = "material_darkness",}, -- Lukki Lair
-
-	-- West
-	["$biome_winter"]			= {particle  = "blood_cold",}, -- Snowy Wasteland
-	["$biome_winter_caves"]		= {particle  = "blood_cold",}, -- Snowy Chasm
-	["$biome_liquidcave"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Ancient Laboratory
-	["$biome_vault_frozen"]		= {particle  = "ice_radioactive_static",}, -- Frozen Vault
-	["$biome_lake"]				= {particle  = "spark_blue_dark",}, -- Lake
-
-	-- East
-	["$biome_desert"]			= {particle  = "sand",}, -- Desert
-	["$biome_pyramid"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
-	["$biome_sandcave"]			= {particle  = "fire",}, -- Sandcave
-	["$biome_watchtower"]		= {particle  = "lava",}, -- Watchtower
-	["$biome_fun"]				= {particle  = "fungi",}, -- Overgrown Cavern
-	["$biome_fungiforest"]		= {particle  = "fungi",}, -- Overgrown Cavern
-	["$biome_robobase"]			= {particle  = "spark_electric",}, -- Power Plant
-	["$biome_meat"]				= {particle  = "pus",}, -- Meat Realm
-	["$biome_wizardcave"]		= {particles   ={"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Wizards' Den
-
-	-- North
-	["$biome_barren"]			= {particle  = "grass_holy",}, -- Barren Temple
-	["$biome_potion_mimics"]	= {particle  = "mimic_liquid",}, -- Henkevä Temple
-	["$biome_darkness"]			= {particle  = "material_darkness",}, -- Ominous Temple
-	["$biome_clouds"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- Cloudscape
-	["$biome_the_sky"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- The Work (Sky)
-
-	-- South
-	["$biome_lava"]				= {particle  = "lava",}, -- Volcanic Lake
-	["$biome_the_end"]			= {particle  = "lava",}, -- The Work (Hell)
-
-	-- Boss Arenas
-	["$biome_secret_lab"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Abandoned Alchemy Lab (High Alchemist)
-	["$biome_dragoncave"]		= {particle  = "spark_red",}, -- Dragoncave (Dragon)
-	["$biome_mestari_secret"]	= {particles = {"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Throne Room (Master of Masters)
-	["$biome_ghost_secret"]		= {particle  = "smoke",}, -- Forgotten Cave (The Forgotten)
-	["$biome_boss_sky2"]		= {particle  = "spark_red",}, -- Kivi Temple
-
-	-- Secret Locations
-	["$biome_orbroom"]			= {particle  = "material_confusion",}, -- Orb Room
-	["$biome_gold"]				= {particle  = "gold",}, -- The Gold
-	["$biome_water"]			= {particle  = "water",}, -- Water
-	["$biome_tower"]			= {particle  = "spark_red",}, -- Tower
-	["$biome_null_room"]		= {particle  = "silver",}, -- Nullifying Altar"
-
-	["???"]						= {particle  = "material_confusion",},
-
-	["_EMPTY_"]					= {},
-
-	[""]						= {particle  = "vomit",},
-	
-	rainbow = {particle = "material_rainbow",},
-	glimmers_expanded_colour_mimicium = {particle = "mimic_liquid",},
-	glimmers_expanded_colour_lively_concoction = {particle = "magic_liquid_hp_regeneration_unstable",},
-	glimmers_expanded_colour_divine_ground = {particle = "grass_holy",},
-	glimmers_expanded_colour_void = {particle = "void_liquid",},
-	glimmers_expanded_colour_blood = {particle = "blood",},
-	glimmers_expanded_colour_lava = {particle = "lava",},
-	glimmers_expanded_colour_ominous = {particle = "material_darkness",},
-	glimmers_expanded_colour_acid = {particle = "acid",},
-	-- BIOMES
-	-- Main Path
-	["$biome_hills"]			= {particle  = "grass",}, -- Forest (radioactive_liquid?)
-	["$biome_coalmine"]			= {particle  = "liquid_fire",}, -- Mines
-	["$biome_excavationsite"]	= {particle  = "slime",}, -- Coal Pits
-	["$biome_snowcave"]			= {particle  = "blood_cold",}, -- Snowy Depths
-	["$biome_snowcastle"]		= {particle  = "blood_cold",}, -- Hiisi Base (or steel_static?)
-	["$biome_rainforest"]		= {particle  = "liquid_fire",}, -- Underground Jungle (poison maybe?)
-	["$biome_vault"]			= {particle  = "acid",}, -- The Vault
-	["$biome_crypt"]			= {particle  = "magic_liquid_polymorph",}, -- Temple of the Art
-	["$biome_boss_arena"]		= {particle  = "spark_red",}, -- The Laboratory
-	["$biome_boss_victoryroom"]	= {particle  = "gold",}, -- The Work (End)
-
-	["$biome_holymountain"]		= {particle  = "glowstone_altar",}, -- Holy Mountain
-
-	-- Side Biomes
-	["$biome_greed_room"]		= {particle  = "gold",}, -- Hall of Wealth
-	["$biome_coalmine_alt"]		= {particle  = "liquid_fire",}, -- Collapsed Mines
-	["$biome_fungicave"]		= {particle  = "fungi",}, -- Fungal Caverns
-	["$biome_wandcave"]			= {particle  = "radioactive_liquid",}, -- Magical Temple
-	["$biome_shop_room"]		= {particle  = "gold",}, -- Secret Shop (in Hiisi Base)
-	["$biome_rainforest_dark"]	= {particle  = "material_darkness",}, -- Lukki Lair
-
-	-- West
-	["$biome_winter"]			= {particle  = "blood_cold",}, -- Snowy Wasteland
-	["$biome_winter_caves"]		= {particle  = "blood_cold",}, -- Snowy Chasm
-	["$biome_liquidcave"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Ancient Laboratory
-	["$biome_vault_frozen"]		= {particle  = "ice_radioactive_static",}, -- Frozen Vault
-	["$biome_lake"]				= {particle  = "spark_blue_dark",}, -- Lake
-
-	-- East
-	["$biome_desert"]			= {particle  = "sand",}, -- Desert
-	["$biome_pyramid"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
-	["$biome_sandcave"]			= {particle  = "fire",}, -- Sandcave
-	["$biome_watchtower"]		= {particle  = "lava",}, -- Watchtower
-	["$biome_fun"]				= {particle  = "fungi",}, -- Overgrown Cavern
-	["$biome_fungiforest"]		= {particle  = "fungi",}, -- Overgrown Cavern
-	["$biome_robobase"]			= {particle  = "spark_electric",}, -- Power Plant
-	["$biome_meat"]				= {particle  = "pus",}, -- Meat Realm
-	["$biome_wizardcave"]		= {particles   ={"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Wizards' Den
-
-	-- North
-	["$biome_barren"]			= {particle  = "grass_holy",}, -- Barren Temple
-	["$biome_potion_mimics"]	= {particle  = "mimic_liquid",}, -- Henkevä Temple
-	["$biome_darkness"]			= {particle  = "material_darkness",}, -- Ominous Temple
-	["$biome_clouds"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- Cloudscape
-	["$biome_the_sky"]			= {particle  = "glimmers_expanded_void_liquid_variant",}, -- The Work (Sky)
-
-	-- South
-	["$biome_lava"]				= {particle  = "lava",}, -- Volcanic Lake
-	["$biome_the_end"]			= {particle  = "lava",}, -- The Work (Hell)
-
-	-- Boss Arenas
-	["$biome_secret_lab"]		= {particles = {"magic_liquid_berserk","magic_liquid_charm","magic_liquid_unstable_polymorph","magic_liquid_teleportation","magic_liquid_mana_regeneration"},}, -- Abandoned Alchemy Lab (High Alchemist)
-	["$biome_dragoncave"]		= {particle  = "spark_red",}, -- Dragoncave (Dragon)
-	["$biome_mestari_secret"]	= {particles = {"magic_liquid_polymorph","magic_liquid_weakness","magic_liquid_berserk","magic_liquid_charm","magic_liquid_mana_regeneration","magic_liquid_teleportation","magic_liquid_movement_faster","magic_liquid_protection_all","magic_liquid_random_polymorph","magic_liquid_faster_levitation_and_movement","magic_liquid_invisibility","magic_liquid_faster_levitation","magic_liquid_unstable_teleportation","magic_liquid_worm_attractor",},}, -- Throne Room (Master of Masters)
-	["$biome_ghost_secret"]		= {particle  = "smoke",}, -- Forgotten Cave (The Forgotten)
-	["$biome_boss_sky2"]		= {particle  = "spark_red",}, -- Kivi Temple
-
-	-- Secret Locations
-	["$biome_orbroom"]			= {particle  = "material_confusion",}, -- Orb Room
-	["$biome_gold"]				= {particle  = "gold",}, -- The Gold
-	["$biome_water"]			= {particle  = "water",}, -- Water
-	["$biome_tower"]			= {particle  = "spark_red",}, -- Tower
-	["$biome_null_room"]		= {particle  = "silver",}, -- Nullifying Altar"
-
-	["???"]						= {particle  = "material_confusion",},
-
-	["_EMPTY_"]					= {},
-
-	[""]						= {particle  = "vomit",},
-
 	rainbow =
 	{
-		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "spark_white", "spark_teal", "fire", "midas", "fungi", "magic_liquid_weakness", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "magic_liquid_hp_regeneration_unstable", "grass_holy", "void_liquid", "blood", "lava", "material_darkness", "acid", "blood_cold", "cc_dormant_crystal", "aa_static_charge", "aa_chaotic_pandorium", "aa_condensed_gravity", "aa_dark_matter", "fire", "spark_teal", "cc_hydroxide", "midas", "fungi", "cc_slicing_liquid", "magic_liquid_weakness", "cc_glittering_liquid", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "cc_explode_player", "spark_white", "magic_liquid_hp_regeneration_unstable", "cc_uranium", "grass_holy", "void_liquid", "cc_antimatter_liquid", "cc_nullium", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
+		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "cc_dormant_crystal", "aa_static_charge", "aa_chaotic_pandorium", "aa_condensed_gravity", "aa_dark_matter", "fire", "spark_teal", "cc_hydroxide", "midas", "fungi", "cc_slicing_liquid", "magic_liquid_weakness", "cc_glittering_liquid", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "cc_explode_player", "spark_white", "magic_liquid_hp_regeneration_unstable", "cc_uranium", "grass_holy", "void_liquid", "cc_antimatter_liquid", "cc_nullium", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
 	},
 	invis =
 	{

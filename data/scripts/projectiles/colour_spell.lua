@@ -162,23 +162,6 @@ local data =
 	{
 		particle = "spark_purple_bright",
 	},
-	glimmers_expanded_colour_freezing_liquid = {particle = "blood_cold",},
-	glimmers_expanded_colour_white = {particle = "spark_white",},
-	glimmers_expanded_colour_teal = {particle = "spark_teal",},
-	glimmers_expanded_colour_fire = {particle = "fire",},
-	glimmers_expanded_colour_midas = {particle = "midas",},
-	glimmers_expanded_colour_weird_fungus = {particle = "fungi",},
-	glimmers_expanded_colour_diminution = {particle = "magic_liquid_weakness",},
-	glimmers_expanded_colour_pink = {particle = "plasma_fading_pink",},
-	glimmers_expanded_colour_true_rainbow = {particle = "material_rainbow",},
-	glimmers_expanded_colour_mimicium = {particle = "mimic_liquid",},
-	glimmers_expanded_colour_lively_concoction = {particle = "magic_liquid_hp_regeneration_unstable",},
-	glimmers_expanded_colour_divine_ground = {particle = "grass_holy",},
-	glimmers_expanded_colour_void = {particle = "void_liquid",},
-	glimmers_expanded_colour_blood = {particle = "blood",},
-	glimmers_expanded_colour_lava = {particle = "lava",},
-	glimmers_expanded_colour_ominous = {particle = "material_darkness",},
-	glimmers_expanded_colour_acid = {particle = "acid",},
 	-- BIOMES
 	-- Main Path
 	["$biome_hills"]			= {particle  = "grass",}, -- Forest (radioactive_liquid?)
@@ -253,7 +236,7 @@ local data =
 
 	rainbow =
 	{
-		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "spark_white", "spark_teal", "fire", "midas", "fungi", "magic_liquid_weakness", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "magic_liquid_hp_regeneration_unstable", "grass_holy", "void_liquid", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
+		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "spark_purple_bright"},
 	},
 	invis =
 	{
