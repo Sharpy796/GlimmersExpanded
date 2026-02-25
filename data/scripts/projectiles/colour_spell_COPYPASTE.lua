@@ -265,7 +265,7 @@ local data =
 	glimmers_expanded_colour_acid = {particle = "acid",},
 	rainbow =
 	{
-		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "cc_dormant_crystal", "aa_static_charge", "aa_chaotic_pandorium", "aa_condensed_gravity", "aa_dark_matter", "fire", "spark_teal", "cc_hydroxide", "midas", "fungi", "cc_slicing_liquid", "magic_liquid_weakness", "cc_glittering_liquid", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "cc_explode_player", "spark_white", "magic_liquid_hp_regeneration_unstable", "cc_uranium", "grass_holy", "void_liquid", "cc_antimatter_liquid", "cc_nullium", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
+		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "spark_purple_bright"},
 	},
 	invis =
 	{

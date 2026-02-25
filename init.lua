@@ -38,12 +38,12 @@ local patches = {
         to      = [[EntityLoad("mods/GlimmersExpanded/files/entities/portals/glimmer_lab_portal_in.xml", -12550]]..((isPrideGlimmersEnabled and [[+60,]]) or [[,]])..[[ 396]]..((isPrideGlimmersEnabled and [[-5)]]) or [[)]])..[[
 		EntityKill( entity_id )]],
     },
-	{
+	{ -- Append to rainbow glimmer color choices
 		path	= "data/scripts/projectiles/colour_spell.lua",
 		from	= [["spark_purple_bright"},]],
 		to		= [["spark_purple_bright"},]],
 	},
-	{
+	{ -- Append to all glimmer color choices
 		path	= "data/scripts/projectiles/colour_spell.lua",
 		from	= [[rainbow]],
 		to		= [[rainbow]],
@@ -103,7 +103,7 @@ end
 local function createColourSpellLuaEntry(id, data)
 	if id ~= "GLIMMERS_EXPANDED_COLOUR_BIOME" then
 		-- print("Creating colour_spell.lua entry for '"..id:lower()..[[ = {particle = "]]..data.materials[1]..[[",},]])
-		-- patches[4].to = [["]]..data.materials[1]..[[", ]]..patches[4].to
+		patches[4].to = [["]]..data.materials[1]..[[", ]]..patches[4].to
 		patches[5].to = id:lower()..[[ = {particle = "]]..data.materials[1]..[[",},
 	]]..patches[5].to
 	end
