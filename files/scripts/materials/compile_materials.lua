@@ -6,6 +6,7 @@ colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
 liquids = {}
 materials = nxml.parse_file("data/materials.xml")
 all_materials = {}
+local original_glimmer_materials = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "spark_purple_bright"}
 
 function hex_to_rgba(hex)
     -- convert ARGB hex to rgba
@@ -156,11 +157,19 @@ function lamas_stats_gather_liquids()
     for id,data in pairs(glimmer_list_revamped) do
         local materials = data.materials
         for id,material in ipairs(materials) do
-            if not liquids[material] then
+            if not liquids[material] and all_materials[material] then
                 local missingMaterial = all_materials[material]
                 local hex = lamas_stats_get_graphics_info(missingMaterial)
                 liquids[material] = hex
             end
+        end
+    end
+
+    for _,material in ipairs(original_glimmer_materials) do
+        if not liquids[material] and all_materials[material] then
+            local missingMaterial = all_materials[material]
+            local hex = lamas_stats_get_graphics_info(missingMaterial)
+            liquids[material] = hex
         end
     end
 end
