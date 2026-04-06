@@ -12,9 +12,16 @@ mod_settings =
         scope = MOD_SETTING_SCOPE_RUNTIME_RESTART
     },
     {
+        id = "disable_lighting",
+        ui_name = "Invisible Glimmer Disables Lights",
+        ui_description = "Lets Invisible Glimmer remove lights from projectiles.\nTurning this off allows invisible projectiles to glow. It's great for decorating!",
+        value_default = true,
+        scope = MOD_SETTING_SCOPE_ONLY_SET_DEFAULT,
+    },
+    {
         id = "glimmer_mixing",
         ui_name = "Allow Glimmers to Mix",
-        ui_description = "Lets glimmer colors mix with each other, instad of making the rightmost glimmer brighter.\nThis also causes glimmers to mix with the projectile's original color.",
+        ui_description = "Lets glimmer colors mix with each other, instad of making the rightmost glimmer brighter.\nThis also causes glimmers to mix with the projectile's original color.\nResults are highly variable.",
         value_default = false,
         scope = MOD_SETTING_SCOPE_RUNTIME_RESTART,
     },
