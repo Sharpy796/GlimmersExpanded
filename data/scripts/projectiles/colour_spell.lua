@@ -325,7 +325,6 @@ if ( colour ~= nil ) then
 	if ( comps ~= nil ) then
 		if particle ~= nil then
 			for i,v in ipairs( comps ) do
-				-- local hex,r,g,b,a = material_to_rgba(particle)
 				ComponentSetValue2(v, "color", r,g,b,a)
 				ComponentSetValue2( v, "is_emitting", true )
 			end
@@ -390,7 +389,6 @@ if ( colour ~= nil ) then
 			if (mixing and i == #comps) or (not mixing) or (colour == "invis") then
 				if ( particle ~= nil ) then
 					local spritefilepath, additive = create_vsc(entity_id, v, i, "explosion_sprite", "explosion_sprite_additive", "explosionspriteoriginal", "config_explosion")
-					-- local hex,r,g,b,a = material_to_rgba(particle)
 					set_additive(r,g,b, v, "explosion_sprite_additive", additive, "config_explosion")
 
 					if spritefilepath ~= nil and spritefilepath ~= "" then
