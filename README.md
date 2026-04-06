@@ -3,7 +3,7 @@ Cast your spells with expanded flair!
 
 This mod adds 18 new glimmer spells! 3 of them can be found in the usual bunker that the glimmer spells are at, but the other 15 have a bit of a... twist to them. Visit the glimmer bunker for more details!
 
-It also makes several changes to glimmers, including glimmers affecting the sprites of projectiles and the beams of plasma beams.
+It also makes several changes to glimmers, including glimmers affecting the sprites of projectiles and the beams of plasma beams, as well as how projectiles glow in the dark (and they finally don't disable the Light spell!).
 
 This mod also adds glimmer alchemy! The process includes a recipe: Australium + any Glimmer spell + any liquid. (The secondary recipe for Australium is urine + pus + flummoxium, three materials that may be hard to come by.) The result of this is a glimmer that is similarly-colored to the material!
 

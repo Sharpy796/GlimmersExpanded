@@ -2,6 +2,7 @@ dofile_once("data/scripts/lib/utilities.lua")
 
 local entity_id = GetUpdatedEntityID()
 local mixing = ModSettingGet("GlimmersExpanded.glimmer_mixing")
+local disable_lighting = ModSettingGet("GlimmersExpanded.disable_lighting")
 local player_id = EntityGetWithTag("player_unit")[1]
 local colour,particle
 ---@type nxml
@@ -378,7 +379,9 @@ if ( colour ~= nil ) then
 			end
 		else
 			for i,v in ipairs( comps ) do
-				ComponentSetValue2( v, "visible", false )
+				if (not ComponentGetValue( v, "fog_of_war_hole") or disable_lighting) then
+					ComponentSetValue2( v, "visible", false )
+				end
 			end
 		end
 	end
@@ -396,17 +399,26 @@ if ( colour ~= nil ) then
 						ComponentObjectSetValue2( v, "config_explosion", "explosion_sprite", dummyfilepath )
 					end
 
-					ComponentSetValue2( v, "shoot_light_flash_r", r*255 )
-					ComponentSetValue2( v, "shoot_light_flash_g", g*255 )
-					ComponentSetValue2( v, "shoot_light_flash_b", b*255 )
-					ComponentObjectSetValue2( v, "config_explosion", "light_r", r*255 )
-					ComponentObjectSetValue2( v, "config_explosion", "light_g", g*255 )
-					ComponentObjectSetValue2( v, "config_explosion", "light_b", b*255 )
+					if mixing then
+						ComponentSetValue2( v, "shoot_light_flash_r", (r+ComponentGetValue2(v,"shoot_light_flash_r"))/2*255 )
+						ComponentSetValue2( v, "shoot_light_flash_g", (g+ComponentGetValue2(v,"shoot_light_flash_g"))/2*255 )
+						ComponentSetValue2( v, "shoot_light_flash_b", (b+ComponentGetValue2(v,"shoot_light_flash_b"))/2*255 )
+						ComponentObjectSetValue2( v, "config_explosion", "light_r", (r+ComponentObjectGetValue2(v,"config_explosion","light_r"))/2*255 )
+						ComponentObjectSetValue2( v, "config_explosion", "light_g", (g+ComponentObjectGetValue2(v,"config_explosion","light_g"))/2*255 )
+						ComponentObjectSetValue2( v, "config_explosion", "light_b", (b+ComponentObjectGetValue2(v,"config_explosion","light_b"))/2*255 )
+					else
+						ComponentSetValue2( v, "shoot_light_flash_r", r*255 )
+						ComponentSetValue2( v, "shoot_light_flash_g", g*255 )
+						ComponentSetValue2( v, "shoot_light_flash_b", b*255 )
+						ComponentObjectSetValue2( v, "config_explosion", "light_r", r*255 )
+						ComponentObjectSetValue2( v, "config_explosion", "light_g", g*255 )
+						ComponentObjectSetValue2( v, "config_explosion", "light_b", b*255 )
+					end
 					ComponentObjectSetValue2( v, "config_explosion", "spark_material", particle )
 					ComponentObjectSetValue2( v, "config_explosion", "material_sparks_enabled", true )
 					ComponentObjectSetValue2( v, "config_explosion", "sparks_enabled", true )
 				else
-					if (ModSettingGet("GlimmersExpanded.disable_lighting")) then
+					if disable_lighting then
 						ComponentSetValue2( v, "shoot_light_flash_r", 0 )
 						ComponentSetValue2( v, "shoot_light_flash_g", 0 )
 						ComponentSetValue2( v, "shoot_light_flash_b", 0 )
@@ -425,26 +437,23 @@ if ( colour ~= nil ) then
 	comps = EntityGetComponentIncludingDisabled( entity_id, "LightComponent" )
 	if ( comps ~= nil ) then
 		for i,v in ipairs( comps ) do
-			if colour == "invis" then
-				if (ModSettingGet("GlimmersExpanded.disable_lighting")) then
-					EntitySetComponentIsEnabled(entity_id,v,false)
-				end
-			else
-				if (ModSettingGet("GlimmersExpanded.disable_lighting")) then
+			if ( particle ~= nil ) then
+				if disable_lighting then
 					EntitySetComponentIsEnabled(entity_id,v,true)
 				end
-				if ( particle ~= nil ) then
-					ComponentSetValue2(v,"_enabled",true)
-					ComponentSetValue2(v, "update_properties", true)
-					if mixing then
-						ComponentSetValue2(v,"r",(r+ComponentGetValue2(v,"r"))/2*255)
-						ComponentSetValue2(v,"g",(g+ComponentGetValue2(v,"g"))/2*255)
-						ComponentSetValue2(v,"b",(b+ComponentGetValue2(v,"b"))/2*255)
-					else
-						ComponentSetValue2(v,"r",r*255)
-						ComponentSetValue2(v,"g",g*255)
-						ComponentSetValue2(v,"b",b*255)
-					end
+				ComponentSetValue2(v, "update_properties", true)
+				if mixing then
+					ComponentSetValue2(v,"r",(r+ComponentGetValue2(v,"r"))/2*255)
+					ComponentSetValue2(v,"g",(g+ComponentGetValue2(v,"g"))/2*255)
+					ComponentSetValue2(v,"b",(b+ComponentGetValue2(v,"b"))/2*255)
+				else
+					ComponentSetValue2(v,"r",r*255)
+					ComponentSetValue2(v,"g",g*255)
+					ComponentSetValue2(v,"b",b*255)
+				end
+			else
+				if disable_lighting then
+					EntitySetComponentIsEnabled(entity_id,v,false)
 				end
 			end
 		end
