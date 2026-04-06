@@ -361,19 +361,24 @@ if ( colour ~= nil ) then
 				hex,r,g,b,a = material_to_rgba(particle) -- If no potion stuff, then use hex instead
 			end
 
+			local firstspritefilepath;
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
 
 				local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
 				set_additive(r,g,b,v,"additive",additive)
 
-				if #comps <= 1 then
-					EntityRefreshSprite( entity_id, v )
-					break
+				-- Check for if the sprite we're looking at is the same as the one modified by the potioncomp
+				-- I'm banking on the projectile's original sprite taking highest priority in the loop
+				-- TODO: Make this less jank.
+				if (not firstspritefilepath) then
+					firstspritefilepath = spritefilepath;
 				end
-
-				dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
-				ComponentSetValue2( v, "image_file", dummyfilepath )
+				
+				if (spritefilepath ~= firstspritefilepath) then
+					dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
+					ComponentSetValue2( v, "image_file", dummyfilepath )
+				end
 
 				EntityRefreshSprite( entity_id, v )
 			end
