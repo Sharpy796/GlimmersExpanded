@@ -364,22 +364,18 @@ if ( colour ~= nil ) then
 			local firstspritefilepath;
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
-
-				local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
-				set_additive(r,g,b,v,"additive",additive)
-
+				local spritefilepath = ComponentGetValue2(v, "image_file");
 				-- Check for if the sprite we're looking at is the same as the one modified by the potioncomp
 				-- I'm banking on the projectile's original sprite taking highest priority in the loop
 				-- TODO: Make this less jank.
 				if (not firstspritefilepath) then
 					firstspritefilepath = spritefilepath;
-				end
-				
-				if (spritefilepath ~= firstspritefilepath) then
+				elseif (spritefilepath ~= firstspritefilepath and not string.find(spritefilepath, "%.png")) then -- Bandaid fix. Remove when you can color png's.
+					local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
+					set_additive(r,g,b,v,"additive",additive)
 					dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
 					ComponentSetValue2( v, "image_file", dummyfilepath )
 				end
-
 				EntityRefreshSprite( entity_id, v )
 			end
 		else
