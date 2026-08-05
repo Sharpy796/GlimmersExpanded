@@ -3,7 +3,7 @@ local materials_xml = [[<Materials>
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_materials.lua")
 
 -- REACTION GENERATION START
-for liquid,color in pairs(liquids) do
+for liquid,color in pairs(ge_alchemic_materials) do
     -- print("Liquid is '"..liquid.."'")
     -- Find the appropriate glimmer to spawn
     local transmuted = false

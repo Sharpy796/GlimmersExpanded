@@ -3,12 +3,13 @@
 local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
 dofile_once("mods/GlimmersExpanded/files/addGlimmers.lua")
 colors = dofile("mods/GlimmersExpanded/files/alchemy/glimmer_colors.lua")
-liquids = {}
 materials = nxml.parse_file("data/materials.xml")
-all_materials = {}
+ge_all_materials = {}
+ge_alchemic_materials = {}
+ge_all_hexes = {}
 local original_glimmer_materials = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "spark_purple_bright"}
 
-function hex_to_rgba(hex)
+function hex_to_rgba(hex) -- TODO: No nil check breaks the code here
     -- convert ARGB hex to rgba
     local a, r, g, b
     if #hex == 8 then
@@ -77,7 +78,7 @@ function get_elem_data(elem, data)
             return dt
         else
             if _parent then
-                return get_elem_data(all_materials[_parent], data)
+                return get_elem_data(ge_all_materials[_parent], data)
             else
                 if (data == "cell_type") then return "liquid"
                 else return "0" end
@@ -116,7 +117,8 @@ function lamas_stats_gather_material()
         for elem in xml:each_of(element_name) do
             local name = elem:get("name")
             if name ~= nil then
-                all_materials[name] = elem
+                ge_all_materials[name] = elem
+                ge_all_hexes[name] = lamas_stats_get_graphics_info(elem)
             end
         end
     end
@@ -125,6 +127,7 @@ end
 function lamas_stats_gather_liquids()
     local xml = get_modded_material_files()
 
+    -- Gather all liquids
     repeat
         -- print("start of loop")
         local actualLiquids = {}
@@ -133,7 +136,7 @@ function lamas_stats_gather_liquids()
             for elem in xml:each_of(element_name) do
                 if elem ~= nil then
                     local name = elem:get("name")
-                    if liquids[name] == nil and name ~= "air" and name ~= nil then -- if we haven't already accepted this material
+                    if ge_alchemic_materials[name] == nil and name ~= "air" and name ~= nil then -- if we haven't already accepted this material
                         local cell_type = get_elem_data(elem, "cell_type")
                         local liquid_sand = get_elem_data(elem, "liquid_sand")
                         local liquid_static = get_elem_data(elem, "liquid_static")
@@ -151,29 +154,33 @@ function lamas_stats_gather_liquids()
             end
         end
         for liquid,hex in pairs(actualLiquids) do
-            liquids[liquid] = hex
+            ge_alchemic_materials[liquid] = hex
         end
     until liquidLength <= 0
 
+    -- Gather all other materials required that aren't liquids
     for id,data in pairs(glimmer_list_revamped) do
+        -- print("MATS FOR "..data.id)
         local materials = data.materials
         for id,material in ipairs(materials) do
-            if not liquids[material] and all_materials[material] then
-                local missingMaterial = all_materials[material]
+            -- print("-- "..material)
+            if not ge_alchemic_materials[material] and ge_all_materials[material] then
+                local missingMaterial = ge_all_materials[material]
                 local hex = lamas_stats_get_graphics_info(missingMaterial)
-                liquids[material] = hex
+                ge_alchemic_materials[material] = hex
             end
         end
     end
 
+    -- Gather all original materials that haven't been covered
     for _,material in ipairs(original_glimmer_materials) do
-        if not liquids[material] and all_materials[material] then
-            local missingMaterial = all_materials[material]
+        if not ge_alchemic_materials[material] and ge_all_materials[material] then
+            local missingMaterial = ge_all_materials[material]
             local hex = lamas_stats_get_graphics_info(missingMaterial)
-            liquids[material] = hex
+            ge_alchemic_materials[material] = hex
         end
     end
 end
 
-lamas_stats_gather_material()
-lamas_stats_gather_liquids()
+lamas_stats_gather_material() -- popualtes ge_all_materials with keys of material names and values of <CellData> (and also ge_all_hexes with keys of material names and values of hex colors)
+lamas_stats_gather_liquids()  -- populates ge_alchemic_materials with keys of material names and values of hex colors

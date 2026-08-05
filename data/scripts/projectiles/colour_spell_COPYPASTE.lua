@@ -105,7 +105,7 @@ local function set_additive(r,g,b, comp_id, additive_name, additive_value, objec
 end
 
 local function material_to_rgba(material)
-	local hex = liquids[material]
+	local hex = ge_alchemic_materials[material]
 	return hex, hex_to_rgba(hex)
 end
 
@@ -133,6 +133,7 @@ if ( colour == "glimmers_expanded_colour_biome" ) then
                 end
             end
         end
+		GamePrint(colour)
     end
 end
 
@@ -196,6 +197,10 @@ local data =
 	-- East
 	["$biome_desert"]			= {particle  = "sand",}, -- Desert
 	["$biome_pyramid"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	["$biome_pyramid_top"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	["$biome_pyramid_right"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	["$biome_pyramid_entrance"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	["$biome_pyramid_hallway"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
 	["$biome_sandcave"]			= {particle  = "fire",}, -- Sandcave
 	["$biome_watchtower"]		= {particle  = "lava",}, -- Watchtower
 	["$biome_fun"]				= {particle  = "fungi",}, -- Overgrown Cavern
@@ -236,37 +241,25 @@ local data =
 	[""]						= {particle  = "vomit",},
 
 	glimmers_expanded_colour_freezing_liquid = {particle = "blood_cold",},
-	glimmers_expanded_cc_colour_dormant_crystal = {particle = "cc_dormant_crystal",},
-	glimmers_expanded_aa_colour_static_charge = {particle = "aa_static_charge",},
-	glimmers_expanded_aa_colour_chaotic_pandorium = {particle = "aa_chaotic_pandorium",},
-	glimmers_expanded_aa_colour_condensed_gravity = {particle = "aa_condensed_gravity",},
-	glimmers_expanded_aa_colour_dark_matter = {particle = "aa_dark_matter",},
-	glimmers_expanded_colour_fire = {particle = "fire",},
+	glimmers_expanded_colour_white = {particle = "spark_white",},
 	glimmers_expanded_colour_teal = {particle = "spark_teal",},
-	glimmers_expanded_cc_colour_hydroxide = {particle = "cc_hydroxide",},
+	glimmers_expanded_colour_fire = {particle = "fire",},
 	glimmers_expanded_colour_midas = {particle = "midas",},
 	glimmers_expanded_colour_weird_fungus = {particle = "fungi",},
-	glimmers_expanded_cc_colour_slicing_liquid = {particle = "cc_slicing_liquid",},
 	glimmers_expanded_colour_diminution = {particle = "magic_liquid_weakness",},
-	glimmers_expanded_cc_colour_glittering_liquid = {particle = "cc_glittering_liquid",},
 	glimmers_expanded_colour_pink = {particle = "plasma_fading_pink",},
 	glimmers_expanded_colour_true_rainbow = {particle = "material_rainbow",},
 	glimmers_expanded_colour_mimicium = {particle = "mimic_liquid",},
-	glimmers_expanded_cc_colour_explode_player = {particle = "cc_explode_player",},
-	glimmers_expanded_colour_white = {particle = "spark_white",},
 	glimmers_expanded_colour_lively_concoction = {particle = "magic_liquid_hp_regeneration_unstable",},
-	glimmers_expanded_cc_colour_uranium = {particle = "cc_uranium",},
 	glimmers_expanded_colour_divine_ground = {particle = "grass_holy",},
 	glimmers_expanded_colour_void = {particle = "void_liquid",},
-	glimmers_expanded_cc_colour_antimatter = {particle = "cc_antimatter_liquid",},
-	glimmers_expanded_cc_colour_nullium = {particle = "cc_nullium",},
 	glimmers_expanded_colour_blood = {particle = "blood",},
 	glimmers_expanded_colour_lava = {particle = "lava",},
 	glimmers_expanded_colour_ominous = {particle = "material_darkness",},
 	glimmers_expanded_colour_acid = {particle = "acid",},
 	rainbow =
 	{
-		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "cc_dormant_crystal", "aa_static_charge", "aa_chaotic_pandorium", "aa_condensed_gravity", "aa_dark_matter", "fire", "spark_teal", "cc_hydroxide", "midas", "fungi", "cc_slicing_liquid", "magic_liquid_weakness", "cc_glittering_liquid", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "cc_explode_player", "spark_white", "magic_liquid_hp_regeneration_unstable", "cc_uranium", "grass_holy", "void_liquid", "cc_antimatter_liquid", "cc_nullium", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
+		particles = {"spark_red", "spark", "spark_yellow", "spark_green", "plasma_fading", "blood_cold", "spark_white", "spark_teal", "fire", "midas", "fungi", "magic_liquid_weakness", "plasma_fading_pink", "material_rainbow", "mimic_liquid", "magic_liquid_hp_regeneration_unstable", "grass_holy", "void_liquid", "blood", "lava", "material_darkness", "acid", "spark_purple_bright"},
 	},
 	invis =
 	{
@@ -390,20 +383,21 @@ if ( colour ~= nil ) then
 				hex,r,g,b,a = material_to_rgba(particle) -- If no potion stuff, then use hex instead
 			end
 
+			local firstspritefilepath;
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
-
-				local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
-				set_additive(r,g,b,v,"additive",additive)
-
-				if #comps <= 1 then
-					EntityRefreshSprite( entity_id, v )
-					break
+				local spritefilepath = ComponentGetValue2(v, "image_file");
+				-- Check for if the sprite we're looking at is the same as the one modified by the potioncomp
+				-- I'm banking on the projectile's original sprite taking highest priority in the loop
+				-- TODO: Make this less jank.
+				if (not firstspritefilepath) then
+					firstspritefilepath = spritefilepath;
+				elseif (spritefilepath ~= firstspritefilepath and not string.find(spritefilepath, "%.png")) then -- Bandaid fix. Remove when you can color png's.
+					local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
+					set_additive(r,g,b,v,"additive",additive)
+					dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
+					ComponentSetValue2( v, "image_file", dummyfilepath )
 				end
-
-				dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
-				ComponentSetValue2( v, "image_file", dummyfilepath )
-
 				EntityRefreshSprite( entity_id, v )
 			end
 		else

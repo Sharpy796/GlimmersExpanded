@@ -105,7 +105,8 @@ local function set_additive(r,g,b, comp_id, additive_name, additive_value, objec
 end
 
 local function material_to_rgba(material)
-	local hex = liquids[material]
+	-- local hex = liquids[material]
+	local hex = ge_all_hexes[material]
 	return hex, hex_to_rgba(hex)
 end
 
@@ -133,6 +134,7 @@ if ( colour == "glimmers_expanded_colour_biome" ) then
                 end
             end
         end
+		GamePrint(colour)
     end
 end
 
@@ -196,6 +198,10 @@ local data =
 	-- East
 	["$biome_desert"]			= {particle  = "sand",}, -- Desert
 	["$biome_pyramid"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	-- ["$biome_pyramid_top"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	-- ["$biome_pyramid_right"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	-- ["$biome_pyramid_entrance"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
+	-- ["$biome_pyramid_hallway"]			= {particle  = "magic_liquid_random_polymorph",}, -- Pyramid
 	["$biome_sandcave"]			= {particle  = "fire",}, -- Sandcave
 	["$biome_watchtower"]		= {particle  = "lava",}, -- Watchtower
 	["$biome_fun"]				= {particle  = "fungi",}, -- Overgrown Cavern
