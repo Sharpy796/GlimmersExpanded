@@ -14,6 +14,26 @@ local function dummyfile_file(filepath, particle)
 	return "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..filepath
 end
 
+
+local function png_path_to_fake_xml_path(filepath)
+	-- return string.gsub("data/particles/area_indicator_064_blue.png","%.png",".xml")
+	return string.gsub(filepath,"%.png",".xml")
+end
+
+local function create_fake_xml(filepath)
+	local fakefilepath = png_path_to_fake_xml_path(filepath)
+	print("fakefilepath:\t"..fakefilepath)
+	if not ModDoesFileExist(fakefilepath) then
+		ModTextFileSetContent (fakefilepath, ModTextFileGetContent("mods/GlimmersExpandedfiles/entities/misc/fake_xml_sprite.xml"))
+		for xml in nxml.edit_file(fakefilepath) do
+			if xml ~= nil then
+				xml:set("filename",filepath)
+			end
+		end
+	end
+	return fakefilepath
+end
+
 local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
 	local dummyfilepath = dummyfile_file(spritefilepath, particle)
 
@@ -390,20 +410,26 @@ if ( colour ~= nil ) then
 				hex,r,g,b,a = material_to_rgba(particle) -- If no potion stuff, then use hex instead
 			end
 
+			local firstspritefilepath;
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
+				local spritefilepath = ComponentGetValue2(v, "image_file");
+				-- Check for if the sprite we're looking at is the same as the one modified by the potioncomp
+				-- I'm banking on the projectile's original sprite taking highest priority in the loop
+				-- TODO: Make this less jank.
+				if (not firstspritefilepath) then
+					firstspritefilepath = spritefilepath;
+				-- elseif (spritefilepath ~= firstspritefilepath and not string.find(spritefilepath, "%.png")) then -- Bandaid fix. Remove when you can color png's.
+				elseif (spritefilepath ~= firstspritefilepath) then
+					if (string.find(spritefilepath, "%.png")) then
+						ComponentSetValue2(v, "image_file", create_fake_xml(spritefilepath));
+					end
 
-				local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
-				set_additive(r,g,b,v,"additive",additive)
-
-				if #comps <= 1 then
-					EntityRefreshSprite( entity_id, v )
-					break
+					local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
+					set_additive(r,g,b,v,"additive",additive)
+					dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
+					ComponentSetValue2( v, "image_file", dummyfilepath )
 				end
-
-				dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
-				ComponentSetValue2( v, "image_file", dummyfilepath )
-
 				EntityRefreshSprite( entity_id, v )
 			end
 		else

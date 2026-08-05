@@ -7,11 +7,33 @@ local player_id = EntityGetWithTag("player_unit")[1]
 local colour,particle
 ---@type nxml
 local nxml = dofile_once("mods/GlimmersExpanded/luanxml/nxml.lua")
+dofile_once("mods/GlimmersExpanded/files/scripts/gun/make_tentacles_editable.lua")
+dofile_once("mods/GlimmersExpanded/init.lua")
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_materials.lua")
 dofile_once("mods/GlimmersExpanded/files/scripts/materials/compile_hex_globals.lua")
 
 local function dummyfile_file(filepath, particle)
 	return "mods/GlimmersExpanded/files/dummyFiles/"..particle.."/"..filepath
+end
+
+
+local function png_path_to_fake_xml_path(filepath)
+	-- return string.gsub("data/particles/area_indicator_064_blue.png","%.png",".xml")
+	return string.gsub(filepath,"%.png",".xml")
+end
+
+local function create_fake_xml(filepath)
+	local fakefilepath = png_path_to_fake_xml_path(filepath)
+	print("fakefilepath:\t"..fakefilepath)
+	if not ModDoesFileExist(fakefilepath) then
+		ModTextFileSetContent(fakefilepath, ModTextFileGetContent("mods/GlimmersExpanded/files/entities/misc/fake_xml_sprite.xml"))
+		for xml in nxml.edit_file(fakefilepath) do
+			if xml ~= nil then
+				xml:set("filename",filepath)
+			end
+		end
+	end
+	return fakefilepath
 end
 
 local function create_dummy_entry(spritefilepath, particle, pcolor, hex)
@@ -66,9 +88,19 @@ local function create_vsc(entity_id, comp_id, i, sprite_name, additive_name, tag
 	local spriteoriginal, additive, vsc
 	if object_name ~= nil then
 		spriteoriginal = ComponentObjectGetValue2(comp_id, object_name, sprite_name)
+		if (string.find(spriteoriginal, "%.png")) then
+			spriteoriginal = create_fake_xml(spriteoriginal)
+			ComponentObjectSetValue2(comp_id, object_name, sprite_name, spriteoriginal);
+		end
 	else
 		spriteoriginal = ComponentGetValue2(comp_id, sprite_name)
+		if (string.find(spriteoriginal, "%.png")) then
+			spriteoriginal = create_fake_xml(spriteoriginal)
+			ComponentSetValue2(comp_id, sprite_name, spriteoriginal);
+		end
 	end
+	
+
 	vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", tag..i)
 	if vsc ~= nil then
 		additive = ComponentGetValue2(vsc, "value_bool")
@@ -336,53 +368,95 @@ if ( colour ~= nil ) then
 		end
 	end
 
-	comps = EntityGetComponent( entity_id, "SpriteComponent" )
-	if ( comps ~= nil ) then
-		if (particle ~= nil) then
-			local dummyfilepath, pcolor, potioncomp
-			local hex,r,g,b,a = "FFFFFFFF",1,1,1,1
+	local function manageSpriteComps( entity_id, child )
+		comps = EntityGetComponent( entity_id, "SpriteComponent" )
+		if ( comps ~= nil ) then
+			if (particle ~= nil) then
+				local dummyfilepath, pcolor, potioncomp
+				local hex,r,g,b,a = "FFFFFFFF",1,1,1,1
 
-			-- Adding PotionComponent for the very first sprite 
-			potioncomp = EntityGetFirstComponentIncludingDisabled( entity_id, "PotionComponent" )
-			if ( potioncomp ~= nil ) then
-				ComponentSetValue2( potioncomp, "custom_color_material", CellFactory_GetType(particle) )
+				-- Adding PotionComponent for the very first sprite 
+				potioncomp = EntityGetFirstComponentIncludingDisabled( entity_id, "PotionComponent" )
+				if ( potioncomp ~= nil ) then
+					ComponentSetValue2( potioncomp, "custom_color_material", CellFactory_GetType(particle) )
+				else
+					potioncomp = EntityAddComponent2( entity_id, "PotionComponent", {
+						custom_color_material = CellFactory_GetType(particle)
+					})
+				end
+
+				pcolor = GameGetPotionColorUint( entity_id ) -- Checking the color for later & for additive check
+				if pcolor ~= nil then
+					r,g,b,a = uint_to_rgb(pcolor)
+				end
+
+				if potioncomp == nil or pcolor == nil or r == nil or g == nil or b == nil then
+					hex,r,g,b,a = material_to_rgba(particle) -- If no potion stuff, then use hex instead
+				end
+				
+				if child then return end
+
+				local firstspritefilepath;
+				for i,v in ipairs( comps ) do
+					ComponentSetValue2( v, "visible", true )
+					local spritefilepath = ComponentGetValue2(v, "image_file");
+					-- Check for if the sprite we're looking at is the same as the one modified by the potioncomp
+					-- I'm banking on the projectile's original sprite taking highest priority in the loop
+					-- TODO: Make this less jank.
+					if (not firstspritefilepath) then
+						firstspritefilepath = spritefilepath;
+					-- elseif (spritefilepath ~= firstspritefilepath and not string.find(spritefilepath, "%.png")) then -- Bandaid fix. Remove when you can color png's.
+					elseif (spritefilepath ~= firstspritefilepath) then
+						-- if (string.find(spritefilepath, "%.png")) then
+						-- 	ComponentSetValue2(v, "image_file", create_fake_xml(spritefilepath));
+						-- end
+
+						local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
+						set_additive(r,g,b,v,"additive",additive)
+						dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
+						ComponentSetValue2( v, "image_file", dummyfilepath )
+					end
+					EntityRefreshSprite( entity_id, v )
+				end
 			else
-				potioncomp = EntityAddComponent2( entity_id, "PotionComponent", {
-					custom_color_material = CellFactory_GetType(particle)
-				})
-			end
-
-			pcolor = GameGetPotionColorUint( entity_id ) -- Checking the color for later & for additive check
-			if pcolor ~= nil then
-				r,g,b,a = uint_to_rgb(pcolor)
-			end
-
-			if potioncomp == nil or pcolor == nil or r == nil or g == nil or b == nil then
-				hex,r,g,b,a = material_to_rgba(particle) -- If no potion stuff, then use hex instead
-			end
-
-			local firstspritefilepath;
-			for i,v in ipairs( comps ) do
-				ComponentSetValue2( v, "visible", true )
-				local spritefilepath = ComponentGetValue2(v, "image_file");
-				-- Check for if the sprite we're looking at is the same as the one modified by the potioncomp
-				-- I'm banking on the projectile's original sprite taking highest priority in the loop
-				-- TODO: Make this less jank.
-				if (not firstspritefilepath) then
-					firstspritefilepath = spritefilepath;
-				elseif (spritefilepath ~= firstspritefilepath and not string.find(spritefilepath, "%.png")) then -- Bandaid fix. Remove when you can color png's.
-					local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
-					set_additive(r,g,b,v,"additive",additive)
-					dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
-					ComponentSetValue2( v, "image_file", dummyfilepath )
+				for i,v in ipairs( comps ) do
+					if (not ComponentGetValue( v, "fog_of_war_hole") or disable_lighting) then
+						ComponentSetValue2( v, "visible", false )
+					end
 				end
-				EntityRefreshSprite( entity_id, v )
 			end
-		else
-			for i,v in ipairs( comps ) do
-				if (not ComponentGetValue( v, "fog_of_war_hole") or disable_lighting) then
-					ComponentSetValue2( v, "visible", false )
+		end
+	end
+
+	manageSpriteComps(entity_id, false)
+
+	-- -- TODO: Get tentacle to work somehow (prolly gotta ModImage it somehow)
+	local child = EntityGetAllChildren(entity_id)[1]
+	if ( child ~= nil ) then
+		comps = EntityGetComponent( child, "SpriteComponent" )
+		if ( comps ~= nil ) then
+			if (particle ~= nil) then
+				local dummyfilepath
+				local hex,r,g,b,a = material_to_rgba(particle)
+				for i,v in ipairs( comps ) do
+					local spritefilepath = ComponentGetValue2(v,"image_file")
+					dummyfilepath = dummyfile_file(spritefilepath,particle)
+					if not ModImageDoesExist(dummyfilepath) then
+						local image,width,height = editable_tentacle_stuff[spritefilepath][1],editable_tentacle_stuff[spritefilepath][2],editable_tentacle_stuff[spritefilepath][3]
+						for w=0,width do
+							for h=0,height do
+								ModImageSetPixel(image,w,h,0xffff00ff)
+								-- ModImageSetPixel(image,w,h,ModImageGetPixel(image,w,h))
+							end
+						end
+
+						ModImageMakeEditable("data/entities/projectiles/tentacle/tentacle_0.png"	,0,0)
+
+					end
+					EntityRefreshSprite( entity_id, v )
 				end
+			else
+				-- invis glimmer
 			end
 		end
 	end

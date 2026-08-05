@@ -11,6 +11,12 @@ local new_translations = ModTextFileGetContent("mods/GlimmersExpanded/translatio
 
 local isPrideGlimmersEnabled = ModIsEnabled("pride_glimmers")
 
+dofile_once("mods/GlimmersExpanded/files/scripts/gun/make_tentacles_editable.lua")
+for i,v in ipairs(tentacle_filepaths) do
+	image,width,height = ModImageMakeEditable(v,0,0)
+	editable_tentacle_stuff[v] = {image,width,height}
+end
+
 -- Thanks Graham for this bit of code, it looks very useful
 local patches = {
 	-- { -- Dummy line

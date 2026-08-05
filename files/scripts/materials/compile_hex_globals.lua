@@ -40,7 +40,7 @@ function hex_projectiles(set_text_func)
     local spritefilepath, dummyfilepath, color, datatype, words
     for line in hexglobals:gmatch("([^\n]*)\n?") do
         -- print("-------------")
-        -- print("HEXING PROJECTILE:\t"..line)
+        print("HEXING PROJECTILE:\t"..line)
         local r,g,b,a = 1,1,1,1
         words = split_with_comma(line)
         spritefilepath = words[1]
@@ -49,7 +49,16 @@ function hex_projectiles(set_text_func)
         datatype = words[4]
         -- debug_hex(spritefilepath, dummyfilepath, hex)
         if spritefilepath ~= nil and dummyfilepath ~= nil and color ~= nil then
-			set_text_func( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+            if not ModDoesFileExist(spritefilepath) then -- check for fake png sprites
+		        set_text_func(dummyfilepath, ModTextFileGetContent("mods/GlimmersExpanded/files/entities/misc/fake_xml_sprite.xml"))
+		        for xml in nxml.edit_file(dummyfilepath) do
+		        	if xml ~= nil then
+		        		xml:set("filename",string.gsub(spritefilepath,"%.xml",".png"))
+		        	end
+		        end
+            else
+			    set_text_func( dummyfilepath, ModTextFileGetContent(spritefilepath) )
+            end
             if datatype == "hex" then
                 r,g,b,a = hex_to_rgba(color)
             elseif datatype == "uint" then
