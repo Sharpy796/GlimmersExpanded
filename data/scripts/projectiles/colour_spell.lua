@@ -88,6 +88,21 @@ local function create_vsc(entity_id, comp_id, i, sprite_name, additive_name, tag
 	return spriteoriginal, additive, vsc
 end
 
+local function get_additive(entity_id, comp_id, i, additive_name, tag, object_name)
+	local additive, vsc
+	vsc = EntityGetFirstComponentIncludingDisabled(entity_id, "VariableStorageComponent", tag..i)
+	if vsc ~= nil then
+		additive = ComponentGetValue2(vsc, "value_bool")
+	else
+		if object_name ~= nil then
+			additive = ComponentObjectGetValue2(comp_id, object_name, additive_name)
+		else
+			additive = ComponentGetValue2(comp_id, additive_name)
+		end
+	end
+	return additive
+end
+
 local function set_additive(r,g,b, comp_id, additive_name, additive_value, object_name)
 	if r <= 0.1 and g <= 0.1 and b <= 0.1 then
 		if object_name ~= nil then
@@ -367,21 +382,23 @@ if ( colour ~= nil ) then
 				hex,r,g,b,a = material_to_rgba(particle) -- If no potion stuff, then use hex instead
 			end
 
-			local firstspritefilepath;
+			local firstspritefilepath
 			for i,v in ipairs( comps ) do
 				ComponentSetValue2( v, "visible", true )
-				local spritefilepath = ComponentGetValue2(v, "image_file");
+				local spritefilepath, additive = ComponentGetValue2(v, "image_file"), nil
 				-- Check for if the sprite we're looking at is the same as the one modified by the potioncomp
 				-- I'm banking on the projectile's original sprite taking highest priority in the loop
-				-- TODO: Make this less jank.
-				if (not firstspritefilepath) then
-					firstspritefilepath = spritefilepath;
+				if (firstspritefilepath == nil) then -- TODO: Make this less jank.
+					firstspritefilepath = spritefilepath -- we don't need to create a vsc for the first projectile bc it uses a potioncomp 
+					additive = get_additive(entity_id, v, i, "additive", "spriteoriginal")
 				elseif (spritefilepath ~= firstspritefilepath and not string.find(spritefilepath, "%.png")) then -- Bandaid fix. Remove when you can color png's.
-					local spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
-					set_additive(r,g,b,v,"additive",additive)
+					spritefilepath, additive = create_vsc(entity_id, v, i, "image_file", "additive", "spriteoriginal")
 					dummyfilepath = create_all_dummy_variations(spritefilepath, particle, pcolor, hex,r,g,b,a)
-					ComponentSetValue2( v, "image_file", dummyfilepath )
+					spritefilepath = dummyfilepath -- for consistency across if statements
 				end
+				set_additive(r,g,b,v,"additive",additive)
+				ComponentSetValue2( v, "image_file", spritefilepath )
+				
 				EntityRefreshSprite( entity_id, v )
 			end
 		else
