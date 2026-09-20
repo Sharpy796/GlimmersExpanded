@@ -149,7 +149,7 @@ if ( colour == "glimmers_expanded_colour_biome" ) then
                 end
             end
         end
-		GamePrint(colour)
+		-- GamePrint(colour)
     end
 end
 
@@ -318,6 +318,7 @@ if ( colour ~= nil ) then
 			for i,v in ipairs( comps ) do
 				if ( particle ~= nil ) then
 					ComponentObjectSetValue2( v, "laser", "beam_particle_type", CellFactory_GetType(particle))
+					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 90)
 				else
 					ComponentObjectSetValue2( v, "laser", "beam_particle_chance", 0)
 				end
